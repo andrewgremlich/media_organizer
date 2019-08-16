@@ -2,9 +2,28 @@ extern crate exif;
 extern crate glob;
 
 use self::glob::glob;
-use std::env;
-use std::fs::File;
+use std::{env, process};
+use std::fs::{create_dir_all, rename, File};
 use std::path::{Display, Path};
+
+fn make_dirs(date_time: &str) {
+    let mut split_date_time_spaces = date_time.split_whitespace();
+
+    match split_date_time_spaces.next() {
+        Some(e) => {
+            let replace_date_hyphens = str::replace(e, "-", "/");
+            let dir_to_create = "./photos/".to_owned() + &replace_date_hyphens;
+
+            println!("{:?}", dir_to_create);
+
+            create_dir_all(dir_to_create);
+        },
+        None => {
+            println!("{:?}", "No dates exist.")
+        }
+    };
+
+}
 
 fn read_exif_date_data(image_path: &Display) {
 
@@ -16,7 +35,8 @@ fn read_exif_date_data(image_path: &Display) {
 
     match reader.get_field(exif::Tag::DateTime, false) {
         Some(data) => {
-            println!("{}", data.value.display_as(data.tag));
+            let date_time: &str = &data.value.display_as(data.tag).to_string();
+            make_dirs(&date_time);
         }
         None => {
             println!("{:?}", "No dates exist.")
@@ -42,8 +62,15 @@ fn read_photo_library(white_list_file_types: Vec<&str>, photos_dir_str: &str) {
 fn main() {
     let args: Vec<String> = env::args().collect();
     let photos_dir_str: &str = &args[1];
+
+    if args.len() != 2 {
+        println!("Did not input the right amount of arguments!  Just two please.");
+        process::exit(1);
+    } 
+
     let photos_dir_path = Path::new(photos_dir_str);
     let white_list_file_types: Vec<&str> = vec!["jpeg", "jpg", "JPEG", "JPG"];
+
     if photos_dir_path.is_dir() {
         read_photo_library(white_list_file_types, photos_dir_str);
     }
