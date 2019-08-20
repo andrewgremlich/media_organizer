@@ -5,6 +5,23 @@ use self::glob::glob;
 use std::fs::{create_dir_all, rename, File};
 use std::path::{Display, Path};
 
+fn move_image(file_name: Option<&str>, made_dir: String, image_path_str: &str) {
+    match file_name {
+        Some(file_name) => {
+            let new_file_name = made_dir + "/" + file_name;
+
+            println!("{:?}", new_file_name);
+            println!("{:?}", image_path_str);
+
+            match rename(image_path_str, new_file_name) {
+                Ok(_e) => println!("File relocated!"),
+                Err(_) => println!("File not relocated"),
+            };
+        },
+        _ => ()
+    }
+}
+
 fn make_dir(date_time: &str) -> String {
     let mut split_date_time_spaces = date_time.split_whitespace();
 
@@ -56,25 +73,9 @@ pub fn make_photo_library(photos_dir_str: &str) {
                     let made_dir: String = make_dir(&date_data);
                     
                     match path.file_name() {
-                        Some(data) => {
-                            match data.to_str() {
-                                Some(file_name) => {
-                                    let new_file_name = made_dir + "/" + file_name;
-
-                                    println!("{:?}", new_file_name);
-                                    println!("{:?}", image_path_str);
-
-                                    match rename(image_path_str, new_file_name) {
-                                        Ok(_e) => println!("File relocated!"),
-                                        Err(_) => println!("File not relocated"),
-                                    };
-                                },
-                                _ => ()
-                            }
-                        },
+                        Some(data) => move_image(data.to_str(), made_dir, image_path_str),
                         _ => (),
-                    };
-                    
+                    }
                 }
                 Err(e) => println!("{:?}", e),
             }
