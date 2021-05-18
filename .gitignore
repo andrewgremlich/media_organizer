@@ -2,3 +2,4 @@
 **/*.rs.bk
 photos/
 .DS_Store
+test-photos/

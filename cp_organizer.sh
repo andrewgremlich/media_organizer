@@ -1,0 +1,1 @@
+cp target/release/photo_organizer .
