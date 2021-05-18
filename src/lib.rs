@@ -1,2 +1,4 @@
 pub mod exif_wrapper;
-pub mod organize;
+mod organize;
+
+pub use organize::make_photo_library;

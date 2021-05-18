@@ -2,7 +2,7 @@
 
 Need an organizer for your photos on the computer? Run this!
 
-## Usage
+## CLI usage
 
 ```bash
 photo_organizer --target test-photos
@@ -14,6 +14,16 @@ While developing with cargo, forward the flags.
 cargo run -- --target test-photos
 ```
 
+## Lib usage
+
+```rust
+//Take an image path and return the exif date of the image
+pub fn read_exif_date_data(image_path_str: &str) -> String
+
+//organize photos in a folder.
+pub fn make_photo_library(photos_dir_str: &str)
+```
+
 ## Features
 
 Organize photos in a folder structure based off of EXIF dates.
@@ -22,7 +32,8 @@ Organize photos in a folder structure based off of EXIF dates.
 
 ## Future development
 
-Allow configurable destination folder.
-Export web assembly binary to use in JS/Node/Electron.
-Index photos in a file structure.
-Compress image sizes.
+- Allow configurable destination folder.
+- Organize videos.
+- Export web assembly binary to use in JS/Node/Electron.
+- Index photos.
+- Compress image sizes.

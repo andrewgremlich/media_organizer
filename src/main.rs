@@ -1,12 +1,12 @@
 extern crate clap;
 
 use clap::{App, Arg, ArgMatches};
-use photo_organizer::organize::make_photo_library;
+use photo_organizer::make_photo_library;
 use std::path::Path;
 
 fn main() {
     let matches: ArgMatches = App::new("Photo Organizer")
-        .version("0.2.0")
+        .version("0.2.2")
         .author("Andrew Gremlich")
         .about("Organize photos in a date structure")
         .arg(
