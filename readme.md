@@ -18,6 +18,8 @@ While developing with cargo, forward the flags.
 cargo run -- --target test-photos
 ```
 
+Supports organizing JPG (jpeg, jpg, JPEG), HEIC (heic), and PNG (png) image files and their variants.
+
 ## Lib usage
 
 ```rust
@@ -41,7 +43,10 @@ pub fn make_photo_library(photos_dir_str: &str)
 
 ## Future development
 
-- Organize videos.
+- Organize videos and audio files.
 - Export web assembly binary to use in JS/Node/Electron.
-- Index photos.
-- Compress image sizes.
+
+  - Watch out for `DEST_FOLDER` environment variable.
+
+- Option to index photos.
+- Option to compress image sizes.
