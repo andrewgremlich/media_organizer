@@ -1,10 +1,10 @@
 [package]
 name = "photo_organizer"
-version = "0.2.2"
+version = "0.3.0"
 authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
 edition = "2018"
 license = "MIT"
-description = "Need an organizer for your photos on the computer? Run this!"
+description = "Organize photos in one folder into date-centric folder structure."
 homepage = "https://github.com/andrewgremlich/photo-organizer"
 readme = "./readme.md"
 documentation = "https://github.com/andrewgremlich/photo-organizer/blob/master/readme.md"
