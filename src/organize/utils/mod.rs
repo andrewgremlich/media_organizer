@@ -1,6 +1,10 @@
+mod determine_file_type;
+
 use std::env;
 use std::fs::rename;
 use std::path::PathBuf;
+
+pub use determine_file_type::{get_white_list_file_types, is_photo, is_video};
 
 pub fn move_image(original_file: PathBuf, dest_dir: &str) {
   if let Some(file_name) = original_file.file_name() {

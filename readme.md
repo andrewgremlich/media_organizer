@@ -24,7 +24,7 @@ Supports organizing JPG (jpeg, jpg, JPEG), HEIC (heic), and PNG (png) image file
 
 ```rust
 //Take an image path and return the exif date of the image
-pub fn read_exif_date_data(image_path_str: &str) -> String
+pub fn read_creation_date(path_str: &str) -> String
 
 //organize photos in a folder.
 //will require environment variable `DEST_FOLDER`

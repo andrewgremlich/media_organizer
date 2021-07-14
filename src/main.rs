@@ -4,12 +4,12 @@ mod env;
 
 use clap::{App, Arg, ArgMatches};
 use env::set_env;
-use photo_organizer::make_photo_library;
+use photo_organizer::sorter;
 use std::path::Path;
 
 fn main() {
     let matches: ArgMatches = App::new("Photo Organizer")
-        .version("0.3.0")
+        .version("0.4.0")
         .author("Andrew Gremlich")
         .about("Organize photos in one folder into date-centric folder structure.")
         .arg(
@@ -34,11 +34,11 @@ fn main() {
 
     set_env(&matches);
 
-    if let Some(tar) = matches.value_of("target") {
-        let photos_dir_path = Path::new(tar);
+    if let Some(targ) = matches.value_of("target") {
+        let dir_path = Path::new(targ);
 
-        if photos_dir_path.is_dir() {
-            make_photo_library(tar);
+        if dir_path.is_dir() {
+            sorter(targ);
         }
     }
 }
