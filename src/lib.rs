@@ -1,4 +1,4 @@
-pub mod exif_wrapper;
+pub mod media_info;
 
 mod organize;
 

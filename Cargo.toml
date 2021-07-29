@@ -18,3 +18,4 @@ clap = { version = "2.33", features = ["suggestions", "color", "vec_map"] }
 glob = "0.3.0"
 kamadak-exif = "0.5.4"
 mkdirp = "1.0.0"
+ffmpeg-next = "4.4.0"

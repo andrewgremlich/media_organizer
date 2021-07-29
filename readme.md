@@ -41,9 +41,14 @@ pub fn make_photo_library(photos_dir_str: &str)
 
   - Use the `--dest` flag.
 
+- Organize Video files in a folder structure based off of FFMPEG creation date.
+
 ## Future development
 
-- Organize videos and audio files.
+- Double check photo organizer lib.
+- Make a video organizer lib.
+- Make a multi-media organizer binary.
+- Organize audio files? https://github.com/pdeljanov/Symphonia
 - Export web assembly binary to use in JS/Node/Electron.
 
   - Watch out for `DEST_FOLDER` environment variable.

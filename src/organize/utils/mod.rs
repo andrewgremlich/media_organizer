@@ -6,8 +6,12 @@ use std::path::PathBuf;
 
 pub use determine_file_type::{get_white_list_file_types, is_photo, is_video};
 
-pub fn move_image(original_file: PathBuf, dest_dir: &str) {
-  if let Some(file_name) = original_file.file_name() {
+pub fn move_image(original_file: &str, dest_dir: &str) {
+  let mut original_file_path_buf: PathBuf = PathBuf::new();
+
+  original_file_path_buf.push(original_file);
+
+  if let Some(file_name) = original_file_path_buf.file_name() {
     if let Some(file_name_to_str) = file_name.to_str() {
       let mut owned_dest_string: String = dest_dir.to_owned();
 
@@ -22,10 +26,8 @@ pub fn move_image(original_file: PathBuf, dest_dir: &str) {
   }
 }
 
-pub fn make_dir_string(date_time: &str) -> String {
-  let mut split_date_time_spaces = date_time.split_whitespace();
-
-  match split_date_time_spaces.next() {
+pub fn make_dir_string(date_time: Option<&str>) -> String {
+  match date_time {
     Some(e) => {
       let dest_folder: String = env::var("DEST_FOLDER").unwrap();
       let replace_date_hyphens = str::replace(e, "-", "/");
