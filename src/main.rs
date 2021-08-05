@@ -1,10 +1,11 @@
 extern crate clap;
 
 mod env;
+mod organize;
 
 use clap::{App, Arg, ArgMatches};
 use env::set_env;
-use photo_organizer::sorter;
+use organize::sorter;
 use std::path::Path;
 
 fn main() {
