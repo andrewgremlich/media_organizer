@@ -1,6 +1,18 @@
-# Media Organizer
+# Photo Organizer
 
-Need an organizer for your photos and videos on the computer? Run this!
+Need an organizer for your media content on the computer? Run this!
+
+## Features
+
+- Organize photos and videos in a folder structure based off creation dates.
+
+  - Photos organized based off of EXIF creation dates.
+  - Video organized based off of FFMPEG creation dates.
+  - User provides target folder of unorganized images. Will move photos to a default `photos` directory in the directory where the binary was ran. The outputed folders will be the respective creation dates on the media.
+
+- Allow configurable destination folder.
+
+  - Use the `--dest` flag.
 
 ## Dependencies
 
@@ -39,21 +51,11 @@ pub fn read_video_creation_date(path_str: &str) -> String
 pub fn sorter(dir_str: &str)
 ```
 
-## Features
-
-- Organize photos in a folder structure based off of EXIF dates.
-
-  - User provides target folder of images to be organized. Will move photos to a `photos` directory in the directory where the binary was ran. The outputed folders will be the respective dates EXIF data pulled from the photo.
-
-- Allow configurable destination folder.
-
-  - Use the `--dest` flag.
-
-- Organize Video files in a folder structure based off of FFMPEG creation date.
-
 ## Future development
 
 - Make a multi-media organizer binary.
+- Organize single file entry through cli.
+- through CLI organize specific media files.
 - Organize audio files? https://github.com/pdeljanov/Symphonia
 - Export web assembly binary to use in JS/Node/Electron.
 

@@ -1,17 +1,15 @@
 [package]
-name = "photo_organizer"
-version = "0.4.0"
+name = "media_organizer"
+version = "0.1.0"
 authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
 edition = "2018"
 license = "MIT"
-description = "Organize photos in one folder into date-centric folder structure."
-homepage = "https://github.com/andrewgremlich/photo-organizer"
+description = "Organize media into one folder with a date-centric folder structure."
+homepage = "https://github.com/andrewgremlich/media_organizer"
 readme = "./readme.md"
-documentation = "https://github.com/andrewgremlich/photo-organizer/blob/master/readme.md"
-repository = "https://github.com/andrewgremlich/photo-organizer"
-keywords = ["photo", "organize"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/readme.md"
+repository = "https://github.com/andrewgremlich/media_organizer"
+keywords = ["media", "organize", "photos", "videos"]
 
 [dependencies]
 clap = { version = "2.33", features = ["suggestions", "color", "vec_map"] }

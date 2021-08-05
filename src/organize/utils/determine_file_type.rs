@@ -1,5 +1,5 @@
 fn get_white_list_video_types<'a>() -> Vec<&'a str> {
-  vec!["mp4"]
+  vec!["mp4", "MP4", "mov", "MOV"]
 }
 
 fn get_white_list_photo_types<'a>() -> Vec<&'a str> {
