@@ -2,6 +2,11 @@
 
 Need an organizer for your photos and videos on the computer? Run this!
 
+## Dependencies
+
+- C++ build tools (or equivalent like build-essentials) (for ffmpeg-next package)
+- FFMPEG
+
 ## CLI usage
 
 To quickly organize photos in the target folder, run the following command to output them into the default destination directory.
