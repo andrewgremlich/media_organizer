@@ -7,7 +7,13 @@ Need an organizer for your media content on the computer? Run this!
 - Organize photos and videos in a folder structure based off creation dates.
 
   - Photos organized based off of EXIF creation dates.
+
+    - Whitelisted photo file types. ("jpeg", "jpg", "JPEG", "JPG", "HEIC", "heic", "PNG", "png")
+
   - Video organized based off of FFMPEG creation dates.
+
+    - Whitelisted video file types. ("mp4", "MP4", "mov", "MOV")
+
   - User provides target folder of unorganized images. Will move photos to a default `photos` directory in the directory where the binary was ran. The outputed folders will be the respective creation dates on the media.
 
 - Allow configurable destination folder.
@@ -33,22 +39,6 @@ While developing with cargo, forward the flags.
 
 ```bash
 cargo run -- --target test-photos
-```
-
-Supports organizing JPG (jpeg, jpg, JPEG), HEIC (heic), and PNG (png) image files and their variants.
-
-## Lib usage
-
-```rust
-// Take an image path and return the exif date of the image
-pub fn read_photo_creation_date(path_str: &str) -> String
-
-// Take a video path and return the FFMPEG creatioon date.
-pub fn read_video_creation_date(path_str: &str) -> String
-
-// Sort all the supported media files in a directory.
-// Note: will default folder "photos"
-pub fn sorter(dir_str: &str)
 ```
 
 ## Future development

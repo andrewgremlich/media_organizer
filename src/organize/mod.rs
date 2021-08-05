@@ -2,9 +2,10 @@ extern crate glob;
 extern crate mkdirp;
 
 mod utils;
+mod media_info;
 
 use self::glob::glob;
-use crate::media_info::date_data::{read_photo_creation_date, read_video_creation_date};
+use media_info::date_data::{read_photo_creation_date, read_video_creation_date};
 use mkdirp::mkdirp;
 use utils::{get_white_list_file_types, is_photo, is_video, make_dir_string, move_image};
 
