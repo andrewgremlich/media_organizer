@@ -4,5 +4,5 @@ photos/
 .DS_Store
 test-photos/
 test-lib/
-photo_organizer
+*_organizer
 media/

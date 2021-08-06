@@ -1,1 +1,1 @@
-cp target/release/photo_organizer .
+cp target/release/media_organizer .
