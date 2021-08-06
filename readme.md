@@ -6,6 +6,8 @@ Need an organizer for your media content on the computer? Run this!
 
 - Organize photos and videos in a folder structure based off creation dates.
 
+  - Organize a single media file, or a folder containing unorganized media files.
+
   - Photos organized based off of EXIF creation dates.
 
     - Whitelisted photo file types. ("jpeg", "jpg", "JPEG", "JPG", "HEIC", "heic", "PNG", "png")
@@ -43,9 +45,8 @@ cargo run -- --target test-photos
 
 ## Future development
 
-- Make a multi-media organizer binary.
-- Organize single file entry through cli.
-- through CLI organize specific media files.
+- Organize specific file types (i.e. sort with glob?).
+- Organize by videos or by photos. (i.e. isvideo or isphoto)
 - Organize audio files? https://github.com/pdeljanov/Symphonia
 - Export web assembly binary to use in JS/Node/Electron.
 
