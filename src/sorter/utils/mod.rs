@@ -4,7 +4,7 @@ use std::env;
 use std::fs::rename;
 use std::path::PathBuf;
 
-pub use determine_file_type::{get_white_list_file_types, is_photo, is_video};
+pub use determine_file_type::{is_photo, is_video};
 
 pub fn move_image(original_file: &str, dest_dir: &str) {
   let mut original_file_path_buf: PathBuf = PathBuf::new();

@@ -6,4 +6,8 @@ pub fn set_env(matches: &ArgMatches) {
     if let Some(d) = matches.value_of("destination") {
         env::set_var("DEST_FOLDER", d);
     }
+
+    if let Some(f) = matches.value_of("filetype") {
+        env::set_var("FILE_TYPE", f);
+    }
 }
