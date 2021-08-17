@@ -22,6 +22,8 @@ Need an organizer for your media content on the computer? Run this!
 
   - Use the `--dest` flag.
 
+- Organize specific file types. Default to any filetype.
+
 ## Dependencies
 
 - C++ build tools (or equivalent like build-essentials) (for ffmpeg-next package)
@@ -45,7 +47,6 @@ cargo run -- --target test-photos
 
 ## Future development
 
-- Organize specific file types (i.e. sort with glob?).
 - Organize audio files? https://github.com/pdeljanov/Symphonia
 - Export web assembly binary to use in JS/Node/Electron.
 
