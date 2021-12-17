@@ -34,7 +34,7 @@ Need an organizer for your media content on the computer? Run this!
 To quickly organize photos in the target folder, run the following command to output them into the default destination directory.
 
 ```bash
-photo_organizer --target test-media
+media_organizer --target test-media
 ```
 
 To add a destination folder for all the organized photos, add the `--dest <DEST_FOLDER>` flag to the end.
