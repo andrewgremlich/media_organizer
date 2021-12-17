@@ -18,9 +18,10 @@ pub fn move_image(original_file: &str, dest_dir: &str) {
       owned_dest_string.push_str("/");
       owned_dest_string.push_str(file_name_to_str);
 
+      // this is to relocate instead of rename file.
       match rename(original_file, owned_dest_string) {
         Ok(_e) => (),
-        Err(_) => println!("File not relocated"),
+        Err(_) => println!("File not relocated: {:?}", original_file),
       };
     }
   }
@@ -29,9 +30,8 @@ pub fn move_image(original_file: &str, dest_dir: &str) {
 pub fn make_dir_string(date_time: Option<&str>) -> String {
   match date_time {
     Some(e) => {
-      let dest_folder: String = env::var("DEST_FOLDER").unwrap();
+      let dest_folder = env::var("DEST_FOLDER").expect("DEST_FOLDER not set");
       let replace_date_hyphens = str::replace(e, "-", "/");
-
       let mut dir_to_create: String = String::new();
 
       dir_to_create.push_str("./");
@@ -41,7 +41,7 @@ pub fn make_dir_string(date_time: Option<&str>) -> String {
 
       return dir_to_create;
     }
-    None => println!("{:?}", "No dates exist."),
+    None => println!("No dates exist. {:?}", date_time),
   };
 
   return String::from("There are no directory strings to be made!");

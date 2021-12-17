@@ -10,7 +10,7 @@ use std::path::Path;
 
 fn main() {
     let matches: ArgMatches = App::new("Photo Organizer")
-        .version("0.3.0")
+        .version("0.3.1")
         .author("Andrew Gremlich")
         .about("Organize media in one folder into date-centric folder structure.")
         .arg(

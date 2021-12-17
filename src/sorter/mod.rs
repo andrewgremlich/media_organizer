@@ -35,7 +35,7 @@ fn handle_path(path: &str) {
         date_data.push_str(&video_dir_str);
     }
 
-    mkdirp(&date_data).unwrap();
+    mkdirp(&date_data).expect("Could not create directory");
     move_image(path_str, &date_data);
 }
 
@@ -45,7 +45,7 @@ pub fn sort_file(file_path: &str) {
 
 pub fn sort_dir(dir_str: &str) {
     let mut glob_path: String = String::new();
-    let file_type: String = env::var("FILE_TYPE").unwrap();
+    let file_type = env::var("FILE_TYPE").expect("FILE_TYPE not set");
 
     glob_path.push_str(dir_str);
     glob_path.push_str("/**/*.");
@@ -53,10 +53,13 @@ pub fn sort_dir(dir_str: &str) {
 
     for entry in glob(&glob_path).expect("Failed to read glob pattern") {
         match entry {
-            Ok(path) => {
-                handle_path(path.to_str().unwrap());
-            }
-            Err(e) => println!("{:?}", e),
+            Ok(path) => match path.to_str() {
+                Some(path_str) => {
+                    handle_path(path_str);
+                }
+                None => println!("Failed to convert path to string"),
+            },
+            Err(e) => panic!("Glop path entry failed: {:?}", e),
         }
     }
 }
