@@ -1,9 +1,14 @@
 extern crate exif;
 extern crate ffmpeg_next as ffmpeg;
 
-use exif::{In, Reader, Tag};
+use exif::{Exif, In, Reader, Tag};
 use std::fs::File;
 use std::path::{Path, PathBuf};
+
+enum ReaderHandle {
+  Exif(Exif),
+  Err(String),
+}
 
 pub fn read_photo_creation_date(path_str: &str) -> String {
   let path = Path::new(path_str);
@@ -14,18 +19,22 @@ pub fn read_photo_creation_date(path_str: &str) -> String {
     Err(_) => panic!("Could not open photo file: {:?}", path_str),
   };
 
-  let reader = Reader::new().read_from_container(&mut std::io::BufReader::new(&file));
-  let reader = match reader {
-    Ok(reader) => reader,
-    Err(_) => panic!("Could not read photo file: {:?}", path_str),
-  };
+  let handled_reader: ReaderHandle =
+    match Reader::new().read_from_container(&mut std::io::BufReader::new(&file)) {
+      Ok(reader) => ReaderHandle::Exif(reader),
+      Err(_) => ReaderHandle::Err(String::from("nodatefound")),
+    };
 
-  let date_data: String = match reader.get_field(Tag::DateTime, In::PRIMARY) {
-    Some(data) => data.value.display_as(data.tag).to_string(),
-    None => panic!("Could not read photo creation date: {:?}", path_str),
-  };
-
-  return date_data;
+  match handled_reader {
+    ReaderHandle::Exif(reader) => {
+      let date_data: String = match reader.get_field(Tag::DateTime, In::PRIMARY) {
+        Some(data) => data.value.display_as(data.tag).to_string(),
+        None => panic!("Could not read photo creation date: {:?}", path_str),
+      };
+      return date_data;
+    }
+    ReaderHandle::Err(message) => message,
+  }
 }
 
 pub fn read_video_creation_date(path_str: &str) -> String {

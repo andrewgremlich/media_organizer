@@ -6,3 +6,6 @@ test-photos/
 test-lib/
 *_organizer
 media/
+debug/
+target/
+*.pdb
