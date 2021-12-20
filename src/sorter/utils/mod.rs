@@ -6,6 +6,11 @@ use std::path::PathBuf;
 
 pub use determine_file_type::{is_photo, is_video};
 
+pub enum DirString<'a> {
+  DateBreakdown(Option<&'a str>),
+  RegularStr(String),
+}
+
 pub fn move_image(original_file: &str, dest_dir: &str) {
   let mut original_file_path_buf: PathBuf = PathBuf::new();
 
@@ -28,22 +33,31 @@ pub fn move_image(original_file: &str, dest_dir: &str) {
   }
 }
 
-pub fn make_dir_string(date_time: Option<&str>) -> String {
-  match date_time {
+fn finally_make_date_str(appender: String) -> String {
+  let dest_folder = env::var("DEST_FOLDER").expect("DEST_FOLDER not set");
+  let mut regular_date_folder: String = String::new();
+
+  regular_date_folder.push_str("./");
+  regular_date_folder.push_str(&dest_folder);
+  regular_date_folder.push_str("/");
+  regular_date_folder.push_str(&appender);
+
+  regular_date_folder
+}
+
+fn handle_date_string_breakdown(breakdown: Option<&str>) -> String {
+  match breakdown {
     Some(e) => {
-      let dest_folder = env::var("DEST_FOLDER").expect("DEST_FOLDER not set");
       let replace_date_hyphens = str::replace(e, "-", "/");
-      let mut dir_to_create: String = String::new();
-
-      dir_to_create.push_str("./");
-      dir_to_create.push_str(&dest_folder);
-      dir_to_create.push_str("/");
-      dir_to_create.push_str(&replace_date_hyphens);
-
-      return dir_to_create;
+      finally_make_date_str(replace_date_hyphens)
     }
-    None => println!("No dates exist. {:?}", date_time),
-  };
+    None => String::from("No dates exist"),
+  }
+}
 
-  return String::from("There are no directory strings to be made!");
+pub fn make_dir_string(date_time: DirString) -> String {
+  match date_time {
+    DirString::DateBreakdown(breakdown) => handle_date_string_breakdown(breakdown),
+    DirString::RegularStr(reg_string) => finally_make_date_str(String::from(reg_string)),
+  }
 }

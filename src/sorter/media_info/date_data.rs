@@ -5,8 +5,18 @@ use exif::{Exif, In, Reader, Tag};
 use std::fs::File;
 use std::path::{Path, PathBuf};
 
-enum ExifReaderHandle {
+enum ImageReaderHandle {
+  ImageData(File),
+  Err(String),
+}
+
+enum ExifReader {
   Exif(Exif),
+  Err(String),
+}
+
+pub enum PhotoCreationDateReader {
+  CreationDate(String),
   Err(String),
 }
 
@@ -15,38 +25,53 @@ pub enum VideoReaderHandle {
   Err(String),
 }
 
-pub fn read_photo_creation_date(path_str: &str) -> String {
-  let path = Path::new(path_str);
+fn match_open_photo_file(path_str: &str) -> ImageReaderHandle {
+  match File::open(Path::new(path_str)) {
+    Ok(file) => ImageReaderHandle::ImageData(file),
+    Err(_) => {
+      let mut message: String = String::new();
 
-  let file = File::open(path);
+      message.push_str("Could not open photo file: ");
+      message.push_str(path_str);
 
-  // TODO: if a photo can't be opened don't error. Just skip it.
-  let file = match file {
-    Ok(file) => file,
-    Err(_) => panic!("Could not open photo file: {:?}", path_str),
-  };
-
-  let handled_reader: ExifReaderHandle =
-    match Reader::new().read_from_container(&mut std::io::BufReader::new(&file)) {
-      Ok(reader) => ExifReaderHandle::Exif(reader),
-      Err(_) => ExifReaderHandle::Err(String::from("nodatefound")),
-    };
-
-  match handled_reader {
-    ExifReaderHandle::Exif(reader) => {
-      // TODO: don't panic! just skip it.
-      let date_data: String = match reader.get_field(Tag::DateTime, In::PRIMARY) {
-        Some(data) => data.value.display_as(data.tag).to_string(),
-        None => panic!("Could not read photo creation date: {:?}", path_str),
-      };
-      return date_data;
+      ImageReaderHandle::Err(message)
     }
-    ExifReaderHandle::Err(message) => message,
+  }
+}
+
+fn match_read_exif(file: File) -> ExifReader {
+  match Reader::new().read_from_container(&mut std::io::BufReader::new(&file)) {
+    Ok(reader) => ExifReader::Exif(reader),
+    Err(_) => ExifReader::Err(String::from("nodatefound")),
+  }
+}
+
+pub fn read_photo_creation_date(path_str: &str) -> PhotoCreationDateReader {
+  let file: ImageReaderHandle = match_open_photo_file(path_str);
+
+  match file {
+    ImageReaderHandle::ImageData(file) => match match_read_exif(file) {
+      ExifReader::Exif(reader) => {
+        let date_data: String = match reader.get_field(Tag::DateTime, In::PRIMARY) {
+          Some(data) => data.value.display_as(data.tag).to_string(),
+          None => {
+            let mut error_message: String = String::new();
+
+            error_message.push_str("Could not read photo creation date: ");
+            error_message.push_str(path_str);
+
+            return PhotoCreationDateReader::Err(error_message);
+          }
+        };
+        return PhotoCreationDateReader::CreationDate(date_data);
+      }
+      ExifReader::Err(message) => PhotoCreationDateReader::Err(message),
+    },
+    ImageReaderHandle::Err(message) => PhotoCreationDateReader::Err(String::from(message)),
   }
 }
 
 pub fn read_video_creation_date(path_str: &str) -> VideoReaderHandle {
-  // definitely panic if there are videos. or skip videos?
   let ffmpeg_init = match ffmpeg::init() {
     Ok(_) => VideoReaderHandle::VideoDate(String::from("success-ffmpeg-init")),
     Err(_) => VideoReaderHandle::Err(String::from("could-not-initialize-ffmpeg")),

@@ -7,15 +7,20 @@ mod utils;
 
 use self::glob::glob;
 use media_info::date_data::{
-    read_photo_creation_date, read_video_creation_date, VideoReaderHandle,
+    read_photo_creation_date, read_video_creation_date, PhotoCreationDateReader, VideoReaderHandle,
 };
 use mkdirp::mkdirp;
-use utils::{is_photo, is_video, make_dir_string, move_image};
+use utils::{is_photo, is_video, make_dir_string, move_image, DirString};
 
 fn make_photo_dir_str(dir_str: &str) -> String {
-    let date_of_photo: String = read_photo_creation_date(dir_str);
-    let photo_dir_str: String = make_dir_string(date_of_photo.split_whitespace().next());
-    return photo_dir_str;
+    match read_photo_creation_date(dir_str) {
+        PhotoCreationDateReader::CreationDate(date_of_photo) => make_dir_string(
+            DirString::DateBreakdown(date_of_photo.split_whitespace().next()),
+        ),
+        PhotoCreationDateReader::Err(err) => {
+            make_dir_string(DirString::RegularStr(String::from(err)))
+        }
+    }
 }
 
 fn make_video_dir_str(dir_str: &str) -> String {
@@ -23,13 +28,9 @@ fn make_video_dir_str(dir_str: &str) -> String {
 
     match date_of_video {
         VideoReaderHandle::VideoDate(date) => {
-            let video_dir_str: String = make_dir_string(date.split("T").next());
-            return video_dir_str;
+            make_dir_string(DirString::DateBreakdown(date.split("T").next()))
         }
-        VideoReaderHandle::Err(message) => {
-            println!("{:?}", message);
-            return String::from("no-video-date");
-        }
+        VideoReaderHandle::Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
     }
 }
 
@@ -38,12 +39,10 @@ fn handle_path(path: &str) {
     let mut date_data: String = String::new();
 
     if is_photo(path_str) {
-        let photo_dir_str: String = make_photo_dir_str(path_str);
-        date_data.push_str(&photo_dir_str);
+        date_data.push_str(&make_photo_dir_str(path_str));
     }
     if is_video(path_str) {
-        let video_dir_str: String = make_video_dir_str(path_str);
-        date_data.push_str(&video_dir_str);
+        date_data.push_str(&make_video_dir_str(path_str));
     }
 
     mkdirp(&date_data).expect("Could not create directory");

@@ -47,7 +47,8 @@ cargo run -- --target test-photos
 
 ## Future development
 
-- Organize audio files? https://github.com/pdeljanov/Symphonia
+- Give option to copy files or move files.
+- [Organize audio files?](https://github.com/pdeljanov/Symphonia)
 - Export web assembly binary to use in JS/Node/Electron.
 
   - Watch out for `DEST_FOLDER` environment variable.
