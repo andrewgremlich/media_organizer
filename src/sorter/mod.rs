@@ -6,7 +6,9 @@ mod media_info;
 mod utils;
 
 use self::glob::glob;
-use media_info::date_data::{read_photo_creation_date, read_video_creation_date};
+use media_info::date_data::{
+    read_photo_creation_date, read_video_creation_date, VideoReaderHandle,
+};
 use mkdirp::mkdirp;
 use utils::{is_photo, is_video, make_dir_string, move_image};
 
@@ -17,9 +19,18 @@ fn make_photo_dir_str(dir_str: &str) -> String {
 }
 
 fn make_video_dir_str(dir_str: &str) -> String {
-    let date_of_video: String = read_video_creation_date(dir_str);
-    let video_dir_str: String = make_dir_string(date_of_video.split("T").next());
-    return video_dir_str;
+    let date_of_video: VideoReaderHandle = read_video_creation_date(dir_str);
+
+    match date_of_video {
+        VideoReaderHandle::VideoDate(date) => {
+            let video_dir_str: String = make_dir_string(date.split("T").next());
+            return video_dir_str;
+        }
+        VideoReaderHandle::Err(message) => {
+            println!("{:?}", message);
+            return String::from("no-video-date");
+        }
+    }
 }
 
 fn handle_path(path: &str) {
@@ -59,6 +70,7 @@ pub fn sort_dir(dir_str: &str) {
                 }
                 None => println!("Failed to convert path to string"),
             },
+            // TODO: I don't think this should fail anymore.
             Err(e) => panic!("Glop path entry failed: {:?}", e),
         }
     }

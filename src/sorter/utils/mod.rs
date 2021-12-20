@@ -19,6 +19,7 @@ pub fn move_image(original_file: &str, dest_dir: &str) {
       owned_dest_string.push_str(file_name_to_str);
 
       // this is to relocate instead of rename file.
+      // TODO: this will error if the folder doesn't have write permissions
       match rename(original_file, owned_dest_string) {
         Ok(_e) => (),
         Err(_) => println!("File not relocated: {:?}", original_file),
