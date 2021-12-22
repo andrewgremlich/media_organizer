@@ -69,8 +69,7 @@ pub fn sort_dir(dir_str: &str) {
                 }
                 None => println!("Failed to convert path to string"),
             },
-            // TODO: I don't think this should fail anymore.
-            Err(e) => panic!("Glop path entry failed: {:?}", e),
+            Err(e) => println!("Glop path entry failed: {:?}", e),
         }
     }
 }

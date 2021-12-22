@@ -28,14 +28,7 @@ pub enum VideoReaderHandle {
 fn match_open_photo_file(path_str: &str) -> ImageReaderHandle {
   match File::open(Path::new(path_str)) {
     Ok(file) => ImageReaderHandle::ImageData(file),
-    Err(_) => {
-      let mut message: String = String::new();
-
-      message.push_str("Could not open photo file: ");
-      message.push_str(path_str);
-
-      ImageReaderHandle::Err(message)
-    }
+    Err(_) => ImageReaderHandle::Err(String::from("couldnotopenphotofile")),
   }
 }
 
@@ -55,12 +48,7 @@ pub fn read_photo_creation_date(path_str: &str) -> PhotoCreationDateReader {
         let date_data: String = match reader.get_field(Tag::DateTime, In::PRIMARY) {
           Some(data) => data.value.display_as(data.tag).to_string(),
           None => {
-            let mut error_message: String = String::new();
-
-            error_message.push_str("Could not read photo creation date: ");
-            error_message.push_str(path_str);
-
-            return PhotoCreationDateReader::Err(error_message);
+            return PhotoCreationDateReader::Err(String::from("couldnotreadphotocreationdate"))
           }
         };
         return PhotoCreationDateReader::CreationDate(date_data);

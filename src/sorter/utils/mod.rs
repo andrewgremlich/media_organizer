@@ -45,19 +45,16 @@ fn finally_make_date_str(appender: String) -> String {
   regular_date_folder
 }
 
-fn handle_date_string_breakdown(breakdown: Option<&str>) -> String {
-  match breakdown {
-    Some(e) => {
-      let replace_date_hyphens = str::replace(e, "-", "/");
-      finally_make_date_str(replace_date_hyphens)
-    }
-    None => String::from("No dates exist"),
-  }
-}
-
 pub fn make_dir_string(date_time: DirString) -> String {
   match date_time {
-    DirString::DateBreakdown(breakdown) => handle_date_string_breakdown(breakdown),
+    DirString::DateBreakdown(breakdown) => {
+      if let Some(breakdown) = breakdown {
+        let replace_date_hyphens = str::replace(breakdown, "-", "/");
+        finally_make_date_str(replace_date_hyphens)
+      } else {
+        finally_make_date_str(String::from("nodatesexist"))
+      }
+    }
     DirString::RegularStr(reg_string) => finally_make_date_str(String::from(reg_string)),
   }
 }
