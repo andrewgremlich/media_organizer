@@ -48,6 +48,12 @@ cargo run -- --target test-photos
 ## Future development
 
 - Give option to copy files or move files.
+- Give option to change permission of parent folder?
+
+  - This will require mapping out the directory structure and checking file permissions.
+
+    - Make structs mapping out the file directory?
+
 - [Organize audio files?](https://github.com/pdeljanov/Symphonia)
 - Export web assembly binary to use in JS/Node/Electron.
 
