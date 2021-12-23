@@ -54,6 +54,7 @@ cargo run -- --target test-photos
 
     - Make structs mapping out the file directory?
 
+- Make a script (Google's NX) for incrementing the version.
 - [Organize audio files?](https://github.com/pdeljanov/Symphonia)
 - Export web assembly binary to use in JS/Node/Electron.
 
