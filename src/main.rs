@@ -46,10 +46,8 @@ fn main() {
 
     if let Some(targ) = matches.value_of("target") {
         let path = Path::new(targ);
-        let path_exists = path.exists();
-        let path_is_dir = path.is_dir();
 
-        if path_exists && path_is_dir {
+        if path.exists() && path.is_dir() {
             sort_dir(targ);
         } else {
             sort_file(targ);

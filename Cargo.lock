@@ -181,6 +181,7 @@ dependencies = [
  "glob",
  "kamadak-exif",
  "mkdirp",
+ "permissions",
 ]
 
 [[package]]
@@ -226,6 +227,15 @@ name = "peeking_take_while"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "19b17cddbe7ec3f8bc800887bab5e717348c95ea2ca0b1bf0837fb964dc67099"
+
+[[package]]
+name = "permissions"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "96cabf601e36de083e58fb7b90b4d392ce7beea9ccb79a7d56e099bb8f9542f0"
+dependencies = [
+ "libc",
+]
 
 [[package]]
 name = "pkg-config"
