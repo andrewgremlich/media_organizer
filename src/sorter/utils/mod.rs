@@ -2,7 +2,7 @@ mod determine_file_type;
 
 use permissions::is_removable;
 use std::env;
-use std::fs::rename;
+use std::fs::{copy, rename};
 use std::path::PathBuf;
 
 pub use determine_file_type::{is_photo, is_video};
@@ -12,7 +12,18 @@ pub enum DirString<'a> {
   RegularStr(String),
 }
 
-pub fn move_image(original_file: &str, dest_dir: &str) {
+fn handle_if_removable(file: &str) {
+  if let Ok(removable) = is_removable(file) {
+    if !removable {
+      println!(
+        "{} is not removable. Check file permissions of parent folder?",
+        file
+      );
+    }
+  }
+}
+
+pub fn handle_media(original_file: &str, dest_dir: &str) {
   let mut original_file_path_buf: PathBuf = PathBuf::new();
 
   original_file_path_buf.push(original_file);
@@ -20,23 +31,23 @@ pub fn move_image(original_file: &str, dest_dir: &str) {
   if let Some(file_name) = original_file_path_buf.file_name() {
     if let Some(file_name_to_str) = file_name.to_str() {
       let mut owned_dest_string: String = dest_dir.to_owned();
+      let copy_env = env::var("COPY").expect("COPY not set");
 
       owned_dest_string.push_str("/");
       owned_dest_string.push_str(file_name_to_str);
 
-      match rename(original_file, owned_dest_string) {
-        Ok(_e) => (),
-        Err(_) => {
-          if let Ok(removable) = is_removable(original_file) {
-            if !removable {
-              println!(
-                "{} is not removable. Check file permissions of parent folder?",
-                original_file
-              );
-            }
-          }
-        }
-      };
+      if copy_env == "true" {
+        println!("{} => {}", original_file, owned_dest_string);
+        match copy(original_file, owned_dest_string) {
+          Ok(_e) => (),
+          Err(_) => handle_if_removable(original_file),
+        };
+      } else {
+        match rename(original_file, owned_dest_string) {
+          Ok(_e) => (),
+          Err(_) => handle_if_removable(original_file),
+        };
+      }
     }
   }
 }

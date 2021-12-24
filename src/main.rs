@@ -40,6 +40,14 @@ fn main() {
                 .help("File type to sort. Defaults to all file types.")
                 .takes_value(true)
         )
+        .arg(
+            Arg::with_name("copy")
+                .short("c")
+                .long("copy")
+                .value_name("COPY")
+                .takes_value(false)
+                .help("Copy files instead of moving them.")
+        )
         .get_matches();
 
     set_env(&matches);

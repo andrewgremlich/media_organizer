@@ -24,6 +24,8 @@ Need an organizer for your media content on the computer? Run this!
 
 - Organize specific file types. Default to any filetype.
 
+- Option to copy files or move files.
+
 ## Dependencies
 
 - C++ build tools (or equivalent like build-essentials) (for ffmpeg-next package)
@@ -47,7 +49,6 @@ cargo run -- --target test-photos
 
 ## Future development
 
-- Give option to copy files or move files.
 - Give option to change permission of parent folder?
 
   - This will require mapping out the directory structure and checking file permissions.

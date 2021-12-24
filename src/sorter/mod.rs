@@ -10,7 +10,7 @@ use media_info::date_data::{
     read_photo_creation_date, read_video_creation_date, PhotoCreationDateReader, VideoReaderHandle,
 };
 use mkdirp::mkdirp;
-use utils::{is_photo, is_video, make_dir_string, move_image, DirString};
+use utils::{handle_media, is_photo, is_video, make_dir_string, DirString};
 
 fn make_photo_dir_str(dir_str: &str) -> String {
     match read_photo_creation_date(dir_str) {
@@ -46,7 +46,7 @@ fn handle_path(path: &str) {
     }
 
     mkdirp(&date_data).expect("Could not create directory");
-    move_image(path_str, &date_data);
+    handle_media(path_str, &date_data);
 }
 
 pub fn sort_file(file_path: &str) {
