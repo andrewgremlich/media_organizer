@@ -1,1 +1,0 @@
-cp target/release/media_organizer .
