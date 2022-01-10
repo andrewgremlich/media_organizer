@@ -19,6 +19,7 @@ fn main() {
                 .long("target")
                 .value_name("TARGET_MEDIA")
                 .help("Target media. Can be a folder with unorganized media or a single file.")
+                .default_value("photos")
                 .takes_value(true)
                 .required(true),
         )

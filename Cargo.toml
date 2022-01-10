@@ -11,7 +11,6 @@ documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/r
 repository = "https://github.com/andrewgremlich/media_organizer"
 keywords = ["media", "organize", "photos", "videos"]
 categories = ["command-line-utilities"]
-# categories = ["command-line-utilities", "wasm]
 
 [dependencies]
 clap = { version = "2.34", features = ["suggestions", "color", "vec_map"] }
