@@ -60,6 +60,7 @@ cargo run -- --target test-photos
 - Export web assembly binary to use in JS/Node/Electron.
 
   - Watch out for `DEST_FOLDER` environment variable.
+  - OR! Just use Tauri!?
 
 - Option to index photos.
 - Option to compress image sizes.
