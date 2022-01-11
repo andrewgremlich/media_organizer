@@ -7,7 +7,7 @@ Need an organizer for your media content on the computer? Run this!
 This is the output from `--help`.
 
 ```txt
-Photo Organizer 0.3.6
+Photo Organizer 0.4.1
 Andrew Gremlich
 Organize media in one folder into date-centric folder structure.
 
