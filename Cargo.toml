@@ -1,6 +1,6 @@
 [package]
 name = "media_organizer"
-version = "0.3.6"
+version = "0.4.0"
 authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
 edition = "2018"
 license = "MIT"
@@ -12,10 +12,18 @@ repository = "https://github.com/andrewgremlich/media_organizer"
 keywords = ["media", "organize", "photos", "videos"]
 categories = ["command-line-utilities"]
 
+[lib]
+name = "media_organizer_lib"
+path = "./src/lib.rs"
+
+[[bin]]
+name = "media_organizer"
+path = "./src/main.rs"
+
 [dependencies]
 clap = { version = "2.34", features = ["suggestions", "color", "vec_map"] }
-glob = "0.3.0"
 kamadak-exif = "0.5.4"
-mkdirp = "1.0.0"
 ffmpeg-next = "4.4.0"
+glob = "0.3.0"
+mkdirp = "1.0.0"
 permissions = "0.3.0"

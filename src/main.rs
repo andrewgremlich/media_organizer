@@ -1,16 +1,16 @@
 extern crate clap;
+extern crate media_organizer_lib;
 
-mod env;
 mod sorter;
 
 use clap::{App, Arg, ArgMatches};
-use env::set_env;
+use media_organizer_lib::env::set_env;
 use sorter::{sort_dir, sort_file};
 use std::path::Path;
 
 fn main() {
     let matches: ArgMatches = App::new("Photo Organizer")
-        .version("0.3.6")
+        .version("0.4.0")
         .author("Andrew Gremlich")
         .about("Organize media in one folder into date-centric folder structure.")
         .arg(

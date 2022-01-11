@@ -66,6 +66,8 @@ cargo run -- --target test-photos
 
 - Option to copy files or move files.
 
+- Exposed creation date reading functions.
+
 ## Dependencies
 
 - C++ build tools (or equivalent like build-essentials) (for ffmpeg-next package)
@@ -73,14 +75,14 @@ cargo run -- --target test-photos
 
 ## Future development
 
+- [Organize audio files?](https://github.com/pdeljanov/Symphonia)
+- Contribute to Kamadak-exif?
 - Give option to change permission of parent folder?
 
   - This will require mapping out the directory structure and checking file permissions.
 
     - Make structs mapping out the file directory?
 
-- Make a script (Google's NX) for incrementing the version.
-- [Organize audio files?](https://github.com/pdeljanov/Symphonia)
 - Export web assembly binary to use in JS/Node/Electron.
 
   - Watch out for `DEST_FOLDER` environment variable.

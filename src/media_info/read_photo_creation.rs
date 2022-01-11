@@ -1,27 +1,21 @@
 extern crate exif;
-extern crate ffmpeg_next as ffmpeg;
 
 use exif::{Exif, In, Reader, Tag};
 use std::fs::File;
-use std::path::{Path, PathBuf};
-
-enum ImageReaderHandle {
-  ImageData(File),
-  Err(String),
-}
+use std::path::Path;
 
 enum ExifReader {
   Exif(Exif),
   Err(String),
 }
 
-pub enum PhotoCreationDateReader {
-  CreationDate(String),
+enum ImageReaderHandle {
+  ImageData(File),
   Err(String),
 }
 
-pub enum VideoReaderHandle {
-  VideoDate(String),
+pub enum PhotoCreationDateReader {
+  CreationDate(String),
   Err(String),
 }
 
@@ -56,32 +50,5 @@ pub fn read_photo_creation_date(path_str: &str) -> PhotoCreationDateReader {
       ExifReader::Err(message) => PhotoCreationDateReader::Err(message),
     },
     ImageReaderHandle::Err(message) => PhotoCreationDateReader::Err(String::from(message)),
-  }
-}
-
-pub fn read_video_creation_date(path_str: &str) -> VideoReaderHandle {
-  let ffmpeg_init = match ffmpeg::init() {
-    Ok(_) => VideoReaderHandle::VideoDate(String::from("success-ffmpeg-init")),
-    Err(_) => VideoReaderHandle::Err(String::from("could-not-initialize-ffmpeg")),
-  };
-
-  match ffmpeg_init {
-    VideoReaderHandle::VideoDate(_) => {
-      let date_info = match ffmpeg::format::input(&PathBuf::from(path_str)) {
-        Ok(context) => {
-          let mut creation_date: String = String::new();
-          for (k, v) in context.metadata().iter() {
-            if k == "creation_time" {
-              creation_date.push_str(v)
-            }
-          }
-          return VideoReaderHandle::VideoDate(creation_date);
-        }
-        Err(_) => VideoReaderHandle::Err(String::from("could-not-read-ffmpeg-date")),
-      };
-
-      return date_info;
-    }
-    VideoReaderHandle::Err(message) => VideoReaderHandle::Err(String::from(message)),
   }
 }

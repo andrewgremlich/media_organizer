@@ -1,16 +1,7 @@
-mod determine_file_type;
-
 use permissions::is_removable;
 use std::env;
 use std::fs::{copy, rename};
 use std::path::PathBuf;
-
-pub use determine_file_type::{is_photo, is_video};
-
-pub enum DirString<'a> {
-  DateBreakdown(Option<&'a str>),
-  RegularStr(String),
-}
 
 fn handle_if_removable(file: &str) {
   if let Ok(removable) = is_removable(file) {
@@ -49,31 +40,5 @@ pub fn handle_media(original_file: &str, dest_dir: &str) {
         };
       }
     }
-  }
-}
-
-fn finally_make_date_str(appender: String) -> String {
-  let dest_folder = env::var("DEST_FOLDER").expect("DEST_FOLDER not set");
-  let mut regular_date_folder: String = String::new();
-
-  regular_date_folder.push_str("./");
-  regular_date_folder.push_str(&dest_folder);
-  regular_date_folder.push_str("/");
-  regular_date_folder.push_str(&appender);
-
-  regular_date_folder
-}
-
-pub fn make_dir_string(date_time: DirString) -> String {
-  match date_time {
-    DirString::DateBreakdown(breakdown) => {
-      if let Some(breakdown) = breakdown {
-        let replace_date_hyphens = str::replace(breakdown, "-", "/");
-        finally_make_date_str(replace_date_hyphens)
-      } else {
-        finally_make_date_str(String::from("nodatesexist"))
-      }
-    }
-    DirString::RegularStr(reg_string) => finally_make_date_str(String::from(reg_string)),
   }
 }

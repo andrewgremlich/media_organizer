@@ -1,38 +1,16 @@
 extern crate glob;
 extern crate mkdirp;
 
-use std::env;
-mod media_info;
-mod utils;
+mod determine_file_type;
+mod handle_media;
+mod make_dir_str;
 
 use self::glob::glob;
-use media_info::date_data::{
-    read_photo_creation_date, read_video_creation_date, PhotoCreationDateReader, VideoReaderHandle,
-};
+use determine_file_type::{is_photo, is_video};
+use handle_media::handle_media;
+use make_dir_str::{make_photo_dir_str, make_video_dir_str};
 use mkdirp::mkdirp;
-use utils::{handle_media, is_photo, is_video, make_dir_string, DirString};
-
-fn make_photo_dir_str(dir_str: &str) -> String {
-    match read_photo_creation_date(dir_str) {
-        PhotoCreationDateReader::CreationDate(date_of_photo) => make_dir_string(
-            DirString::DateBreakdown(date_of_photo.split_whitespace().next()),
-        ),
-        PhotoCreationDateReader::Err(err) => {
-            make_dir_string(DirString::RegularStr(String::from(err)))
-        }
-    }
-}
-
-fn make_video_dir_str(dir_str: &str) -> String {
-    let date_of_video: VideoReaderHandle = read_video_creation_date(dir_str);
-
-    match date_of_video {
-        VideoReaderHandle::VideoDate(date) => {
-            make_dir_string(DirString::DateBreakdown(date.split("T").next()))
-        }
-        VideoReaderHandle::Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
-    }
-}
+use std::env;
 
 fn handle_path(path: &str) {
     let path_str: &str = path;
@@ -44,6 +22,9 @@ fn handle_path(path: &str) {
     if is_video(path_str) {
         date_data.push_str(&make_video_dir_str(path_str));
     }
+    // if is_audio(path_str) {
+    //     make_audio_dir_str(path_str);
+    // }
 
     mkdirp(&date_data).expect("Could not create directory");
     handle_media(path_str, &date_data);
