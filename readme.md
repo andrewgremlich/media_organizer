@@ -77,6 +77,7 @@ cargo run -- --target test-photos
 
 - [Organize audio files?](https://github.com/pdeljanov/Symphonia)
 - Contribute to Kamadak-exif?
+- Write tests for bin and lib?
 - Give option to change permission of parent folder?
 
   - This will require mapping out the directory structure and checking file permissions.

@@ -9,7 +9,7 @@ use sorter::{sort_dir, sort_file};
 use std::path::Path;
 
 fn main() {
-    let matches: ArgMatches = App::new("Photo Organizer")
+    let matches: ArgMatches = App::new("Media Organizer")
         .version("0.4.1")
         .author("Andrew Gremlich")
         .about("Organize media in one folder into date-centric folder structure.")
