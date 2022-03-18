@@ -71,19 +71,13 @@ cargo run -- --target test-media --destination sorted_media
 
 ## Future development
 
-- Give option to change permission of parent folder?
-
-  - This will require mapping out the directory structure and checking file permissions.
-
-    - Make structs mapping out the file directory?
-
-- [Organize audio files?](https://github.com/pdeljanov/Symphonia)
-- Contribute to Kamadak-exif?
 - Write tests for bin and lib?
 - Export web assembly binary to use in JS/Node/Electron.
 
   - Watch out for `DEST_FOLDER` environment variable.
   - OR! Just use Tauri!?
 
+- Contribute to Kamadak-exif
+- [Organize audio files?](https://github.com/pdeljanov/Symphonia)
 - Option to index photos.
 - Option to compress image sizes.

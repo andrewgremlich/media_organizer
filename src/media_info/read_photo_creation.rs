@@ -14,6 +14,7 @@ enum ImageReaderHandle {
   Err(String),
 }
 
+#[derive(Debug)]
 pub enum PhotoCreationDateReader {
   CreationDate(String),
   Err(String),

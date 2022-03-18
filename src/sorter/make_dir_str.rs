@@ -63,3 +63,26 @@ pub fn make_video_dir_str(dir_str: &str) -> String {
 // pub fn make_audio_dir_str(dir_str: &str) {
 //   read_audio_creation_date(dir_str);
 // }
+
+#[cfg(test)]
+pub mod photo_tests {
+  use super::*;
+
+  #[test]
+  fn can_read_photo_creation_date() {
+    env::set_var("DEST_FOLDER", &"tests/test_files");
+
+    let path_str = "tests/test_files/test_photo.JPG";
+
+    let date_info = match read_photo_creation_date(path_str) {
+      PhotoCreationDateReader::CreationDate(date_of_photo) => make_dir_string(
+        DirString::DateBreakdown(date_of_photo.split_whitespace().next()),
+      ),
+      PhotoCreationDateReader::Err(err) => {
+        make_dir_string(DirString::RegularStr(String::from(err)))
+      }
+    };
+
+    assert_eq!("./tests/test_files/2020/02/01", date_info);
+  }
+}
