@@ -71,7 +71,6 @@ cargo run -- --target test-media --destination sorted_media
 
 ## Future development
 
-- Write tests for bin and lib?
 - Export web assembly binary to use in JS/Node/Electron.
 
   - Watch out for `DEST_FOLDER` environment variable.

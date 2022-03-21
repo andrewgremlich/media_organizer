@@ -65,7 +65,7 @@ pub fn make_video_dir_str(dir_str: &str) -> String {
 // }
 
 #[cfg(test)]
-pub mod photo_tests {
+pub mod date_read_tests {
   use super::*;
 
   #[test]
@@ -84,5 +84,21 @@ pub mod photo_tests {
     };
 
     assert_eq!("./tests/test_files/2020/02/01", date_info);
+  }
+
+  #[test]
+  fn can_read_video_creation_date() {
+    env::set_var("DEST_FOLDER", &"tests/test_files");
+
+    let path_str = "tests/test_files/test_video.mp4";
+
+    let date_info = match read_video_creation_date(path_str) {
+      VideoReaderHandle::VideoDate(date_of_video) => {
+        make_dir_string(DirString::DateBreakdown(date_of_video.split("T").next()))
+      }
+      VideoReaderHandle::Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
+    };
+
+    assert_eq!("./tests/test_files/2021/05/21", date_info);
   }
 }

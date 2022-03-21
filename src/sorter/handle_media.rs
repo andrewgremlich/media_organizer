@@ -38,8 +38,6 @@ pub fn handle_media(original_file: &str, dest_dir: &str) {
 
   original_file_path_buf.push(original_file);
 
-  println!("{}", original_file_path_buf.display());
-
   match original_file_path_buf.file_name() {
     Some(file_name) => {
       media_action(
