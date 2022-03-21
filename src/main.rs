@@ -1,11 +1,11 @@
 extern crate clap;
 extern crate media_organizer_lib;
 
-mod sorter;
+mod organizer;
 
 use clap::Parser;
 use media_organizer_lib::env::{set_env, Args};
-use sorter::{sort_dir, sort_file};
+use organizer::{organizer_dir, organize_file};
 use std::path::Path;
 
 fn main() {
@@ -16,8 +16,8 @@ fn main() {
     let path = Path::new(&matches.target);
 
     if path.exists() && path.is_dir() {
-        sort_dir(&matches.target);
+        organizer_dir(&matches.target);
     } else {
-        sort_file(&matches.target);
+        organize_file(&matches.target);
     }
 }

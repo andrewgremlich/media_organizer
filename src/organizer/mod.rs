@@ -30,11 +30,11 @@ fn handle_path(path: &str) {
     handle_media(path_str, &date_data);
 }
 
-pub fn sort_file(file_path: &str) {
+pub fn organize_file(file_path: &str) {
     handle_path(file_path);
 }
 
-pub fn sort_dir(dir_str: &str) {
+pub fn organizer_dir(dir_str: &str) {
     let mut glob_path: String = String::new();
     let file_type = env::var("FILE_TYPE").expect("FILE_TYPE not set");
 
