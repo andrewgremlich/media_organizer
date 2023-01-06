@@ -65,9 +65,7 @@ cargo run -- --target test-media --destination sorted_media
 
 ## Dependencies
 
-- For ffmpeg-next package
-  - C++ build tools (or equivalent like build-essentials)
-  - FFMPEG
+For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffmpeg/wiki/Notes-on-building)
 
 ## Future development
 

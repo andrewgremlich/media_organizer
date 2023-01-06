@@ -1,6 +1,6 @@
 [package]
 name = "media_organizer"
-version = "0.5.0"
+version = "0.5.1"
 authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
 edition = "2018"
 license = "MIT"
@@ -22,8 +22,8 @@ path = "./src/main.rs"
 
 [dependencies]
 clap = { version = "3.1.6", features = ["derive"] }
-kamadak-exif = "0.5.4"
-ffmpeg-next = "5.0.2"
+kamadak-exif = "0.5.5"
+ffmpeg-next = "5.1.1"
 glob = "0.3.0"
 mkdirp = "1.0.0"
 permissions = "0.3.0"
