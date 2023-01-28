@@ -11,7 +11,6 @@ pub struct Args {
         long,
         value_name = "TARGET_MEDIA",
         help = "The target media to sort.",
-        takes_value = true,
         required = true
     )]
     pub target: String,
@@ -19,10 +18,9 @@ pub struct Args {
     #[clap(
         short,
         long,
-        value_name = "DESTINATION_PATH",
-        help = "The destination path",
-        help = "The destination path of sorted media.",
-        takes_value = true
+        value_name = "DESTINATION_FOLDER",
+        default_value = "sorted_media",
+        help = "The destination folder of sorted media."
     )]
     destination: String,
 
@@ -31,8 +29,7 @@ pub struct Args {
         long,
         value_name = "FILE_TYPE",
         default_value = "*",
-        help = "The file type to sort.",
-        takes_value = true
+        help = "The file type to sort."
     )]
     file_type: String,
 
@@ -40,8 +37,8 @@ pub struct Args {
         short,
         long,
         value_name = "COPY",
-        takes_value = false,
-        help = "Copy the files instead of moving them."
+        help = "Copy the files instead of moving them.",
+        default_value = "false"
     )]
     copy: bool,
 }

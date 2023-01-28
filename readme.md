@@ -4,13 +4,7 @@ Need an organizer for your media content on the computer? Run this!
 
 ## CLI Usage
 
-This is the output from `--help`.
-
 ```txt
-media_organizer 0.5.0
-Andrew Gremlich <andrew.gremlich@gmail.com>
-Organize media into one folder with a date-centric folder structure.
-
 USAGE:
     media_organizer [OPTIONS] --target <TARGET_MEDIA> --destination <DESTINATION_PATH>
 

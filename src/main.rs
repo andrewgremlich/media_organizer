@@ -5,7 +5,7 @@ mod organizer;
 
 use clap::Parser;
 use media_organizer_lib::env::{set_env, Args};
-use organizer::{organizer_dir, organize_file};
+use organizer::{organize_dir, organize_file};
 use std::path::Path;
 
 fn main() {
@@ -16,7 +16,7 @@ fn main() {
     let path = Path::new(&matches.target);
 
     if path.exists() && path.is_dir() {
-        organizer_dir(&matches.target);
+        organize_dir(&matches.target);
     } else {
         organize_file(&matches.target);
     }

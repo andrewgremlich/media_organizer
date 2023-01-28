@@ -34,7 +34,7 @@ pub fn organize_file(file_path: &str) {
     handle_path(file_path);
 }
 
-pub fn organizer_dir(dir_str: &str) {
+pub fn organize_dir(dir_str: &str) {
     let mut glob_path: String = String::new();
     let file_type = env::var("FILE_TYPE").expect("FILE_TYPE not set");
 
