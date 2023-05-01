@@ -1,8 +1,8 @@
 [package]
 name = "media_organizer"
-version = "0.5.4"
+version = "0.5.5"
 authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
-edition = "2018"
+edition = "2021"
 license = "MIT"
 description = "Organize media into one folder with a date-centric folder structure."
 homepage = "https://github.com/andrewgremlich/media_organizer"
@@ -21,9 +21,10 @@ name = "media_organizer"
 path = "./src/main.rs"
 
 [dependencies]
-clap = { version = "4.1.4", features = ["derive"] }
+clap = { version = "4.2.5", features = ["derive"] }
 kamadak-exif = "0.5.5"
-ffmpeg-next = "5.1.1"
+ffmpeg-next = "6.0.0"
 glob = "0.3.1"
 mkdirp = "1.0.0"
 permissions = "0.4.1"
+id3 = "1.7.0"

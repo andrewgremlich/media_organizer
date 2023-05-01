@@ -1,5 +1,4 @@
-extern crate ffmpeg_next as ffmpeg;
-
+use ffmpeg_next as ffmpeg;
 use std::path::PathBuf;
 
 pub enum VideoReaderHandle {

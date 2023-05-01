@@ -1,16 +1,14 @@
-extern crate glob;
-extern crate mkdirp;
-
 mod determine_file_type;
 mod handle_media;
 mod make_dir_str;
 
-use self::glob::glob;
-use determine_file_type::{is_photo, is_video};
+use glob::glob;
+use determine_file_type::{is_audio, is_photo, is_video};
 use handle_media::handle_media;
 use make_dir_str::{make_photo_dir_str, make_video_dir_str};
 use mkdirp::mkdirp;
 use std::env;
+use std::fs::File;
 
 fn handle_path(path: &str) {
     let path_str: &str = path;
@@ -22,9 +20,16 @@ fn handle_path(path: &str) {
     if is_video(path_str) {
         date_data.push_str(&make_video_dir_str(path_str));
     }
-    // if is_audio(path_str) {
-    //     make_audio_dir_str(path_str);
-    // }
+    if is_audio(path_str) {
+        println!("Audio file found: {}", path_str);
+
+        let source = match File::open(path_str) {
+            Ok(file) => Box::new(file),
+            Err(e) => panic!("Failed to open file: {}", e),
+        };
+
+        // make_audio_dir_str(path_str);
+    }
 
     mkdirp(&date_data).expect("Could not create directory");
     handle_media(path_str, &date_data);

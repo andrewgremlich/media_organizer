@@ -60,15 +60,3 @@ cargo run -- --target test-media --destination sorted_media
 ## Dependencies
 
 For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffmpeg/wiki/Notes-on-building)
-
-## Future development
-
-- Export web assembly binary to use in JS/Node/Electron.
-
-  - Watch out for `DEST_FOLDER` environment variable.
-  - OR! Just use Tauri!?
-
-- Contribute to Kamadak-exif
-- [Organize audio files?](https://github.com/pdeljanov/Symphonia)
-- Option to index photos.
-- Option to compress image sizes.

@@ -1,5 +1,3 @@
-extern crate media_organizer_lib;
-
 // use media_organizer_lib::media_info::read_audio_creation::read_audio_creation_date;
 use media_organizer_lib::media_info::read_photo_creation::{
   read_photo_creation_date, PhotoCreationDateReader,

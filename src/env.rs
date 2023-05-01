@@ -1,6 +1,4 @@
 use std::env;
-extern crate clap;
-
 use clap::Parser;
 
 #[derive(Parser, Debug)]

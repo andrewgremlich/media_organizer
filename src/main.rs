@@ -1,6 +1,3 @@
-extern crate clap;
-extern crate media_organizer_lib;
-
 mod organizer;
 
 use clap::Parser;
