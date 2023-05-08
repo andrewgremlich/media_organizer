@@ -2,13 +2,17 @@ mod determine_file_type;
 mod handle_media;
 mod make_dir_str;
 
-use glob::glob;
+use chrono::{DateTime, Local, TimeZone};
 use determine_file_type::{is_audio, is_photo, is_video};
+use glob::glob;
 use handle_media::handle_media;
+use id3::{ErrorKind, Frame, Timestamp};
+use id3::{Tag, TagLike};
 use make_dir_str::{make_photo_dir_str, make_video_dir_str};
 use mkdirp::mkdirp;
 use std::env;
-use std::fs::File;
+use std::fs;
+use std::str::FromStr;
 
 fn handle_path(path: &str) {
     let path_str: &str = path;
@@ -22,11 +26,44 @@ fn handle_path(path: &str) {
     }
     if is_audio(path_str) {
         println!("Audio file found: {}", path_str);
+        let file_metadata = fs::metadata(path_str).expect("Failed to read file metadata");
 
-        let source = match File::open(path_str) {
-            Ok(file) => Box::new(file),
-            Err(e) => panic!("Failed to open file: {}", e),
+        let created = file_metadata
+            .created()
+            .expect("Failed to read file creation date");
+        let datetime: DateTime<Local> = created.into();
+        let formatted_date = datetime.format("%Y-%m-%d").to_string();
+        let id3_timestamp =
+            Timestamp::from_str(&formatted_date).expect("could not write timestamp");
+
+        println!("created: {:?}", formatted_date);
+
+        let existing_tags = match Tag::read_from_path(path_str) {
+            Ok(tags) => tags,
+            Err(why) => match why.kind {
+                ErrorKind::NoTag => {
+                    println!("No tag found");
+                    Tag::new()
+                }
+                _ => panic!("An error occurred while reading the file"),
+            },
         };
+
+        println!("existing tags: {:?}", existing_tags);
+
+        let mut tag = Tag::new();
+        tag.set_date_recorded(id3_timestamp);
+        tag.write_to_path(path, id3::Version::Id3v24);
+
+        // if let Some(artist) = tag.artist() {
+        //     println!("artist: {}", artist);
+        // }
+        // if let Some(title) = tag.title() {
+        //     println!("title: {}", title);
+        // }
+        // if let Some(album) = tag.album() {
+        //     println!("album: {}", album);
+        // }
 
         // make_audio_dir_str(path_str);
     }
