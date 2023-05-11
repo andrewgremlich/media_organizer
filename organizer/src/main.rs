@@ -1,7 +1,7 @@
 mod organizer;
 
 use clap::Parser;
-use media_organizer_lib::env::{set_env, Args};
+use env::{set_env, Args};
 use organizer::{organize_dir, organize_file};
 use std::path::Path;
 

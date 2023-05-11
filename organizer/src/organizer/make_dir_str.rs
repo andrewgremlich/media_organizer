@@ -1,10 +1,4 @@
-// use media_organizer_lib::media_info::read_audio_creation::read_audio_creation_date;
-use media_organizer_lib::media_info::read_photo_creation::{
-    read_photo_creation_date, PhotoCreationDateReader,
-};
-use media_organizer_lib::media_info::read_video_creation::{
-    read_video_creation_date, VideoReaderHandle,
-};
+use media_info::{read_audio_creation_date, read_photo_creation_date, read_video_creation_date};
 use std::env;
 
 enum DirString<'a> {
@@ -40,10 +34,10 @@ fn make_dir_string(date_time: DirString) -> String {
 
 pub fn make_photo_dir_str(dir_str: &str) -> String {
     match read_photo_creation_date(dir_str) {
-        PhotoCreationDateReader::CreationDate(date_of_photo) => make_dir_string(
-            DirString::DateBreakdown(date_of_photo.split_whitespace().next()),
-        ),
-        PhotoCreationDateReader::Err(err) => {
+        Ok(date_of_photo) => make_dir_string(DirString::DateBreakdown(
+            date_of_photo.split_whitespace().next(),
+        )),
+        Err(err) => {
             // TODO: make string from file creation date
             make_dir_string(DirString::RegularStr(String::from(err)))
         }
@@ -52,19 +46,20 @@ pub fn make_photo_dir_str(dir_str: &str) -> String {
 
 pub fn make_video_dir_str(dir_str: &str) -> String {
     match read_video_creation_date(dir_str) {
-        VideoReaderHandle::VideoDate(date) => {
-            make_dir_string(DirString::DateBreakdown(date.split("T").next()))
-        }
-        VideoReaderHandle::Err(err) => {
+        Ok(date) => make_dir_string(DirString::DateBreakdown(date.split("T").next())),
+        Err(err) => {
             // TODO: make string from file creation date
             make_dir_string(DirString::RegularStr(String::from(err)))
         }
     }
 }
 
-// pub fn make_audio_dir_str(dir_str: &str) {
-//   read_audio_creation_date(dir_str);
-// }
+pub fn make_audio_dir_str(dir_str: &str) -> String {
+    match read_audio_creation_date(dir_str) {
+        Ok(date) => make_dir_string(DirString::RegularStr(date)),
+        Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
+    }
+}
 
 #[cfg(test)]
 pub mod date_read_tests {
@@ -77,12 +72,10 @@ pub mod date_read_tests {
         let path_str = "tests/test_files/test_photo.JPG";
 
         let date_info = match read_photo_creation_date(path_str) {
-            PhotoCreationDateReader::CreationDate(date_of_photo) => make_dir_string(
-                DirString::DateBreakdown(date_of_photo.split_whitespace().next()),
-            ),
-            PhotoCreationDateReader::Err(err) => {
-                make_dir_string(DirString::RegularStr(String::from(err)))
-            }
+            Ok(date_of_photo) => make_dir_string(DirString::DateBreakdown(
+                date_of_photo.split_whitespace().next(),
+            )),
+            Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
         };
 
         assert_eq!("./tests/test_files/2020/02/01", date_info);
@@ -95,12 +88,10 @@ pub mod date_read_tests {
         let path_str = "tests/test_files/test_video.mp4";
 
         let date_info = match read_video_creation_date(path_str) {
-            VideoReaderHandle::VideoDate(date_of_video) => {
+            Ok(date_of_video) => {
                 make_dir_string(DirString::DateBreakdown(date_of_video.split("T").next()))
             }
-            VideoReaderHandle::Err(err) => {
-                make_dir_string(DirString::RegularStr(String::from(err)))
-            }
+            Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
         };
 
         assert_eq!("./tests/test_files/2021/05/21", date_info);
