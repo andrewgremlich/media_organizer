@@ -60,3 +60,11 @@ cargo run -- --target test-media --destination sorted_media
 ## Dependencies
 
 For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffmpeg/wiki/Notes-on-building)
+
+## Features to build
+
+- write file creation date as the metadata creation date
+
+- allow a CLI option to individually modify creation dates or metadata.
+
+- option to compress images (with copy feature)
