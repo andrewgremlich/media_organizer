@@ -33,7 +33,7 @@ cargo run -- --target test-media --destination sorted_media
 
 ## Features
 
-- Organize photos and videos in a folder structure based off creation dates.
+- Organize photos, videos, and audio in a folder structure based off creation dates.
 
   - Organize a single media file, or a folder containing unorganized media files.
 
@@ -45,6 +45,10 @@ cargo run -- --target test-media --destination sorted_media
 
     - Whitelisted video file types. ("mp4", "MP4", "mov", "MOV")
 
+  - Audio organized based off of ID3 recorded dates.
+
+    - Whitelisted audio file types. ("mp3", "MP3", "wav", "WAV")
+
   - User provides target folder of unorganized images. Will move photos to a default `photos` directory in the directory where the binary was ran. The outputed folders will be the respective creation dates on the media.
 
 - Allow configurable destination folder.
@@ -55,7 +59,9 @@ cargo run -- --target test-media --destination sorted_media
 
 - Option to copy files or move files.
 
-- Exposed creation date reading functions.
+- Creation of file paths from file creation date as an organizer fallback.
+
+- Exposed env, file_metadata, and media_info as libs.
 
 ## Dependencies
 
@@ -63,8 +69,8 @@ For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffm
 
 ## Features to build
 
-- write file creation date as the metadata creation date
+- allow a CLI option to allow organization from file creation dates.
 
-- allow a CLI option to individually modify creation dates or metadata.
+- option to compress media with copy feature
 
-- option to compress images (with copy feature)
+- individually modify file metadata and tag metadata (exif, video, id3)

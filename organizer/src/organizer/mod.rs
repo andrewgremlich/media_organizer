@@ -14,10 +14,12 @@ fn handle_path(path: &str) {
     let mut date_data: String = String::new();
 
     if is_photo(path_str) {
-        date_data.push_str(&make_photo_dir_str(path_str));
+        // date_data.push_str(&make_photo_dir_str(path_str));
+        println!("{:?} is photo", make_photo_dir_str(path_str));
     }
     if is_video(path_str) {
-        date_data.push_str(&make_video_dir_str(path_str));
+        // date_data.push_str(&make_video_dir_str(path_str));
+        println!("{:?} is video", make_video_dir_str(path_str));
     }
     if is_audio(path_str) {
         println!("{:?} is audio", make_audio_dir_str(path_str));

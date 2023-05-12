@@ -1,22 +1,28 @@
 use ffmpeg_next as ffmpeg;
+use file_metadata::file_created;
 use std::path::PathBuf;
 
 pub fn read_video_creation_date(path_str: &str) -> Result<String, String> {
-    match ffmpeg::init() {
-        Ok(_) => match ffmpeg::format::input(&PathBuf::from(path_str)) {
-            Ok(context) => {
-                let mut creation_date: String = String::new();
+    ffmpeg::init().expect("could not initialize ffmpeg");
 
-                for (k, v) in context.metadata().iter() {
-                    if k == "creation_time" {
-                        creation_date.push_str(v)
-                    }
+    match ffmpeg::format::input(&PathBuf::from(path_str)) {
+        Ok(context) => {
+            let mut creation_date: String = String::new();
+
+            for (name, value) in context.metadata().iter() {
+                if name == "creation_time" {
+                    creation_date.push_str(value)
                 }
-
-                Ok(creation_date)
             }
-            Err(_) => Err(String::from("could-not-read-ffmpeg-date")),
-        },
-        Err(_) => Err(String::from("could-not-initialize-ffmpeg")),
+
+            Ok(creation_date)
+        }
+        Err(_) => {
+            println!("Error reading video creation date: {:?}", path_str);
+            println!("Falling back to file creation date");
+
+            let formatted_date = file_created(path_str);
+            return Ok(formatted_date);
+        }
     }
 }

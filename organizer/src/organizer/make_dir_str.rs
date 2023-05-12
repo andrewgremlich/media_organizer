@@ -56,7 +56,7 @@ pub fn make_video_dir_str(dir_str: &str) -> String {
 
 pub fn make_audio_dir_str(dir_str: &str) -> String {
     match read_audio_creation_date(dir_str) {
-        Ok(date) => make_dir_string(DirString::RegularStr(date)),
+        Ok(date) => make_dir_string(DirString::DateBreakdown(Some(&date))),
         Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
     }
 }
