@@ -1,6 +1,6 @@
 # Media Organizer
 
-Need an organizer for your media content on the computer? Run this!
+Organize videos, photos, and audio into a folder date-hierarchy format.
 
 ## CLI Usage
 
@@ -28,7 +28,7 @@ media_organizer --target test-media --destination sorted_media
 While developing with cargo, forward the flags.
 
 ```bash
-cargo run -- --target test-media --destination sorted_media
+cargo run -p media_organizer -- --target ./media_organizer/photos --destination ./media_organizer/media
 ```
 
 ## Features
@@ -39,7 +39,8 @@ cargo run -- --target test-media --destination sorted_media
 
   - Photos organized based off of EXIF creation dates.
 
-    - Whitelisted photo file types. ("jpeg", "jpg", "JPEG", "JPG", "HEIC", "heic", "PNG", "png")
+    - Whitelisted photo file types. ("tiff", "TIFF", "heif", "HEIF", "HEIC", "heic", "AVIF", "avif", "jpeg", "jpg", "JPEG",
+        "JPG", "HEIC", "heic", "PNG", "png", "webp", "WEBP")
 
   - Video organized based off of FFMPEG creation dates.
 
@@ -47,7 +48,7 @@ cargo run -- --target test-media --destination sorted_media
 
   - Audio organized based off of ID3 recorded dates.
 
-    - Whitelisted audio file types. ("mp3", "MP3", "wav", "WAV")
+    - Whitelisted audio file types. ("mp3", "MP3", "wav", "WAV", "aiff", "AIFF")
 
   - User provides target folder of unorganized images. Will move photos to a default `photos` directory in the directory where the binary was ran. The outputed folders will be the respective creation dates on the media.
 
@@ -67,7 +68,10 @@ cargo run -- --target test-media --destination sorted_media
 
 For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffmpeg/wiki/Notes-on-building)
 
-## Features to build
+## Roadmap
+
+- tests
 
 - option to compress media with copy feature
-  - individually modify file metadata and tag metadata (exif, video, id3)
+
+- individually modify file metadata and tag metadata (exif, ffmpeg, id3)

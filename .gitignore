@@ -3,7 +3,6 @@
 photos/
 .DS_Store
 test-photos/
-*_organizer
 media/
 debug/
 target/
