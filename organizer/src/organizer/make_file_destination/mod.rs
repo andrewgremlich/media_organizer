@@ -49,5 +49,5 @@ pub fn sort_and_make(file_name: &str) -> Result<String, String> {
         return Ok(make_audio_dir_str(file_name));
     }
 
-    return Err(String::from("File type not supported"));
+    return Err(format!("'{}', File type not supported", file_name));
 }

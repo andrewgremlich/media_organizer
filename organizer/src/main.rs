@@ -2,7 +2,7 @@ mod organizer;
 
 use clap::Parser;
 use env::{set_env, Args};
-use organizer::{organize_dir, organize_file};
+use organizer::{handle_path, organize_dir};
 use std::path::Path;
 
 fn main() {
@@ -12,9 +12,16 @@ fn main() {
 
     let path = Path::new(&matches.target);
 
-    if path.exists() && path.is_dir() {
+    if !path.exists() {
+        println!("Path does not exist: {}", &matches.target);
+        return;
+    }
+
+    if path.is_dir() {
         organize_dir(&matches.target);
+    } else if path.is_file() {
+        handle_path(&matches.target);
     } else {
-        organize_file(&matches.target);
+        println!("Path is not a file or directory: {}", &matches.target);
     }
 }

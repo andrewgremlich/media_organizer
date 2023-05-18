@@ -17,7 +17,7 @@ name = "media_organizer"
 path = "./src/main.rs"
 
 [dependencies]
-clap = { version = "4.2.5", features = ["derive"] }
+clap = { version = "4.2.7", features = ["derive"] }
 glob = "0.3.1"
 mkdirp = "1.0.0"
 permissions = "0.4.1"

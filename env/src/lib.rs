@@ -1,8 +1,8 @@
-use std::env;
 use clap::Parser;
+use std::env;
 
 #[derive(Parser, Debug)]
-#[clap(author, version, about, long_about = None)]
+#[command(author, version, about, long_about = None)]
 pub struct Args {
     #[clap(
         short,
