@@ -1,11 +1,9 @@
-mod determine_file_type;
+mod make_file_destination;
 mod handle_media;
-mod make_dir_str;
 
-use determine_file_type::{is_audio, is_photo, is_video};
+use make_file_destination::sort_and_make;
 use glob::glob;
 use handle_media::handle_media;
-use make_dir_str::{make_audio_dir_str, make_photo_dir_str, make_video_dir_str};
 use mkdirp::mkdirp;
 use std::env;
 
@@ -13,16 +11,12 @@ fn handle_path(path: &str) {
     let path_str: &str = path;
     let mut date_data: String = String::new();
 
-    if is_photo(path_str) {
-        // date_data.push_str(&make_photo_dir_str(path_str));
-        println!("{:?} is photo", make_photo_dir_str(path_str));
-    }
-    if is_video(path_str) {
-        // date_data.push_str(&make_video_dir_str(path_str));
-        println!("{:?} is video", make_video_dir_str(path_str));
-    }
-    if is_audio(path_str) {
-        println!("{:?} is audio", make_audio_dir_str(path_str));
+    match sort_and_make(path_str) {
+        Ok(date) => date_data.push_str(&date),
+        Err(err) => {
+            println!("Error: {}", err);
+            date_data.push_str("filetypenotsupported");
+        }
     }
 
     mkdirp(&date_data).expect("Could not create directory");

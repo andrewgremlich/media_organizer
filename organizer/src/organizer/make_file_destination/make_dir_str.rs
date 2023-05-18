@@ -37,20 +37,14 @@ pub fn make_photo_dir_str(dir_str: &str) -> String {
         Ok(date_of_photo) => make_dir_string(DirString::DateBreakdown(
             date_of_photo.split_whitespace().next(),
         )),
-        Err(err) => {
-            // TODO: make string from file creation date
-            make_dir_string(DirString::RegularStr(String::from(err)))
-        }
+        Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
     }
 }
 
 pub fn make_video_dir_str(dir_str: &str) -> String {
     match read_video_creation_date(dir_str) {
         Ok(date) => make_dir_string(DirString::DateBreakdown(date.split("T").next())),
-        Err(err) => {
-            // TODO: make string from file creation date
-            make_dir_string(DirString::RegularStr(String::from(err)))
-        }
+        Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
     }
 }
 

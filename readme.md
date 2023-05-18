@@ -61,7 +61,7 @@ cargo run -- --target test-media --destination sorted_media
 
 - Creation of file paths from file creation date as an organizer fallback.
 
-- Exposed env, file_metadata, and media_info as libs.
+- Exposed env, file_metadata, and media_info as lib crates.
 
 ## Dependencies
 
@@ -69,8 +69,5 @@ For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffm
 
 ## Features to build
 
-- allow a CLI option to allow organization from file creation dates.
-
 - option to compress media with copy feature
-
-- individually modify file metadata and tag metadata (exif, video, id3)
+  - individually modify file metadata and tag metadata (exif, video, id3)
