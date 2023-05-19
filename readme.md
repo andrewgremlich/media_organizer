@@ -70,7 +70,7 @@ For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffm
 
 ## Roadmap
 
-- publish other crates
+- [Documentation](https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments)
 
 - tests
 

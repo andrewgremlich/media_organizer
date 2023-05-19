@@ -6,21 +6,20 @@ use handle_media::handle_media;
 use make_file_destination::sort_and_make;
 use mkdirp::mkdirp;
 use std::env;
+use std::path::Path;
 
 pub fn handle_path(path: &str) {
-    let path_str: &str = path;
-    let mut date_data: String = String::new();
-
-    match sort_and_make(path_str) {
-        Ok(date) => date_data.push_str(&date),
-        Err(err) => {
-            println!("Error: {}", err);
-            date_data.push_str("filetypenotsupported");
+    if Path::new(&path).is_file() {
+        match sort_and_make(path) {
+            Ok(date) => {
+                mkdirp(&date).expect("Could not create directory");
+                handle_media(path, &date);
+            }
+            Err(err) => println!("Error: {}", err),
         }
+    } else {
+        println!("Path is not a file: {}", path);
     }
-
-    mkdirp(&date_data).expect("Could not create directory");
-    handle_media(path_str, &date_data);
 }
 
 pub fn organize_dir(dir_str: &str) {
