@@ -1,5 +1,5 @@
 [package]
-name = "file_metadata"
+name = "mo_file_metadata"
 version = "0.1.0"
 edition = "2021"
 

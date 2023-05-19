@@ -1,5 +1,5 @@
 use ffmpeg_next as ffmpeg;
-use file_metadata::file_created;
+use mo_file_metadata::file_created;
 use std::path::PathBuf;
 
 pub fn read_video_creation_date(path_str: &str) -> Result<String, String> {

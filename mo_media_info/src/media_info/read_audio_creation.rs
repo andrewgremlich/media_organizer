@@ -1,5 +1,5 @@
 use chrono::NaiveDate;
-use file_metadata::file_created;
+use mo_file_metadata::file_created;
 use id3::{ErrorKind, Timestamp};
 use id3::{Tag, TagLike};
 use std::str::FromStr;

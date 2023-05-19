@@ -1,7 +1,7 @@
 mod organizer;
 
 use clap::Parser;
-use env::{set_env, Args};
+use mo_env::{set_env, Args};
 use organizer::{handle_path, organize_dir};
 use std::path::Path;
 
