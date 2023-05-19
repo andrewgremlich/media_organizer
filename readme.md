@@ -2,6 +2,8 @@
 
 Organize videos, photos, and audio into a folder date-hierarchy format.
 
+[Crate link to Media Organizer](https://crates.io/crates/media_organizer)
+
 ## CLI Usage
 
 ```txt
