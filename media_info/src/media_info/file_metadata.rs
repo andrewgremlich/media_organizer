@@ -9,5 +9,5 @@ pub fn file_created(path_str: &str) -> String {
     let datetime: DateTime<Local> = created.into();
     let formatted_date = datetime.format("%Y-%m-%d").to_string();
 
-    return formatted_date;
+    formatted_date
 }

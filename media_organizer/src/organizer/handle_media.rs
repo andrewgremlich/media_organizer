@@ -17,7 +17,7 @@ fn handle_if_removable(file: &str) {
 fn media_action(file_name: &str, dest_dir: &str, original_file: &str) {
     let mut owned_dest_string: String = dest_dir.to_owned();
     let copy_env = env::var("COPY").expect("COPY not set");
-    owned_dest_string.push_str("/");
+    owned_dest_string.push('/');
     owned_dest_string.push_str(file_name);
 
     if copy_env == "true" {

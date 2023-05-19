@@ -12,7 +12,7 @@ fn finally_make_date_str(appender: String) -> String {
 
     regular_date_folder.push_str("./");
     regular_date_folder.push_str(&dest_folder);
-    regular_date_folder.push_str("/");
+    regular_date_folder.push('/');
     regular_date_folder.push_str(&appender);
 
     regular_date_folder
@@ -28,7 +28,7 @@ fn make_dir_string(date_time: DirString) -> String {
                 finally_make_date_str(String::from("nodatesexist"))
             }
         }
-        DirString::RegularStr(reg_string) => finally_make_date_str(String::from(reg_string)),
+        DirString::RegularStr(reg_string) => finally_make_date_str(reg_string),
     }
 }
 
@@ -37,21 +37,21 @@ pub fn make_photo_dir_str(dir_str: &str) -> String {
         Ok(date_of_photo) => make_dir_string(DirString::DateBreakdown(
             date_of_photo.split_whitespace().next(),
         )),
-        Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
+        Err(err) => make_dir_string(DirString::RegularStr(err)),
     }
 }
 
 pub fn make_video_dir_str(dir_str: &str) -> String {
     match read_video_creation_date(dir_str) {
-        Ok(date) => make_dir_string(DirString::DateBreakdown(date.split("T").next())),
-        Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
+        Ok(date) => make_dir_string(DirString::DateBreakdown(date.split('T').next())),
+        Err(err) => make_dir_string(DirString::RegularStr(err)),
     }
 }
 
 pub fn make_audio_dir_str(dir_str: &str) -> String {
     match read_audio_creation_date(dir_str) {
         Ok(date) => make_dir_string(DirString::DateBreakdown(Some(&date))),
-        Err(err) => make_dir_string(DirString::RegularStr(String::from(err))),
+        Err(err) => make_dir_string(DirString::RegularStr(err)),
     }
 }
 
