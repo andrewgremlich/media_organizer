@@ -1,5 +1,5 @@
 [package]
-name = "mo_media_info"
+name = "media_info"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,4 +10,3 @@ ffmpeg-next = "6.0.0"
 kamadak-exif = "0.5.5"
 chrono = "0.4.24"
 id3 = "1.7.0"
-mo_file_metadata = { path = "../mo_file_metadata" }

@@ -62,7 +62,7 @@ cargo run -p media_organizer -- --target ./media_organizer/photos --destination 
 
 - Creation of file paths from file creation date as an organizer fallback.
 
-- Exposed mo_env, mo_file_metadata, and mo_media_info as lib crates.
+- Exposed media_info as a new crate.
 
 ## Dependencies
 

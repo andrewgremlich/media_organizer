@@ -1,4 +1,4 @@
-use mo_media_info::{read_audio_creation_date, read_photo_creation_date, read_video_creation_date};
+use media_info::{read_audio_creation_date, read_photo_creation_date, read_video_creation_date};
 use std::env;
 
 enum DirString<'a> {
