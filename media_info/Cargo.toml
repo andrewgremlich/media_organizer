@@ -9,7 +9,7 @@ homepage = "https://github.com/andrewgremlich/media_organizer"
 readme = "../readme.md"
 documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/readme.md"
 repository = "https://github.com/andrewgremlich/media_organizer"
-keywords = ["media", "metadata", "information", "info", "id3", "exif", "ffmpeg"]
+keywords = ["media", "metadata", "information", "info"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
