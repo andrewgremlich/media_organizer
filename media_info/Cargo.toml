@@ -1,12 +1,12 @@
 [package]
 name = "media_info"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
 edition = "2021"
 license = "MIT"
 description = "A tool to extract media information from a media source."
 homepage = "https://github.com/andrewgremlich/media_organizer"
-readme = "../readme.md"
+readme = "./readme.md"
 documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/readme.md"
 repository = "https://github.com/andrewgremlich/media_organizer"
 keywords = ["media", "metadata", "information", "info"]
