@@ -2,8 +2,6 @@
 
 Organize videos, photos, and audio into a folder date-hierarchy format.
 
-[Crate link to Media Organizer](https://crates.io/crates/media_organizer)
-
 ## CLI Usage
 
 ```txt
@@ -72,8 +70,8 @@ For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffm
 
 ## Roadmap
 
-- tests
-
 - option to compress media with copy feature
 
 - individually modify file metadata and tag metadata (exif, ffmpeg, id3)
+
+- tests
