@@ -1,5 +1,5 @@
 use ffmpeg_next as ffmpeg;
-use file_metadata::file_created;
+use fs_metadata::file_created;
 use std::path::PathBuf;
 
 /// Reads the creation date of the video from the metadata.

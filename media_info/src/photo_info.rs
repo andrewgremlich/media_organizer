@@ -1,5 +1,5 @@
 use exif::{In, Reader, Tag as ExifTag};
-use file_metadata::file_created;
+use fs_metadata::file_created;
 use std::fs::File;
 use std::path::Path;
 

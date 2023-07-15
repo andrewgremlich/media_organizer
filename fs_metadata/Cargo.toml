@@ -1,5 +1,5 @@
 [package]
-name = "file_metadata"
+name = "fs_metadata"
 version = "0.1.0"
 authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
 edition = "2021"
@@ -7,7 +7,7 @@ license = "MIT"
 description = "A wrapper around Rust API for getting file metadata"
 homepage = "https://github.com/andrewgremlich/media_organizer"
 readme = "./readme.md"
-documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/file_metadata/readme.md"
+documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/fs_metadata/readme.md"
 repository = "https://github.com/andrewgremlich/media_organizer"
 keywords = ["file", "metadata", "wrapper"]
 

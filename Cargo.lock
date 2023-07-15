@@ -327,13 +327,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "file_metadata"
-version = "0.1.0"
-dependencies = [
- "chrono",
-]
-
-[[package]]
 name = "flate2"
 version = "1.0.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -341,6 +334,13 @@ checksum = "3b9429470923de8e8cbd4d2dc513535400b4b3fef0319fb5c4e1f520a7bef743"
 dependencies = [
  "crc32fast",
  "miniz_oxide",
+]
+
+[[package]]
+name = "fs_metadata"
+version = "0.1.0"
+dependencies = [
+ "chrono",
 ]
 
 [[package]]
@@ -504,7 +504,7 @@ version = "0.2.0"
 dependencies = [
  "chrono",
  "ffmpeg-next",
- "file_metadata",
+ "fs_metadata",
  "id3",
  "kamadak-exif",
 ]

@@ -1,7 +1,7 @@
 use id3::Timestamp;
 use id3::{Tag as ID3Tag, TagLike};
 use std::str::FromStr;
-use file_metadata::file_created;
+use fs_metadata::file_created;
 
 /// Writes the creation date of the audio to the metadata.
 ///
