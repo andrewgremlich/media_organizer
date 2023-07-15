@@ -6,3 +6,4 @@ View the crates related read me files with these links.
 
 [Media Organizer](./media_organizer/readme.md)
 [Media Info](./media_info/README.md)
+[File Metadata](./file_metadata/readme.md)
