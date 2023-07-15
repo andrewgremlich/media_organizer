@@ -7,3 +7,4 @@ media/
 debug/
 target/
 *.pdb
+*/tests/data/
