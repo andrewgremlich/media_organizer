@@ -70,8 +70,7 @@ For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffm
 
 ## Roadmap
 
-- option to compress media with copy feature
-
+- option to remove original folder to trash
+- more file metadata wrapper options
 - individually modify file metadata and tag metadata (exif, ffmpeg, id3)
-
 - tests
