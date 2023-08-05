@@ -1,8 +1,6 @@
 use chrono::{DateTime, Local};
 use std::fs;
 
-mod format_permissions;
-
 pub fn file_created(path_str: &str) -> Result<String, String> {
     match fs::metadata(path_str) {
         Ok(data) => {
