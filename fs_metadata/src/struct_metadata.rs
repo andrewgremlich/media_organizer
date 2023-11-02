@@ -17,7 +17,7 @@ pub struct FileMetadata {
 }
 
 impl FileMetadata {
-    pub fn new(path_str: &str) -> Result<FileMetadata, String> {
+    pub fn new(path_str: &str) -> Result<Self, String> {
         let path = Path::new(path_str);
         let metadata = fs::metadata(path_str);
 
