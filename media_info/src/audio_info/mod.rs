@@ -15,7 +15,7 @@ mod audio_util;
 /// let creation_date = read_audio_creation_date(audio_path).unwrap();
 /// assert_eq!(creation_date, "2021-01-01");
 /// ```
-pub fn read_audio_creation_date(path_str: &str) -> Result<String, String> {
+pub fn read_audio_creation_date(path_str: &str) -> String {
     let date_recorded = match ID3Tag::read_from_path(path_str) {
         Ok(tags) => tags.date_recorded(),
         Err(why) => match why.kind {
@@ -32,5 +32,5 @@ pub fn read_audio_creation_date(path_str: &str) -> Result<String, String> {
     let assembled_date = NaiveDate::from_ymd_opt(year, month as u32, day as u32);
     let date_str = assembled_date.unwrap().format("%Y-%m-%d").to_string();
 
-    Ok(date_str)
+    date_str
 }

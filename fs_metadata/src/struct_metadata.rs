@@ -1,7 +1,7 @@
 use chrono::{DateTime, Local};
-use faccess::PathExt;
 use std::fs::{self, Metadata};
 use std::path::Path;
+use faccess::PathExt;
 
 pub struct FileMetadata {
     pub created: String,

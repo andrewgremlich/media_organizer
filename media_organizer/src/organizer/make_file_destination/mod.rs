@@ -13,7 +13,7 @@ fn get_white_list_photo_types<'a>() -> Vec<&'a str> {
 }
 
 fn get_white_list_audio_types<'a>() -> Vec<&'a str> {
-    vec!["mp3", "MP3", "wav", "WAV", "aiff", "AIFF"]
+    vec!["mp3", "MP3", "wav", "WAV", "aiff", "AIFF", "m4a", "M4A", "flac", "FLAC"]
 }
 
 fn contains_type(types: Vec<&str>, name: &str) -> bool {

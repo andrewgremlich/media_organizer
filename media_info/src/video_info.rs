@@ -13,7 +13,7 @@ use std::path::PathBuf;
 /// let creation_date = read_video_creation_date(video_path).unwrap();
 /// assert_eq!(creation_date, "2021-01-01");
 /// ```
-pub fn read_video_creation_date(path_str: &str) -> Result<String, String> {
+pub fn read_video_creation_date(path_str: &str) -> String {
     ffmpeg::init().expect("could not initialize ffmpeg");
 
     match ffmpeg::format::input(&PathBuf::from(path_str)) {
@@ -26,7 +26,7 @@ pub fn read_video_creation_date(path_str: &str) -> Result<String, String> {
                 }
             }
 
-            Ok(creation_date)
+            creation_date
         }
         Err(_) => {
             println!("Error reading video creation date: {:?}", path_str);
@@ -34,7 +34,7 @@ pub fn read_video_creation_date(path_str: &str) -> Result<String, String> {
             // TODO: edit creation date with file creation date?
 
             let formatted_date = file_created(path_str).unwrap();
-            Ok(formatted_date)
+            formatted_date
         }
     }
 }

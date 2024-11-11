@@ -1,16 +1,20 @@
-use permissions::is_removable;
+use faccess::{AccessMode, PathExt};
 use std::env;
 use std::fs::{copy, rename};
+use std::path::Path;
 use std::path::PathBuf;
 
 fn handle_if_removable(file: &str) {
-    if let Ok(removable) = is_removable(file) {
-        if !removable {
-            println!(
-                "{} is not removable. Check file permissions of parent folder?",
-                file
-            );
-        }
+    let file_path = Path::new(file);
+
+    if !file_path.exists() {
+        println!("The {} file does not exist.", file);
+        return;
+    }
+
+    match file_path.parent().unwrap().access(AccessMode::WRITE) {
+        Ok(_) => println!("The file is likely deletable."),
+        Err(e) => println!("The file might not be deletable. Error: {}", e),
     }
 }
 

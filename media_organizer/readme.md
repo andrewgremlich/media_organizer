@@ -28,7 +28,7 @@ media_organizer --target test-media --destination sorted_media
 While developing with cargo, forward the flags.
 
 ```bash
-cargo run -p media_organizer -- --target ./media_organizer/photos --destination ./media_organizer/media
+cargo run -p media_organizer -- --target ./test-media --destination ./sorted_media
 ```
 
 ## Features
@@ -67,6 +67,8 @@ cargo run -p media_organizer -- --target ./media_organizer/photos --destination 
 ## Dependencies
 
 For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffmpeg/wiki/Notes-on-building)
+
+If on windows be sure to install the _shared_ version of FFMPEG!
 
 ## Roadmap
 

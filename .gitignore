@@ -8,3 +8,5 @@ debug/
 target/
 *.pdb
 */tests/data/
+test-media/
+sorted_media/

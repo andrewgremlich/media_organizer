@@ -1,6 +1,6 @@
 [package]
 name = "media_organizer"
-version = "0.6.1"
+version = "0.6.3"
 authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
 edition = "2021"
 license = "MIT"
@@ -17,8 +17,8 @@ name = "media_organizer"
 path = "./src/main.rs"
 
 [dependencies]
-clap = { version = "4.2.7", features = ["derive"] }
+clap = { version = "4.5.20", features = ["derive"] }
 glob = "0.3.1"
 mkdirp = "1.0.0"
-permissions = "0.4.1"
-media_info = { version = "0.2.0", path = "../media_info" }
+faccess = "0.2.4"
+media_info = { version = "0.3.3", path = "../media_info" }
