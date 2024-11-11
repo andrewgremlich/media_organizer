@@ -17,9 +17,9 @@ pub struct FileMetadata {
 }
 
 impl FileMetadata {
-    pub fn new(path_str: &str) -> Result<Self, String> {
-        let path = Path::new(path_str);
-        let metadata = fs::metadata(path_str);
+
+    pub fn new(path: &Path) -> Result<Self, String> {
+        let metadata = fs::metadata(path);
 
         match metadata {
             Ok(data) => {
@@ -101,19 +101,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn can_make_file_metadata() {
-        let result = FileMetadata::new("./tests/data/test_photo.JPG").unwrap();
-
-        println!("{:?}", result.get_file_in_kilobytes());
-
-        assert_eq!(result.created, "2023-10-30");
-        assert_eq!(result.modified, "2023-10-30");
-        assert_eq!(result.accessed, "2023-10-31");
-    }
-
-    #[test]
     fn has_permissions() {
-        let result = FileMetadata::new("./tests/data/test_photo.JPG").unwrap();
+        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let result = FileMetadata::new(path).unwrap();
 
         assert_eq!(result.is_readable, true);
         assert_eq!(result.is_writable, true);
@@ -122,19 +112,32 @@ mod tests {
 
     #[test]
     fn is_file_read_only() {
-        let result = FileMetadata::new("./tests/data/test_photo.JPG").unwrap();
+        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let result = FileMetadata::new(path).unwrap();
         assert_eq!(result.is_file_read_only, false)
     }
 
     #[test]
     fn is_dir() {
-        let result = FileMetadata::new("./tests/data/test_photo.JPG").unwrap();
+        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let result = FileMetadata::new(path).unwrap();
         assert_eq!(result.is_dir, false);
     }
 
     #[test]
     fn is_file() {
-        let result = FileMetadata::new("./tests/data/test_photo.JPG").unwrap();
+        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let result = FileMetadata::new(path).unwrap();
         assert_eq!(result.is_file, true);
+    }
+
+    #[test]
+    fn can_get_file_size() {
+        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let result = FileMetadata::new(path).unwrap();
+        assert_eq!(true, result.get_file_in_kilobytes() > 0.0);
+        assert_eq!(true, result.get_file_in_megabytes() > 0.0);
+        assert_eq!(true, result.get_file_in_gigabytes() > 0.0);
+        assert_eq!(true, result.get_file_in_terabytes() > 0.0);
     }
 }

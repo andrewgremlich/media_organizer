@@ -11,11 +11,11 @@ A cross-platform simple wrapper to get metadata of a file.
 Favor the Struct version instead.
 
 ```rust
-pub fn file_created(path_str: &str) -> Result<String, String>
+pub fn file_created(path_str: &Path) -> Result<String, String>
 
-pub fn file_modified(path_str: &str) -> Result<String, String>
+pub fn file_modified(path_str: &Path) -> Result<String, String>
 
-pub fn last_accessed(path_str: &str) -> Result<String, String>
+pub fn last_accessed(path_str: &Path) -> Result<String, String>
 ```
 
 ## Struct
@@ -34,7 +34,7 @@ struct FileMetadata {
 }
 
 FileMetadata {
-    fn new(path_str: &'static str) -> Result<Self, String>;
+    fn new(path: &Path) -> Result<Self, String>;
     fn readable(&self) -> bool;
     fn writable(&self) -> bool;
     fn executable(&self) -> bool;
