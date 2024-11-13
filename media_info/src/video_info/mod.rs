@@ -2,9 +2,9 @@ use ffmpeg_next as ffmpeg;
 use fs_metadata::file_created;
 use std::path::Path;
 
-mod struct_video_info;
+// mod struct_video_info;
 
-pub use struct_video_info::VideoInfo;
+// pub use struct_video_info::VideoInfo;
 
 pub fn read_video_creation_date(path: &Path) -> Result<String, String> {
     if !path.exists() {
