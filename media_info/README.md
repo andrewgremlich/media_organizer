@@ -8,11 +8,11 @@ This is a supplemental library crate for
 ## API
 
 ```rust
-read_audio_creation_date(path_str: &str) -> Result<String, String>
+read_audio_creation_date(path_str: &Path) -> Result<String, String>
 
-read_photo_creation_date(path_str: &str) -> Result<String, String>
+read_photo_creation_date(path_str: &Path) -> Result<String, String>
 
-read_video_creation_date(path_str: &str) -> Result<String, String>
+read_video_creation_date(path_str: &Path) -> Result<String, String>
 ```
 
 ```rust
