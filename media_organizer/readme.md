@@ -68,6 +68,8 @@ cargo run -p media_organizer -- --target ./test-media --destination ./sorted_med
 
 For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffmpeg/wiki/Notes-on-building)
 
+The version of ffmpeg-next should correlate to the version of ffmpeg installed on the system.
+
 If on windows be sure to install the _shared_ version of FFMPEG!
 
 ## Roadmap
