@@ -102,7 +102,7 @@ mod tests {
 
     #[test]
     fn has_permissions() {
-        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let path: &Path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = FileMetadata::new(path).unwrap();
 
         assert_eq!(result.is_readable, true);
@@ -112,28 +112,28 @@ mod tests {
 
     #[test]
     fn is_file_read_only() {
-        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let path: &Path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = FileMetadata::new(path).unwrap();
         assert_eq!(result.is_file_read_only, false)
     }
 
     #[test]
     fn is_dir() {
-        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let path: &Path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = FileMetadata::new(path).unwrap();
         assert_eq!(result.is_dir, false);
     }
 
     #[test]
     fn is_file() {
-        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let path: &Path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = FileMetadata::new(path).unwrap();
         assert_eq!(result.is_file, true);
     }
 
     #[test]
     fn can_get_file_size() {
-        let path: &Path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let path: &Path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = FileMetadata::new(path).unwrap();
         assert_eq!(true, result.get_file_in_kilobytes() > 0.0);
         assert_eq!(true, result.get_file_in_megabytes() > 0.0);

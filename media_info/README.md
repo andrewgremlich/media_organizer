@@ -13,3 +13,7 @@ read_photo_creation_date(path_str: &str) -> Result<String, String>
 
 read_video_creation_date(path_str: &str) -> Result<String, String>
 ```
+
+## TODO
+
+1. More metadata functions.

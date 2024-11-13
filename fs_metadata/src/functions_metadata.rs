@@ -51,21 +51,21 @@ mod tests {
 
     #[test]
     fn can_read_creation_string() {
-        let path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = file_created(path).unwrap();
         assert_eq!(result, "2024-11-10");
     }
 
     #[test]
     fn can_read_modified_string() {
-        let path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = file_modified(path).unwrap();
         assert_eq!(result, "2024-11-10");
     }
 
     #[test]
     fn can_read_accessed_string() {
-        let path = Path::new("..\\test-media\\099fdb49-f56b-410e-84e3-7532c0d96af3.jpg");
+        let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = last_accessed(path).unwrap();
         assert_eq!(result, "2024-11-11");
     }
