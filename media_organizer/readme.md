@@ -72,9 +72,9 @@ The version of ffmpeg-next should correlate to the version of ffmpeg installed o
 
 If on windows be sure to install the _shared_ version of FFMPEG!
 
-## Roadmap
+## TODO
 
-- option to remove original folder to trash
-- more file metadata wrapper options
-- individually modify file metadata and tag metadata (exif, ffmpeg, id3)
-- tests
+1. option to remove original folder to trash
+2. more file metadata wrapper options
+3. individually modify file metadata and tag metadata (exif, ffmpeg, id3)
+4. tests

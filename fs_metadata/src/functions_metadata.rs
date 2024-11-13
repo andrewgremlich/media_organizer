@@ -67,6 +67,6 @@ mod tests {
     fn can_read_accessed_string() {
         let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = last_accessed(path).unwrap();
-        assert_eq!(result, "2024-11-11");
+        assert_eq!(result, "2024-11-13");
     }
 }

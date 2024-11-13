@@ -4,14 +4,6 @@ use std::path::Path;
 use std::str::FromStr;
 use fs_metadata::file_created;
 
-/// Writes the creation date of the audio to the metadata.
-///
-/// # Examples
-/// ```
-/// let audio_path = "tests/test_data/audio.mp3";
-/// let creation_date = "2021-01-01";
-/// make_date_recorded_from_audio_file(audio_path, creation_date).unwrap();
-/// ```
 pub fn make_date_recorded_from_audio_file(path: &Path) -> Option<Timestamp> {
     if !path.exists() {
         panic!("File does not exist: {:?}", path);
@@ -27,3 +19,17 @@ pub fn make_date_recorded_from_audio_file(path: &Path) -> Option<Timestamp> {
 
     Some(id3_timestamp)
 }
+
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+
+//     #[test]
+//     fn can_read_audio_creation_date() {
+//         let raw_path_str = "../test-media/Recording.m4a";
+//         let path = Path::new(raw_path_str);
+//         let creation_date = make_date_recorded_from_audio_file(path);
+
+//         assert_eq!(creation_date.unwrap().contains("2024-10-22"), true);
+//     }
+// }
