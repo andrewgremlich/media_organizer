@@ -21,9 +21,6 @@ pub fn read_video_creation_date(path: &Path) -> Result<String, String> {
                 .unwrap_or(&"".to_string())
                 .to_string();
 
-            println!("Video metadata: {:?}", video_metadata);
-            println!("Creation time: {:?}",creation_date);
-
             Ok(creation_date)
         }
         Err(_) => {
