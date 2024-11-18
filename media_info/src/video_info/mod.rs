@@ -2,9 +2,9 @@ use ffmpeg_next as ffmpeg;
 use fs_metadata::file_created;
 use std::path::Path;
 
-// mod struct_video_info;
+mod struct_video_info;
 
-// pub use struct_video_info::VideoInfo;
+pub use struct_video_info::VideoInfo;
 
 pub fn read_video_creation_date(path: &Path) -> Result<String, String> {
     if !path.exists() {
@@ -15,13 +15,14 @@ pub fn read_video_creation_date(path: &Path) -> Result<String, String> {
 
     match ffmpeg::format::input(path) {
         Ok(context) => {
-            let mut creation_date: String = String::new();
+            let video_metadata = context.metadata().to_owned();
+            let creation_date: String = video_metadata
+                .get("creation_time")
+                .unwrap_or(&"".to_string())
+                .to_string();
 
-            for (name, value) in context.metadata().iter() {
-                if name == "creation_time" {
-                    creation_date.push_str(value)
-                }
-            }
+            println!("Video metadata: {:?}", video_metadata);
+            println!("Creation time: {:?}",creation_date);
 
             Ok(creation_date)
         }

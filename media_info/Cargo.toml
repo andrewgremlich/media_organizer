@@ -13,6 +13,13 @@ keywords = ["media", "metadata", "information", "info"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = ["video", "audio", "photo"]
+video = []
+audio = []
+photo = []
+apple_video = []
+
 [dependencies]
 ffmpeg-next = "7.1.0"
 kamadak-exif = "0.6.1"
