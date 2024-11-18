@@ -1,4 +1,4 @@
-use ffmpeg_next::{self as ffmpeg, software};
+use ffmpeg_next::{self as ffmpeg};
 use std::path::Path;
 
 #[derive(Debug)]

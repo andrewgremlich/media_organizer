@@ -4,7 +4,9 @@ use chrono::NaiveDate;
 use id3::ErrorKind;
 use id3::{Tag as ID3Tag, TagLike};
 
-mod audio_util;
+mod dates;
+
+pub mod struct_audio_info;
 
 pub fn read_audio_creation_date(path: &Path) -> Result<String, String> {
     if !path.exists() {
@@ -14,7 +16,7 @@ pub fn read_audio_creation_date(path: &Path) -> Result<String, String> {
     let date_recorded = match ID3Tag::read_from_path(path) {
         Ok(tags) => tags.date_recorded(),
         Err(why) => match why.kind {
-            ErrorKind::NoTag => audio_util::make_date_recorded_from_audio_file(path),
+            ErrorKind::NoTag => dates::make_date_recorded_from_audio_file(path),
             _ => None,
         },
     };

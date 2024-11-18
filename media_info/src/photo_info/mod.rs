@@ -3,9 +3,7 @@ use fs_metadata::file_created;
 use std::fs::File;
 use std::path::Path;
 
-mod struct_photo_info;
-
-pub use struct_photo_info::PhotoInfo;
+pub mod struct_photo_info;
 
 pub fn read_photo_creation_date(path: &Path) -> Result<String, String> {
     if !path.exists() {
