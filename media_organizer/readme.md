@@ -48,7 +48,7 @@ cargo run -p media_organizer -- --target ./test-media --destination ./sorted_med
 
   - Audio organized based off of ID3 recorded dates.
 
-    - Whitelisted audio file types. ("mp3", "MP3", "wav", "WAV", "aiff", "AIFF")
+    - Whitelisted audio file types. ("mp3", "MP3", "wav", "WAV", "aiff", "AIFF", "m4a", "M4A", "flac", "FLAC")
 
   - User provides target folder of unorganized images. Will move photos to a default `photos` directory in the directory where the binary was ran. The outputed folders will be the respective creation dates on the media.
 
