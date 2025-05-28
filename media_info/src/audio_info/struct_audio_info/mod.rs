@@ -15,6 +15,26 @@ pub struct AudioInfo {
   pub genre: String,
 }
 
+/// Creates a new `AudioInfo` instance by reading metadata from the specified file path.
+///
+/// # Arguments
+///
+/// * `path` - A reference to a `Path` representing the location of the audio file.
+///
+/// # Returns
+///
+/// * `Ok(AudioInfo)` if the file exists and metadata is successfully read.
+/// * `Err(String)` if the file does not exist or if there is an error reading metadata.
+///
+/// # Errors
+///
+/// Returns an error if the file does not exist at the given path or if metadata extraction fails.
+///
+/// # Example
+///
+/// ```rust
+/// let audio_info = AudioInfo::new(Path::new("song.mp3"))?;
+/// ```
 impl AudioInfo {
   pub fn new (path: &Path) -> Result<Self, String> {
     if !path.exists() {

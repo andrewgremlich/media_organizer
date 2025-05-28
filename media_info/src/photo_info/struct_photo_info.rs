@@ -36,6 +36,27 @@ pub struct PhotoInfo {
     pub gps_h_positioning_error: String,
 }
 
+/// Creates a new `PhotoInfo` instance by extracting EXIF metadata from the specified file path.
+///
+/// # Arguments
+///
+/// * `path` - A reference to a `Path` representing the location of the photo file.
+///
+/// # Returns
+///
+/// * `Ok(PhotoInfo)` containing the extracted metadata if successful.
+/// * `Err(String)` with an error message if the file does not exist or cannot be read.
+///
+/// # Errors
+///
+/// Returns an error if the file at the given path does not exist. Panics if the file cannot be opened
+/// or if EXIF data cannot be read from the file.
+///
+/// # Example
+///
+/// ```rust
+/// let photo_info = PhotoInfo::new(Path::new("path/to/photo.jpg"))?;
+/// ```
 impl PhotoInfo {
     pub fn new(path: &Path) -> Result<Self, String> {
         if !path.exists() {

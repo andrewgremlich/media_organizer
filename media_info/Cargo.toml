@@ -1,13 +1,12 @@
 [package]
 name = "media_info"
-version = "0.5.0"
+version = "0.5.1"
 authors = ["Andrew Gremlich <andrew@gremlich.dev>"]
 edition = "2024"
 license = "MIT"
 description = "A tool to extract media information from a media source."
 homepage = "https://github.com/andrewgremlich/media_organizer"
 readme = "./readme.md"
-documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/media_info/README.md"
 repository = "https://github.com/andrewgremlich/media_organizer"
 keywords = ["media", "metadata", "information", "info"]
 
@@ -23,6 +22,6 @@ apple_video = []
 [dependencies]
 ffmpeg-next = "7.1.0"
 kamadak-exif = "0.6.1"
-chrono = "0.4.38"
-id3 = "1.14.0"
-fs_metadata = { version = "0.4.0", path = "../fs_metadata" }
+chrono = "0.4.41"
+id3 = "1.16.2"
+fs_metadata = { version = "0.4.3", path = "../fs_metadata" }

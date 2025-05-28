@@ -7,7 +7,6 @@ license = "MIT"
 description = "Organize media into one folder with a date-centric folder structure."
 homepage = "https://github.com/andrewgremlich/media_organizer"
 readme = "./readme.md"
-documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/readme.md"
 repository = "https://github.com/andrewgremlich/media_organizer"
 keywords = ["media", "organize", "photos", "videos", "audio"]
 categories = ["command-line-utilities"]
@@ -17,8 +16,8 @@ name = "media_organizer"
 path = "./src/main.rs"
 
 [dependencies]
-clap = { version = "4.5.20", features = ["derive"] }
-glob = "0.3.1"
+clap = { version = "4.5.39", features = ["derive"] }
+glob = "0.3.2"
 mkdirp = "1.0.0"
 faccess = "0.2.4"
 media_info = { version = "0.5.0", path = "../media_info", features = ["default"]}
