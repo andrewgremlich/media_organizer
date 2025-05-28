@@ -1,13 +1,12 @@
 [package]
 name = "fs_metadata"
-version = "0.4.2"
+version = "0.4.3"
 authors = ["Andrew Gremlich <andrew@gremlich.dev>"]
 edition = "2024"
 license = "MIT"
 description = "A wrapper around Rust API for getting file metadata"
 homepage = "https://github.com/andrewgremlich/media_organizer"
 readme = "./readme.md"
-documentation = "https://github.com/andrewgremlich/media_organizer/blob/master/fs_metadata/readme.md"
 repository = "https://github.com/andrewgremlich/media_organizer"
 keywords = ["file", "metadata", "wrapper"]
 exclude = ["tests/*", "target/*", "Cargo.lock", "Cargo.toml"]
