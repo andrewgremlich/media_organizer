@@ -46,9 +46,11 @@ pub struct Args {
 }
 
 fn set_env(matches: &Args) {
-    env::set_var("DEST_FOLDER", &matches.destination);
-    env::set_var("FILE_TYPE", &matches.file_type);
-    env::set_var("COPY", matches.copy.to_string());
+    unsafe {
+        env::set_var("DEST_FOLDER", &matches.destination);
+        env::set_var("FILE_TYPE", &matches.file_type);
+        env::set_var("COPY", matches.copy.to_string());
+    }
 }
 
 fn main() {

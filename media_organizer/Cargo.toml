@@ -1,8 +1,8 @@
 [package]
 name = "media_organizer"
 version = "0.7.0"
-authors = ["Andrew Gremlich <andrew.gremlich@gmail.com>"]
-edition = "2021"
+authors = ["Andrew Gremlich <andrew@gremlich.dev>"]
+edition = "2024"
 license = "MIT"
 description = "Organize media into one folder with a date-centric folder structure."
 homepage = "https://github.com/andrewgremlich/media_organizer"
