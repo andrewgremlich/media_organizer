@@ -16,6 +16,40 @@ pub struct FileMetadata {
     data: Metadata,
 }
 
+/// Implementation of methods for the `FileMetadata` struct, providing functionality
+/// to create a new instance from a file path, retrieve file metadata, and access
+/// human-readable file size information.
+///
+/// # Methods
+///
+/// - `new(path: &Path) -> Result<Self, String>`
+///   Constructs a new `FileMetadata` instance from the given file path, extracting
+///   metadata such as creation, modification, and access times, as well as file
+///   permissions and type. Returns an error if metadata cannot be read.
+///
+/// - `get_human_readable_file_size(&self) -> (f32, f32, f32, f32)`
+///   Returns the file size in kilobytes, megabytes, gigabytes, and terabytes as a tuple.
+///
+/// - `readable(&self) -> bool`
+///   Returns `true` if the file is readable, otherwise `false`.
+///
+/// - `writable(&self) -> bool`
+///   Returns `true` if the file is writable, otherwise `false`.
+///
+/// - `executable(&self) -> bool`
+///   Returns `true` if the file is executable, otherwise `false`.
+///
+/// - `get_file_in_kilobytes(&self) -> f32`
+///   Returns the file size in kilobytes.
+///
+/// - `get_file_in_megabytes(&self) -> f32`
+///   Returns the file size in megabytes.
+///
+/// - `get_file_in_gigabytes(&self) -> f32`
+///   Returns the file size in gigabytes.
+///
+/// - `get_file_in_terabytes(&self) -> f32`
+///   Returns the file size in terabytes.
 impl FileMetadata {
 
     pub fn new(path: &Path) -> Result<Self, String> {

@@ -2,6 +2,16 @@ use chrono::{DateTime, Local};
 use std::fs;
 use std::path::Path;
 
+/// Reads the metadata of a file at the given path and returns it as `fs::Metadata`.
+/// 
+/// # Arguments
+/// 
+/// * `path_str` - A reference to a `Path` representing the file path.
+/// 
+/// # Returns
+/// 
+/// * `Ok(fs::Metadata)` if the metadata could be read successfully.
+/// * `Err(String)` if there was an error reading the metadata.
 fn read_metadata(path_str: &Path) -> Result<fs::Metadata, String> {
     match fs::metadata(path_str) {
         Ok(data) => return Ok(data),
@@ -9,6 +19,16 @@ fn read_metadata(path_str: &Path) -> Result<fs::Metadata, String> {
     }
 }
 
+/// Returns the creation date of the file at the given path as a formatted string (`YYYY-MM-DD`).
+/// 
+/// # Arguments
+/// 
+/// * `path_str` - A reference to a `Path` representing the file path.
+/// 
+/// # Returns
+/// 
+/// * `Ok(String)` containing the formatted creation date if successful.
+/// * `Err(String)` if the file does not exist or the creation date cannot be retrieved.
 pub fn file_created(path_str: &Path) -> Result<String, String> {
     if !path_str.exists() {
         return Err("File does not exist".to_string());
@@ -21,6 +41,16 @@ pub fn file_created(path_str: &Path) -> Result<String, String> {
     Ok(formatted_date)
 }
 
+/// Returns the last modification date of the file at the given path as a formatted string (`YYYY-MM-DD`).
+/// 
+/// # Arguments
+/// 
+/// * `path_str` - A reference to a `Path` representing the file path.
+/// 
+/// # Returns
+/// 
+/// * `Ok(String)` containing the formatted modification date if successful.
+/// * `Err(String)` if the file does not exist or the modification date cannot be retrieved.
 pub fn file_modified(path_str: &Path) -> Result<String, String> {
     if !path_str.exists() {
         return Err("File does not exist".to_string());
@@ -33,6 +63,16 @@ pub fn file_modified(path_str: &Path) -> Result<String, String> {
     Ok(formatted_date)
 }
 
+/// Returns the last accessed date of the file at the given path as a formatted string (`YYYY-MM-DD`).
+/// 
+/// # Arguments
+/// 
+/// * `path_str` - A reference to a `Path` representing the file path.
+/// 
+/// # Returns
+/// 
+/// * `Ok(String)` containing the formatted last accessed date if successful.
+/// * `Err(String)` if the file does not exist or the accessed date cannot be retrieved.
 pub fn last_accessed(path_str: &Path) -> Result<String, String> {
     if !path_str.exists() {
         return Err("File does not exist".to_string());

@@ -1,6 +1,6 @@
 [package]
 name = "fs_metadata"
-version = "0.4.1"
+version = "0.4.2"
 authors = ["Andrew Gremlich <andrew@gremlich.dev>"]
 edition = "2024"
 license = "MIT"
