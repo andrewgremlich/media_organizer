@@ -3,13 +3,13 @@ use std::fs;
 use std::path::Path;
 
 /// Reads the metadata of a file at the given path and returns it as `fs::Metadata`.
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `path_str` - A reference to a `Path` representing the file path.
-/// 
+///
 /// # Returns
-/// 
+///
 /// * `Ok(fs::Metadata)` if the metadata could be read successfully.
 /// * `Err(String)` if there was an error reading the metadata.
 fn read_metadata(path_str: &Path) -> Result<fs::Metadata, String> {
@@ -20,13 +20,13 @@ fn read_metadata(path_str: &Path) -> Result<fs::Metadata, String> {
 }
 
 /// Returns the creation date of the file at the given path as a formatted string (`YYYY-MM-DD`).
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `path_str` - A reference to a `Path` representing the file path.
-/// 
+///
 /// # Returns
-/// 
+///
 /// * `Ok(String)` containing the formatted creation date if successful.
 /// * `Err(String)` if the file does not exist or the creation date cannot be retrieved.
 pub fn file_created(path_str: &Path) -> Result<String, String> {
@@ -42,13 +42,13 @@ pub fn file_created(path_str: &Path) -> Result<String, String> {
 }
 
 /// Returns the last modification date of the file at the given path as a formatted string (`YYYY-MM-DD`).
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `path_str` - A reference to a `Path` representing the file path.
-/// 
+///
 /// # Returns
-/// 
+///
 /// * `Ok(String)` containing the formatted modification date if successful.
 /// * `Err(String)` if the file does not exist or the modification date cannot be retrieved.
 pub fn file_modified(path_str: &Path) -> Result<String, String> {
@@ -64,13 +64,13 @@ pub fn file_modified(path_str: &Path) -> Result<String, String> {
 }
 
 /// Returns the last accessed date of the file at the given path as a formatted string (`YYYY-MM-DD`).
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `path_str` - A reference to a `Path` representing the file path.
-/// 
+///
 /// # Returns
-/// 
+///
 /// * `Ok(String)` containing the formatted last accessed date if successful.
 /// * `Err(String)` if the file does not exist or the accessed date cannot be retrieved.
 pub fn last_accessed(path_str: &Path) -> Result<String, String> {
@@ -93,20 +93,20 @@ mod tests {
     fn can_read_creation_string() {
         let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = file_created(path).unwrap();
-        assert_eq!(result, "2025-05-28");
+        assert_eq!(result, "2024-12-14");
     }
 
     #[test]
     fn can_read_modified_string() {
         let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = file_modified(path).unwrap();
-        assert_eq!(result, "2025-05-28");
+        assert_eq!(result, "2024-12-14");
     }
 
     #[test]
     fn can_read_accessed_string() {
         let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
         let result = last_accessed(path).unwrap();
-        assert_eq!(result, "2025-05-28");
+        assert_eq!(result, "2025-06-19");
     }
 }

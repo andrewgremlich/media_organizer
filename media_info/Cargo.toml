@@ -13,11 +13,11 @@ keywords = ["media", "metadata", "information", "info"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["video", "audio", "photo"]
+default = ["video", "audio", "photo", "doc"]
 video = []
 audio = []
 photo = []
-apple_video = []
+doc = []
 
 [dependencies]
 ffmpeg-next = "7.1.0"
@@ -25,3 +25,7 @@ kamadak-exif = "0.6.1"
 chrono = "0.4.41"
 id3 = "1.16.2"
 fs_metadata = { version = "0.4.3", path = "../fs_metadata" }
+epub = "2.1.4"
+mobi = "0.8.0"
+pdf = "0.9.0"
+docx = "1.1.2"

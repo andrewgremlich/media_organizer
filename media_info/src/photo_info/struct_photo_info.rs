@@ -55,7 +55,9 @@ pub struct PhotoInfo {
 /// # Example
 ///
 /// ```rust
-/// let photo_info = PhotoInfo::new(Path::new("path/to/photo.jpg"))?;
+/// use media_info::photo_info::struct_photo_info::PhotoInfo;
+/// use std::path::Path;
+/// let photo_info = PhotoInfo::new(Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg")).unwrap();
 /// ```
 impl PhotoInfo {
     pub fn new(path: &Path) -> Result<Self, String> {

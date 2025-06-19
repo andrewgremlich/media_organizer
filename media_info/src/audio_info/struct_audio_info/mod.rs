@@ -33,7 +33,9 @@ pub struct AudioInfo {
 /// # Example
 ///
 /// ```rust
-/// let audio_info = AudioInfo::new(Path::new("song.mp3"))?;
+/// use media_info::audio_info::struct_audio_info::AudioInfo;
+/// use std::path::Path;
+/// let audio_info = AudioInfo::new(Path::new("../test-media/Recording.m4a")).unwrap();
 /// ```
 impl AudioInfo {
   pub fn new (path: &Path) -> Result<Self, String> {
