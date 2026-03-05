@@ -5,16 +5,25 @@ Organize photos, videos, and audio into a YYYY/MM/DD folder structure based on c
 ## CLI Usage
 
 ```bash
-USAGE:
-    media_organizer [OPTIONS] --target <TARGET_MEDIA> --destination <DESTINATION_PATH>
+Organize media into one folder with a date-centric folder structure.
 
-OPTIONS:
-    -c, --copy                              Copy the files instead of moving them.
-    -d, --destination <DESTINATION_PATH>    The destination path of sorted media.
-    -f, --file-type <FILE_TYPE>             The file type to sort. [default: *]
-    -h, --help                              Print help information
-    -t, --target <TARGET_MEDIA>             The target media to sort.
-    -V, --version                           Print version information
+Usage: media_organizer [OPTIONS] --target <TARGET_MEDIA>
+
+Options:
+  -t, --target <TARGET_MEDIA>
+          The target media to sort.
+  -d, --destination <DESTINATION_FOLDER>
+          The destination folder of sorted media. [default: sorted_media]
+  -f, --file-type <FILE_TYPE>
+          The file type to sort. [default: *]
+  -c, --copy
+          Copy the files instead of moving them.
+      --dimensions
+          Append width x height dimensions to image and video filenames.
+  -h, --help
+          Print help
+  -V, --version
+          Print version
 ```
 
 ## Example CLI usage

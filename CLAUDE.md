@@ -18,7 +18,7 @@ Requires FFmpeg installed on the system (libavformat, libavcodec). On Windows, u
 
 ```bash
 cargo build                    # Build all crates
-cargo run -- --target <path> --destination <path> [--file-type <type>] [--copy]
+cargo run -- --target <path> --destination <path> [--file-type <type>] [--copy] [--dimensions]
 ```
 
 ## Testing
@@ -33,8 +33,8 @@ Tests use example media files in `test-media/` at the workspace root. Test files
 ### Test Coverage Summary
 
 - **fs_metadata** (8 tests) — file metadata functions and struct methods
-- **media_info** (18 tests) — date extraction for each media type (photo, video, audio, doc), format validation, and error cases
-- **media_organizer** (29 tests) — type detection for all supported formats, dir string construction, date reading for each media type, nonexistent file fallbacks, and edge cases
+- **media_info** (22 tests) — date extraction and dimension reading for each media type (photo, video, audio, doc), format validation, and error cases
+- **media_organizer** (34 tests) — type detection for all supported formats, dir string construction, date reading for each media type, dimension filename appending, nonexistent file fallbacks, and edge cases
 - **Doc-tests** (2 tests) — AudioInfo and PhotoInfo struct examples
 
 ### Test Media Files
@@ -54,7 +54,7 @@ Located in `test-media/`: JPEG photos, MP4 video, M4A audio, and documents (DOCX
 - Date strings formatted as `YYYY-MM-DD`, organized into `YYYY/MM/DD` directory paths
 - Fallback to `"no_date_found"` when date extraction fails
 - Feature-gated compilation in media_info via Cargo features
-- Environment variables set in main.rs: `DEST_FOLDER`, `FILE_TYPE`, `COPY`
+- Environment variables set in main.rs: `DEST_FOLDER`, `FILE_TYPE`, `COPY`, `DIMENSIONS`
 - File type detection uses explicit whitelists (case-sensitive with common variations)
 - `get_exif_field!` macro used for EXIF field extraction in media_info
 
@@ -67,8 +67,8 @@ Located in `test-media/`: JPEG photos, MP4 video, M4A audio, and documents (DOCX
 
 ## Architecture Notes
 
-- Config is passed via environment variables (`DEST_FOLDER`, `FILE_TYPE`, `COPY`) set in `main.rs` using `unsafe env::set_var`. This is intentional — don't refactor to struct-passing without being asked.
-- Each media type module in `media_info` follows the same pattern: a `read_*_creation_date` function and an info struct with `::new(path)`.
+- Config is passed via environment variables (`DEST_FOLDER`, `FILE_TYPE`, `COPY`, `DIMENSIONS`) set in `main.rs` using `unsafe env::set_var`. This is intentional — don't refactor to struct-passing without being asked.
+- Each media type module in `media_info` follows the same pattern: a `read_*_creation_date` function and an info struct with `::new(path)`. Photo and video modules also have `read_*_dimensions` functions returning `(u32, u32)`.
 - The `get_exif_field!` macro in `media_info` handles EXIF field extraction with fallback to empty strings.
 
 ## Linting

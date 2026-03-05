@@ -43,6 +43,14 @@ pub struct Args {
         default_value = "false"
     )]
     copy: bool,
+
+    #[clap(
+        long,
+        value_name = "DIMENSIONS",
+        help = "Append width x height dimensions to image and video filenames.",
+        default_value = "false"
+    )]
+    dimensions: bool,
 }
 
 fn set_env(matches: &Args) {
@@ -50,6 +58,7 @@ fn set_env(matches: &Args) {
         env::set_var("DEST_FOLDER", &matches.destination);
         env::set_var("FILE_TYPE", &matches.file_type);
         env::set_var("COPY", matches.copy.to_string());
+        env::set_var("DIMENSIONS", matches.dimensions.to_string());
     }
 }
 
