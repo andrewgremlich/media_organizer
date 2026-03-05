@@ -4,7 +4,7 @@ Organize photos, videos, and audio into a YYYY/MM/DD folder structure based on c
 
 ## CLI Usage
 
-```txt
+```bash
 USAGE:
     media_organizer [OPTIONS] --target <TARGET_MEDIA> --destination <DESTINATION_PATH>
 

@@ -30,6 +30,17 @@ cargo test -p media_info       # Run tests for a specific crate
 
 Tests use example media files in `test-media/` at the workspace root. Test files are referenced via relative paths (`../test-media/`).
 
+### Test Coverage Summary
+
+- **fs_metadata** (8 tests) — file metadata functions and struct methods
+- **media_info** (18 tests) — date extraction for each media type (photo, video, audio, doc), format validation, and error cases
+- **media_organizer** (29 tests) — type detection for all supported formats, dir string construction, date reading for each media type, nonexistent file fallbacks, and edge cases
+- **Doc-tests** (2 tests) — AudioInfo and PhotoInfo struct examples
+
+### Test Media Files
+
+Located in `test-media/`: JPEG photos, MP4 video, M4A audio, and documents (DOCX, PDF, EPUB, TXT, MD, ODT, RTF). Also includes PPTX and XLSX (not yet supported).
+
 ## Supported File Types
 
 - **Photos:** JPEG, PNG, HEIF, HEIC, TIFF, AVIF, WebP
@@ -50,7 +61,7 @@ Tests use example media files in `test-media/` at the workspace root. Test files
 ## Common Tasks
 
 - To add a new media type, follow the pattern in `media_organizer/src/organizer/make_file_destination/mod.rs` — add a whitelist function, detection function, and wire it into `sort_and_make`.
-- Document sorting is partially implemented — `media_info` has `read_doc_creation_date` but the CLI doesn't route to it yet. Use `/wire-doc-sorting` to complete it.
+- Document sorting is wired end-to-end — `media_info` has `read_doc_creation_date` and the organizer routes to it via `make_doc_dir_str` and `is_document`.
 - When adding file extensions, always include both lowercase and uppercase variants in the whitelist.
 - The `ffmpeg-next` version must match the system FFmpeg version. Check compatibility before upgrading.
 
@@ -83,4 +94,5 @@ Tests use example media files in `test-media/` at the workspace root. Test files
 - **id3** - Audio ID3 tag reading
 - **clap** - CLI argument parsing
 - **chrono** - Date/time handling
-- **epub, mobi, pdf, docx** - Document metadata readers
+- **epub, mobi, pdf** - Document metadata readers
+- **zip, quick-xml** - DOCX/ODT metadata extraction (manual XML parsing)
