@@ -1,4 +1,7 @@
-use media_info::{read_audio_creation_date, read_photo_creation_date, read_video_creation_date};
+use media_info::{
+    read_audio_creation_date, read_doc_creation_date, read_photo_creation_date,
+    read_video_creation_date,
+};
 use std::env;
 use std::path::Path;
 
@@ -33,6 +36,13 @@ pub fn make_audio_dir_str(dir_str: &str) -> String {
         read_audio_creation_date(Path::new(dir_str)).unwrap_or("no_date_found".to_string());
 
     make_dir_string(&audio_date)
+}
+
+pub fn make_doc_dir_str(dir_str: &str) -> String {
+    let doc_date =
+        read_doc_creation_date(Path::new(dir_str)).unwrap_or("no_date_found".to_string());
+
+    make_dir_string(&doc_date)
 }
 
 #[cfg(test)]
@@ -78,5 +88,76 @@ pub mod date_read_tests {
         let date_info = make_dir_string(&audio_date);
 
         assert_eq!("./tests/test_files/2024/11/11", date_info);
+    }
+
+    #[test]
+    fn can_read_doc_creation_date() {
+        unsafe {
+            env::set_var("DEST_FOLDER", &"tests/test_files");
+        }
+
+        let doc_date = read_doc_creation_date(Path::new("../test-media/TESTDOCUMENT.docx"))
+            .unwrap_or("no_date_found".to_string());
+        let date_info = make_dir_string(&doc_date);
+
+        assert!(
+            date_info.starts_with("./tests/test_files/"),
+            "Expected path to start with dest folder, got: {}",
+            date_info
+        );
+        assert_ne!(
+            date_info, "./tests/test_files/no_date_found",
+            "Should extract a real date, not fallback"
+        );
+    }
+
+    #[test]
+    fn make_dir_string_with_no_date_found() {
+        unsafe {
+            env::set_var("DEST_FOLDER", &"tests/test_files");
+        }
+
+        let date_info = make_dir_string("no_date_found");
+        assert_eq!("./tests/test_files/no_date_found", date_info);
+    }
+
+    #[test]
+    fn make_doc_dir_str_with_nonexistent_file() {
+        unsafe {
+            env::set_var("DEST_FOLDER", &"tests/test_files");
+        }
+
+        let result = make_doc_dir_str("nonexistent.pdf");
+        assert_eq!("./tests/test_files/no_date_found", result);
+    }
+
+    #[test]
+    fn make_photo_dir_str_with_nonexistent_file() {
+        unsafe {
+            env::set_var("DEST_FOLDER", &"tests/test_files");
+        }
+
+        let result = make_photo_dir_str("nonexistent.jpg");
+        assert_eq!("./tests/test_files/no_date_found", result);
+    }
+
+    #[test]
+    fn make_video_dir_str_with_nonexistent_file() {
+        unsafe {
+            env::set_var("DEST_FOLDER", &"tests/test_files");
+        }
+
+        let result = make_video_dir_str("nonexistent.mp4");
+        assert_eq!("./tests/test_files/no_date_found", result);
+    }
+
+    #[test]
+    fn make_audio_dir_str_with_nonexistent_file() {
+        unsafe {
+            env::set_var("DEST_FOLDER", &"tests/test_files");
+        }
+
+        let result = make_audio_dir_str("nonexistent.mp3");
+        assert_eq!("./tests/test_files/no_date_found", result);
     }
 }
