@@ -47,6 +47,35 @@ Tests use example media files in `test-media/` at the workspace root. Test files
 - File type detection uses explicit whitelists (case-sensitive with common variations)
 - `get_exif_field!` macro used for EXIF field extraction in media_info
 
+## Common Tasks
+
+- To add a new media type, follow the pattern in `media_organizer/src/organizer/make_file_destination/mod.rs` — add a whitelist function, detection function, and wire it into `sort_and_make`.
+- Document sorting is partially implemented — `media_info` has `read_doc_creation_date` but the CLI doesn't route to it yet. Use `/wire-doc-sorting` to complete it.
+- When adding file extensions, always include both lowercase and uppercase variants in the whitelist.
+- The `ffmpeg-next` version must match the system FFmpeg version. Check compatibility before upgrading.
+
+## Architecture Notes
+
+- Config is passed via environment variables (`DEST_FOLDER`, `FILE_TYPE`, `COPY`) set in `main.rs` using `unsafe env::set_var`. This is intentional — don't refactor to struct-passing without being asked.
+- Each media type module in `media_info` follows the same pattern: a `read_*_creation_date` function and an info struct with `::new(path)`.
+- The `get_exif_field!` macro in `media_info` handles EXIF field extraction with fallback to empty strings.
+
+## Linting
+
+- Run `cargo clippy --workspace -- -D warnings` before committing.
+- Run `cargo test --workspace` to verify all crates pass.
+
+## Slash Commands
+
+- `/test` — Run workspace tests, diagnose and fix failures
+- `/check` — Full pipeline: cargo check + clippy + test
+- `/wire-doc-sorting` — Complete the partial document sorting feature in the CLI
+- `/add-media-type <type>` — Template for adding a new file type end-to-end
+- `/explore <topic>` — Trace and explain how a part of the codebase works
+- `/upgrade-deps` — Safely check and upgrade outdated dependencies
+- `/debug-media <file>` — Debug why a specific media file isn't sorting correctly
+- `/release` — Prepare a versioned release (tests, lint, version bump)
+
 ## Key Dependencies
 
 - **ffmpeg-next** (v7.1.0) - Video metadata extraction
