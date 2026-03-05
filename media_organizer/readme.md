@@ -1,6 +1,6 @@
 # Media Organizer
 
-Organize videos, photos, and audio into a folder date-hierarchy format.
+Organize photos, videos, and audio into a YYYY/MM/DD folder structure based on creation dates extracted from EXIF, FFmpeg, and ID3 metadata.
 
 ## CLI Usage
 

@@ -1,9 +1,11 @@
 # Media Info
 
-A tool to extract media information from a media source.
+A library for extracting metadata from photos, videos, audio, and documents.
 
 This is a supplemental library crate for
 [Media Organizer](https://crates.io/crates/media_organizer).
+
+Uses feature-gated compilation with `photo`, `video`, `audio`, and `doc` features (all enabled by default).
 
 ## API
 
@@ -13,6 +15,8 @@ read_audio_creation_date(path_str: &Path) -> Result<String, String>
 read_photo_creation_date(path_str: &Path) -> Result<String, String>
 
 read_video_creation_date(path_str: &Path) -> Result<String, String>
+
+read_doc_creation_date(path: &Path) -> Result<String, String>
 ```
 
 ```rust

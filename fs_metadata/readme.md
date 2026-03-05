@@ -1,10 +1,10 @@
 # FS Metadata
 
-A cross-platform simple wrapper to get metadata of a file.
+A cross-platform wrapper for file system metadata.
 
-1. Access SystemTime as readable dates.
-2. Get the permissions of a file.
-3. Get human readable file sizes.
+- Access creation, modification, and last-accessed times as readable date strings (YYYY-MM-DD)
+- Query file permissions (readable, writable, executable)
+- Get human-readable file sizes (KB, MB, GB, TB)
 
 ## Functions
 

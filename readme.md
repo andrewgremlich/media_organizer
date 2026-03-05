@@ -1,9 +1,42 @@
 # Media Organizer
 
-This is a repository to house the code related to organizing media into one folder with a date-centric folder structure.
+A Rust workspace for organizing media files (photos, videos, audio, and documents) into a date-centric folder structure (YYYY/MM/DD). Extracts creation dates from EXIF data, FFmpeg metadata, ID3 tags, and document metadata.
 
-View the crates related read me files with these links.
+## Prerequisites
 
-- [Media Organizer](./media_organizer/readme.md)
-- [Media Info](./media_info/README.md)
-- [File Metadata](./fs_metadata/readme.md)
+- **Rust** (edition 2024)
+- **FFmpeg** installed on your system (libavformat, libavcodec). See [build notes](https://github.com/zmwangx/rust-ffmpeg/wiki/Notes-on-building). On Windows, use the _shared_ version.
+
+## Quick Start
+
+```bash
+# Build
+cargo build
+
+# Run
+cargo run -p media_organizer -- --target ./test-media --destination ./sorted_media
+
+# Test
+cargo test
+```
+
+## Workspace Crates
+
+- [media_organizer](./media_organizer/readme.md) - CLI binary for organizing media files
+- [media_info](./media_info/README.md) - Library for extracting metadata from photos, videos, audio, and documents
+- [fs_metadata](./fs_metadata/readme.md) - Library for cross-platform file metadata (timestamps, permissions, sizes)
+
+## Supported File Types
+
+| Category | Extensions |
+|----------|------------|
+| Photos   | JPEG, JPG, PNG, HEIF, HEIC, TIFF, AVIF, WebP |
+| Videos   | MP4, MOV |
+| Audio    | MP3, WAV, AIFF, M4A, FLAC |
+| Documents | DOCX, PDF, EPUB, MOBI, TXT, MD, ODT, RTF |
+
+> Note: Document sorting is supported in the `media_info` library but is not yet wired into the CLI organizer.
+
+## License
+
+[MIT](./LICENSE)
