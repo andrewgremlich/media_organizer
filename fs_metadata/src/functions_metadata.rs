@@ -88,25 +88,35 @@ pub fn last_accessed(path_str: &Path) -> Result<String, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::io::Write;
+
+    fn create_temp_file() -> tempfile::NamedTempFile {
+        let mut f = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+        writeln!(f, "test content").unwrap();
+        f
+    }
 
     #[test]
     fn can_read_creation_string() {
-        let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
-        let result = file_created(path).unwrap();
-        assert_eq!(result, "2024-12-14");
+        let f = create_temp_file();
+        let result = file_created(f.path()).unwrap();
+        let today = Local::now().format("%Y-%m-%d").to_string();
+        assert_eq!(result, today);
     }
 
     #[test]
     fn can_read_modified_string() {
-        let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
-        let result = file_modified(path).unwrap();
-        assert_eq!(result, "2024-12-14");
+        let f = create_temp_file();
+        let result = file_modified(f.path()).unwrap();
+        let today = Local::now().format("%Y-%m-%d").to_string();
+        assert_eq!(result, today);
     }
 
     #[test]
     fn can_read_accessed_string() {
-        let path = Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg");
-        let result = last_accessed(path).unwrap();
-        assert_eq!(result, "2025-06-19");
+        let f = create_temp_file();
+        let result = last_accessed(f.path()).unwrap();
+        let today = Local::now().format("%Y-%m-%d").to_string();
+        assert_eq!(result, today);
     }
 }
