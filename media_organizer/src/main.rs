@@ -65,14 +65,25 @@ pub struct Args {
         default_value = "false"
     )]
     log_saved: bool,
+
+    #[clap(
+        long,
+        value_name = "DIMENSIONS",
+        help = "Append width x height dimensions to image and video filenames.",
+        default_value = "false"
+    )]
+    dimensions: bool,
 }
 
 fn set_env(matches: &Args) {
-    env::set_var("DEST_FOLDER", &matches.destination);
-    env::set_var("FILE_TYPE", &matches.file_type);
-    env::set_var("COPY", matches.copy.to_string());
-    env::set_var("DRY_RUN", matches.dry_run.to_string());
-    env::set_var("LOG_SAVED", matches.log_saved.to_string());
+    unsafe {
+        env::set_var("DEST_FOLDER", &matches.destination);
+        env::set_var("FILE_TYPE", &matches.file_type);
+        env::set_var("COPY", matches.copy.to_string());
+        env::set_var("DRY_RUN", matches.dry_run.to_string());
+        env::set_var("LOG_SAVED", matches.log_saved.to_string());
+        env::set_var("DIMENSIONS", matches.dimensions.to_string());
+    }
 }
 
 fn main() {

@@ -18,6 +18,42 @@ pub struct VideoInfo {
     pub software: String,
 }
 
+/// Creates a new `VideoInfo` instance by extracting metadata from the given video file path.
+///
+/// # Arguments
+///
+/// * `path` - A reference to a `Path` representing the location of the video file.
+///
+/// # Returns
+///
+/// * `Ok(VideoInfo)` containing the extracted metadata if successful.
+/// * `Err(String)` with an error message if the file does not exist or if metadata extraction fails.
+///
+/// # Errors
+///
+/// Returns an error if the file does not exist at the specified path or if FFmpeg fails to initialize.
+///
+/// # Metadata Extraction
+///
+/// Attempts to extract the following metadata fields, preferring QuickTime-specific tags when available:
+/// - `creation_date`
+/// - `location`
+/// - `make`
+/// - `model`
+/// - `software`
+///
+/// Also extracts:
+/// - `major_brand`
+/// - `minor_version`
+/// - `compatible_brands`
+/// - `encoder`
+/// - `comment`
+/// - `duration_in_secs`
+/// - `bit_rate`
+///
+/// # Panics
+///
+/// Panics if FFmpeg fails to initialize.
 impl VideoInfo {
     pub fn new(path: &Path) -> Result<Self, String> {
         if !path.exists() {

@@ -1,6 +1,6 @@
 # Media Organizer
 
-Organize videos, photos, and audio into a folder date-hierarchy format.
+Organize photos, videos, and audio into a YYYY/MM/DD folder structure based on creation dates extracted from EXIF, FFmpeg, and ID3 metadata.
 
 ## CLI Usage
 
@@ -16,6 +16,8 @@ OPTIONS:
     -s, --source <SOURCE_FOLDER>            The absolute path to the source folder of the media to be sorted.
     -V, --version                           Print version information
     -y, --dry-run                           Dry-run with statistics but without actually copying or moving.
+    -l, --log-saved                         Log each saved file in a log-file.
+      --dimensions                          Append width x height dimensions to image and video filenames.
 ```
 
 ## Example CLI usage
@@ -72,10 +74,3 @@ For ffmpeg-next package, [follow this guide](https://github.com/zmwangx/rust-ffm
 The version of ffmpeg-next should correlate to the version of ffmpeg installed on the system.
 
 If on windows be sure to install the _shared_ version of FFMPEG!
-
-## TODO
-
-1. option to remove original folder to trash
-2. more file metadata wrapper options
-3. individually modify file metadata and tag metadata (exif, ffmpeg, id3)
-4. tests

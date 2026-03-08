@@ -21,6 +21,29 @@ pub use struct_video_info::VideoInfo;
 /// let creation_date = read_video_creation_date(video_path).unwrap();
 /// assert_eq!(creation_date, "2024-10-20");
 /// ```
+pub fn read_video_dimensions(path: &Path) -> Result<(u32, u32), String> {
+    if !path.exists() {
+        return Err(format!("File does not exist: {:?}", path));
+    }
+
+    ffmpeg::init().expect("could not initialize ffmpeg");
+
+    match ffmpeg::format::input(path) {
+        Ok(context) => {
+            for stream in context.streams() {
+                let codec_params = stream.parameters();
+                if let Ok(decoder) = ffmpeg::codec::context::Context::from_parameters(codec_params)
+                    && let Ok(video) = decoder.decoder().video()
+                {
+                    return Ok((video.width(), video.height()));
+                }
+            }
+            Err("No video stream found".to_string())
+        }
+        Err(e) => Err(format!("Error reading video: {}", e)),
+    }
+}
+
 pub fn read_video_creation_date(path: &Path) -> Result<String, String> {
     if !path.exists() {
         return Err(format!("File does not exist: {:?}", path));
@@ -82,5 +105,20 @@ pub mod video_date_read {
         let creation_date = read_video_creation_date(path);
 
         assert_eq!(creation_date.unwrap().contains("2024-10-20"), true);
+    }
+
+    #[test]
+    fn can_read_video_dimensions() {
+        let path = Path::new("../test-media/corgi_race.mp4");
+        let (width, height) = read_video_dimensions(path).unwrap();
+
+        assert!(width > 0);
+        assert!(height > 0);
+    }
+
+    #[test]
+    fn video_dimensions_nonexistent_file() {
+        let path = Path::new("nonexistent.mp4");
+        assert!(read_video_dimensions(path).is_err());
     }
 }

@@ -1,0 +1,1 @@
+Run `cargo test --workspace` and analyze the results. If any tests fail, read the failing test code and the source it tests, diagnose the root cause, and fix the issue. After fixing, re-run the tests to confirm they pass.
