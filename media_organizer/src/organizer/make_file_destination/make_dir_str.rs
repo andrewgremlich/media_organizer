@@ -52,10 +52,12 @@ pub mod date_read_tests {
 
     #[test]
     fn can_read_photo_creation_date() {
-        env::set_var(
-            "DEST_FOLDER",
-            &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
-        );
+        unsafe {
+            env::set_var(
+                "DEST_FOLDER",
+                &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
+            );
+        }
 
         let path_str = &format!(
             "..{}test-media{0}400a861d-014a-4dfb-9143-1a914212fd4d.jpg",
@@ -75,10 +77,12 @@ pub mod date_read_tests {
 
     #[test]
     fn can_read_video_creation_date() {
-        env::set_var(
-            "DEST_FOLDER",
-            &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
-        );
+        unsafe {
+            env::set_var(
+                "DEST_FOLDER",
+                &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
+            );
+        }
 
         let path_str = &format!(
             "..{}test-media{0}corgi_race.mp4",
@@ -98,10 +102,12 @@ pub mod date_read_tests {
 
     #[test]
     fn can_read_audio_creation_date() {
-        env::set_var(
-            "DEST_FOLDER",
-            &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
-        );
+        unsafe {
+            env::set_var(
+                "DEST_FOLDER",
+                &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
+            );
+        }
 
         let path_str = &format!(
             "..{}test-media{0}Recording.m4a",
@@ -162,10 +168,12 @@ pub mod date_read_tests {
 
     #[test]
     fn make_photo_dir_str_with_nonexistent_file() {
-        env::set_var(
-            "DEST_FOLDER",
-            &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
-        );
+        unsafe {
+            env::set_var(
+                "DEST_FOLDER",
+                &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
+            );
+        }
 
         let result = make_photo_dir_str("nonexistent.jpg");
         assert!(result.is_err());
@@ -173,10 +181,12 @@ pub mod date_read_tests {
 
     #[test]
     fn make_video_dir_str_with_nonexistent_file() {
-        env::set_var(
-            "DEST_FOLDER",
-            &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
-        );
+        unsafe {
+            env::set_var(
+                "DEST_FOLDER",
+                &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
+            );
+        }
 
         let result = make_video_dir_str("nonexistent.mp4");
         assert!(result.is_err());
@@ -184,10 +194,12 @@ pub mod date_read_tests {
 
     #[test]
     fn make_audio_dir_str_with_nonexistent_file() {
-        env::set_var(
-            "DEST_FOLDER",
-            &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
-        );
+        unsafe {
+            env::set_var(
+                "DEST_FOLDER",
+                &format!("tests{}test_files", std::path::MAIN_SEPARATOR),
+            );
+        }
 
         let result = make_audio_dir_str("nonexistent.mp3");
         assert!(result.is_err());
