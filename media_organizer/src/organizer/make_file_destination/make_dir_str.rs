@@ -9,6 +9,12 @@ use std::path::Path;
 fn make_dir_string(date: &str) -> String {
     let replace_date_hyphens = str::replace(date, "-", &std::path::MAIN_SEPARATOR.to_string());
     let dest_folder = env::var("DEST_FOLDER").expect("DEST_FOLDER not set");
+    // Normalize so output uses platform separator even if DEST_FOLDER was set with / or \.
+    let dest_folder = str::replace(
+        &dest_folder,
+        if std::path::MAIN_SEPARATOR == '\\' { "/" } else { "\\" },
+        &std::path::MAIN_SEPARATOR.to_string(),
+    );
     let mut regular_date_folder: String = String::new();
 
     regular_date_folder.push_str(&dest_folder);
@@ -127,43 +133,54 @@ pub mod date_read_tests {
 
     #[test]
     fn can_read_doc_creation_date() {
+        let sep = std::path::MAIN_SEPARATOR;
         unsafe {
-            env::set_var("DEST_FOLDER", &"tests/test_files");
+            env::set_var("DEST_FOLDER", &format!("tests{}test_files", sep));
         }
 
         let doc_date = read_doc_creation_date(Path::new("../test-media/TESTDOCUMENT.docx"))
             .unwrap_or("no_date_found".to_string());
         let date_info = make_dir_string(&doc_date);
 
+        let expected_prefix = format!("tests{}test_files{}", sep, sep);
         assert!(
-            date_info.starts_with("./tests/test_files/"),
+            date_info.starts_with(&expected_prefix),
             "Expected path to start with dest folder, got: {}",
             date_info
         );
         assert_ne!(
-            date_info, "./tests/test_files/no_date_found",
+            date_info,
+            format!("tests{}test_files{}no_date_found", sep, sep),
             "Should extract a real date, not fallback"
         );
     }
 
     #[test]
     fn make_dir_string_with_no_date_found() {
+        let sep = std::path::MAIN_SEPARATOR;
         unsafe {
-            env::set_var("DEST_FOLDER", &"tests/test_files");
+            env::set_var("DEST_FOLDER", &format!("tests{}test_files", sep));
         }
 
         let date_info = make_dir_string("no_date_found");
-        assert_eq!("./tests/test_files/no_date_found", date_info);
+        assert_eq!(
+            format!("tests{}test_files{}no_date_found", sep, sep),
+            date_info
+        );
     }
 
     #[test]
     fn make_doc_dir_str_with_nonexistent_file() {
+        let sep = std::path::MAIN_SEPARATOR;
         unsafe {
-            env::set_var("DEST_FOLDER", &"tests/test_files");
+            env::set_var("DEST_FOLDER", &format!("tests{}test_files", sep));
         }
 
         let result = make_doc_dir_str("nonexistent.pdf");
-        assert_eq!("./tests/test_files/no_date_found", result);
+        assert_eq!(
+            format!("tests{}test_files{}no_date_found", sep, sep),
+            result
+        );
     }
 
     #[test]

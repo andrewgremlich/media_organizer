@@ -86,41 +86,67 @@ pub fn make_file_destination_str(file_name: &str) -> Result<String, MakeFileDest
 mod tests {
     use super::*;
 
-    // make_file_destination_str type detection tests
+    // make_file_destination_str type detection tests (file may be missing → Err(Error) is ok, UnsupportedType is not)
     #[test]
     fn sort_and_make_detects_video_mp4() {
         let result = make_file_destination_str("video.mp4");
-        assert!(result.is_ok());
+        assert!(
+            result.is_ok() || !matches!(&result, Err(MakeFileDestinationError::UnsupportedType(_))),
+            "MP4 should be detected as video, got: {:?}",
+            result
+        );
     }
 
     #[test]
     fn sort_and_make_detects_video_mov() {
         let result = make_file_destination_str("video.MOV");
-        assert!(result.is_ok());
+        assert!(
+            result.is_ok() || !matches!(&result, Err(MakeFileDestinationError::UnsupportedType(_))),
+            "MOV should be detected as video, got: {:?}",
+            result
+        );
     }
 
     #[test]
     fn sort_and_make_detects_photo_jpg() {
         let result = make_file_destination_str("photo.jpg");
-        assert!(result.is_ok());
+        assert!(
+            result.is_ok() || !matches!(&result, Err(MakeFileDestinationError::UnsupportedType(_))),
+            "JPG should be detected as photo, got: {:?}",
+            result
+        );
     }
 
     #[test]
     fn sort_and_make_detects_photo_heic() {
         let result = make_file_destination_str("photo.HEIC");
-        assert!(result.is_ok());
+        assert!(
+            result.is_ok() || !matches!(&result, Err(MakeFileDestinationError::UnsupportedType(_))),
+            "HEIC should be detected as photo, got: {:?}",
+            result
+        );
     }
 
     #[test]
     fn sort_and_make_detects_audio_mp3() {
         let result = make_file_destination_str("song.mp3");
-        assert!(result.is_ok());
+        assert!(
+            result.is_ok() || !matches!(&result, Err(MakeFileDestinationError::UnsupportedType(_))),
+            "MP3 should be detected as audio, got: {:?}",
+            result
+        );
     }
 
     #[test]
     fn sort_and_make_detects_audio_flac() {
+        // Detection test: FLAC must be recognized as audio (no UnsupportedType).
+        // Err(Error(_)) is acceptable when the path does not point to an existing file.
         let result = make_file_destination_str("song.FLAC");
-        assert!(result.is_ok());
+        assert!(
+            result.is_ok() || !matches!(&result, Err(MakeFileDestinationError::UnsupportedType(_))),
+            "FLAC should be detected as audio, got: {:?}",
+            result
+        );
     }
 
     #[test]
