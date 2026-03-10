@@ -32,7 +32,8 @@ pub fn read_epub_date(path: &Path) -> Result<String, String> {
     let keys = ["dcterms:created", "dcterms:modified", "date"];
     for key in &keys {
         if let Some(value) = doc.mdata(key) {
-            if let Some(date) = parse_date_to_ymd(&value) {
+            let s = value.value.as_str();
+            if let Some(date) = parse_date_to_ymd(s) {
                 return Ok(date);
             }
         }
