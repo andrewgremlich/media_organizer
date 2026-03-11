@@ -8,6 +8,7 @@ use std::path::Path;
 use log::error;
 use structured_logger::Builder;
 use structured_logger::json::new_writer;
+use std::io;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -73,6 +74,15 @@ pub struct Args {
         default_value = "false"
     )]
     dimensions: bool,
+
+    #[clap(
+        short,
+        long,
+        value_name = "VERBOSE",
+        help = "Print log output to the terminal.",
+        default_value = "false"
+    )]
+    verbose: bool,
 }
 
 fn set_env(matches: &Args) {
@@ -99,12 +109,17 @@ fn main() {
         .open("saved_file.log")
         .expect("Unable to create or open log file for saved_file logging");
 
-    Builder::with_level("debug")
-        .with_target_writer("same_file", new_writer(same_file_log_file))
-        .with_target_writer("saved_file", new_writer(saved_file_log_file))
-        .init();
-
     let matches: Args = Args::parse();
+
+    let mut builder = Builder::with_level("debug")
+        .with_target_writer("same_file", new_writer(same_file_log_file))
+        .with_target_writer("saved_file", new_writer(saved_file_log_file));
+
+    if !matches.verbose {
+        builder = builder.with_default_writer(new_writer(io::sink()));
+    }
+
+    builder.init();
 
     set_env(&matches);
 
