@@ -1,5 +1,45 @@
 use chrono::NaiveDate;
 use id3::{Tag as ID3Tag, TagLike, Timestamp};
+use std::path::Path;
+
+#[derive(Debug)]
+pub struct AudioInfo {
+    pub creation_date: String,
+    pub artist: String,
+    pub title: String,
+    pub album: String,
+    pub duration: String,
+    pub released: String,
+    pub genre: String,
+}
+
+impl AudioInfo {
+    pub fn new(path: &Path) -> Result<Self, String> {
+        if !path.exists() {
+            return Err(format!("File does not exist: {:?}", path));
+        }
+
+        let tag = ID3Tag::read_from_path(path).unwrap();
+
+        let date_recorded = get_date_recorded(&tag);
+        let artist = get_artist(&tag);
+        let title = get_title(&tag);
+        let album = get_album(&tag);
+        let duration = get_duration(&tag);
+        let released = get_release_date(&tag);
+        let genre = get_genre(&tag);
+
+        Ok(AudioInfo {
+            creation_date: date_recorded,
+            artist,
+            title,
+            album,
+            duration,
+            released,
+            genre,
+        })
+    }
+}
 
 /// Formats a `Timestamp` into a `String` in the format "YYYY-MM-DD".
 /// If the month or day is missing, defaults to 1.
@@ -17,9 +57,8 @@ fn format_date(date: Timestamp) -> String {
     let day = date.day.unwrap_or(1);
 
     let assembled_date = NaiveDate::from_ymd_opt(year, month as u32, day as u32);
-    let date_str = assembled_date.unwrap().format("%Y-%m-%d").to_string();
 
-    return date_str;
+    assembled_date.unwrap().format("%Y-%m-%d").to_string()
 }
 
 /// Retrieves the recorded date from an ID3 tag and formats it as a string.

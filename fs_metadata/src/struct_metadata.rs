@@ -70,7 +70,7 @@ impl FileMetadata {
                     .expect("Could not read accessed system time")
                     .into();
 
-                return Ok(FileMetadata {
+                Ok(FileMetadata {
                     accessed: accessed_system_time.format("%Y-%m-%d").to_string(),
                     modified: modified_system_time.format("%Y-%m-%d").to_string(),
                     created: created_system_time.format("%Y-%m-%d").to_string(),
@@ -80,10 +80,10 @@ impl FileMetadata {
                     is_readable: path.readable(),
                     is_writable: path.writable(),
                     is_executable: path.executable(),
-                    data: data,
-                });
+                    data,
+                })
             }
-            Err(_) => return Err("Failed to read metadata from file".to_string()),
+            Err(_) => Err("Failed to read metadata from file".to_string()),
         }
     }
 
@@ -111,28 +111,37 @@ impl FileMetadata {
 
     pub fn get_file_in_kilobytes(&self) -> f32 {
         let (k, _m, _g, _t) = self.get_human_readable_file_size();
-        k as f32
+        k
     }
 
     pub fn get_file_in_megabytes(&self) -> f32 {
         let (_k, m, _g, _t) = self.get_human_readable_file_size();
-        m as f32
+        m
     }
 
     pub fn get_file_in_gigabytes(&self) -> f32 {
         let (_k, _m, g, _t) = self.get_human_readable_file_size();
-        g as f32
+        g
     }
 
     pub fn get_file_in_terabytes(&self) -> f32 {
         let (_k, _m, _g, t) = self.get_human_readable_file_size();
-        t as f32
+        t
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn can_make_file_metadata() {
+        let result = FileMetadata::new(Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg")).unwrap();
+
+        assert_eq!(result.created, "2025-01-03");
+        assert_eq!(result.modified, "2025-01-03");
+        assert_eq!(result.accessed, "2025-01-04");
+    }
 
     #[test]
     fn has_permissions() {

@@ -25,6 +25,7 @@ kamadak-exif = "0.6.1"
 chrono = "0.4.41"
 id3 = "1.16.2"
 fs_metadata = { version = "0.4.3", path = "../fs_metadata" }
+log = "0.4.22"
 epub = "2.1.4"
 mobi = "0.8.0"
 pdf = "0.9.0"

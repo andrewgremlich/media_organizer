@@ -14,10 +14,18 @@ A Rust workspace for organizing media files (photos, videos, audio, and document
 cargo build
 
 # Run
-cargo run -p media_organizer -- --target ./test-media --destination ./sorted_media
+cargo run -p media_organizer -- --source ./test-media --destination ./sorted_media
 
 # Test
 cargo test
+```
+
+## Examples
+
+Copy (`-c`) from source (`-s D:\iPhone.Photos`) into destination relative to current directory (`-d iPhone.Photos1`):
+
+```bash
+..../media_organizer.exe -s D:\iPhone.Photos -d iPhone.Photos1 -c
 ```
 
 ## Workspace Crates

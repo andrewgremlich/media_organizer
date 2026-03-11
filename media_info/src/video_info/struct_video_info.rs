@@ -119,7 +119,7 @@ impl VideoInfo {
 }
 
 #[cfg(test)]
-mod video_info_struct {
+mod tests {
     use super::*;
 
     #[test]

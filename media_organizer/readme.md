@@ -4,40 +4,34 @@ Organize photos, videos, and audio into a YYYY/MM/DD folder structure based on c
 
 ## CLI Usage
 
-```bash
-Organize media into one folder with a date-centric folder structure.
+```txt
+USAGE:
+    media_organizer [OPTIONS] --source <SOURCE_FOLDER> --destination <DESTINATION_FOLDER>
 
-Usage: media_organizer [OPTIONS] --target <TARGET_MEDIA>
-
-Options:
-  -t, --target <TARGET_MEDIA>
-          The target media to sort.
-  -d, --destination <DESTINATION_FOLDER>
-          The destination folder of sorted media. [default: sorted_media]
-  -f, --file-type <FILE_TYPE>
-          The file type to sort. [default: *]
-  -c, --copy
-          Copy the files instead of moving them.
-      --dimensions
-          Append width x height dimensions to image and video filenames.
-  -h, --help
-          Print help
-  -V, --version
-          Print version
+OPTIONS:
+    -c, --copy                              Copy the files instead of moving them.
+    -d, --destination <DESTINATION_FOLDER>  The destination folder of sorted media.
+    -f, --file-type <FILE_TYPE>             The file type to sort. [default: *]
+    -h, --help                              Print help information
+    -s, --source <SOURCE_FOLDER>            The absolute path to the source folder of the media to be sorted.
+    -V, --version                           Print version information
+    -y, --dry-run                           Dry-run with statistics but without actually copying or moving.
+    -l, --log-saved                         Log each saved file in a log-file.
+      --dimensions                          Append width x height dimensions to image and video filenames.
 ```
 
 ## Example CLI usage
 
-To quickly organize photos in the target folder, run the following command to output them into the default destination directory.
+To quickly organize photos in the source folder, run the following command to output them into the default destination directory.
 
 ```bash
-media_organizer --target test-media --destination sorted_media
+media_organizer --source test-media --destination sorted_media
 ```
 
 While developing with cargo, forward the flags.
 
 ```bash
-cargo run -p media_organizer -- --target ./test-media --destination ./sorted_media
+cargo run -p media_organizer -- --source ./test-media --destination ./sorted_media
 ```
 
 ## Features
@@ -49,21 +43,21 @@ cargo run -p media_organizer -- --target ./test-media --destination ./sorted_med
   - Photos organized based off of EXIF creation dates.
 
     - Whitelisted photo file types. ("tiff", "TIFF", "heif", "HEIF", "HEIC", "heic", "AVIF", "avif", "jpeg", "jpg", "JPEG",
-        "JPG", "HEIC", "heic", "PNG", "png", "webp", "WEBP")
+        "JPG", "HEIC", "heic", "PNG", "png", "webp", "WEBP", "dng", "DNG", "gif", "GIF", "raw", "RAW")
 
   - Video organized based off of FFMPEG creation dates.
 
-    - Whitelisted video file types. ("mp4", "MP4", "mov", "MOV")
+    - Whitelisted video file types. ("mp4", "MP4", "mov", "MOV", "avi", "AVI")
 
   - Audio organized based off of ID3 recorded dates.
 
     - Whitelisted audio file types. ("mp3", "MP3", "wav", "WAV", "aiff", "AIFF", "m4a", "M4A", "flac", "FLAC")
 
-  - User provides target folder of unorganized images. Will move photos to a default `photos` directory in the directory where the binary was ran. The outputed folders will be the respective creation dates on the media.
+  - User provides source folder of unorganized images. Will move photos to a default `photos` directory in the directory where the binary was ran. The outputed folders will be the respective creation dates on the media.
 
 - Allow configurable destination folder.
 
-  - Use the `--dest` flag.
+  - Use the `--destination` flag.
 
 - Organize specific file types. Default to any filetype.
 
