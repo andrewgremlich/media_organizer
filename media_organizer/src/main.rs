@@ -97,23 +97,27 @@ fn set_env(matches: &Args) {
 }
 
 fn main() {
-    let same_file_log_file = OpenOptions::new()
-        .append(true)
-        .create(true)
-        .open("same_file.log")
-        .expect("Unable to create or open log file for same_file logging");
-
-    let saved_file_log_file = OpenOptions::new()
-        .append(true)
-        .create(true)
-        .open("saved_file.log")
-        .expect("Unable to create or open log file for saved_file logging");
-
     let matches: Args = Args::parse();
 
-    let mut builder = Builder::with_level("debug")
-        .with_target_writer("same_file", new_writer(same_file_log_file))
-        .with_target_writer("saved_file", new_writer(saved_file_log_file));
+    let mut builder = Builder::with_level("debug");
+
+    if !matches.dry_run {
+        let same_file_log_file = OpenOptions::new()
+            .append(true)
+            .create(true)
+            .open("same_file.log")
+            .expect("Unable to create or open log file for same_file logging");
+        builder = builder.with_target_writer("same_file", new_writer(same_file_log_file));
+    }
+
+    if matches.log_saved {
+        let saved_file_log_file = OpenOptions::new()
+            .append(true)
+            .create(true)
+            .open("saved_file.log")
+            .expect("Unable to create or open log file for saved_file logging");
+        builder = builder.with_target_writer("saved_file", new_writer(saved_file_log_file));
+    }
 
     if !matches.verbose {
         builder = builder.with_default_writer(new_writer(io::sink()));
