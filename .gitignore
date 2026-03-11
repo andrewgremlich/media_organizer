@@ -8,3 +8,6 @@ debug/
 target/
 *.pdb
 /.idea/*
+same_file.log
+saved_file.log
+sorted_media/

@@ -24,10 +24,13 @@ pub fn organize_file(file_str: &str) {
     if Path::new(&file_str).is_file() {
         match make_file_destination_str(file_str) {
             Ok(destination_dir) => {
-                mkdirp(&destination_dir).expect(&format!(
-                    "Could not create destination directory {:?} for the source file {}",
-                    destination_dir, file_str
-                ));
+                let dry_run = env::var("DRY_RUN").unwrap_or_default() == "true";
+                if !dry_run {
+                    mkdirp(&destination_dir).expect(&format!(
+                        "Could not create destination directory {:?} for the source file {}",
+                        destination_dir, file_str
+                    ));
+                }
                 handle_media(file_str, &destination_dir);
             }
             Err(MakeFileDestinationError::UnsupportedType(unsupported_type)) => {
