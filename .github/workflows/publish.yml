@@ -72,17 +72,10 @@ jobs:
       - name: Install git-cliff
         run: cargo install git-cliff
 
-      - name: Generate changelog
-        run: git-cliff --tag ${{ steps.crate.outputs.tag }} -o CHANGELOG.md
+      - name: Generate release notes
+        run: git-cliff --current --strip header -o RELEASE_NOTES.md
 
-      - name: Commit and push changelog
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md
-          if git diff --cached --quiet; then
-            echo "No changelog changes to commit"
-          else
-            git commit -m "docs: update changelog for ${{ steps.crate.outputs.tag }}"
-            git push origin HEAD:master
-          fi
+      - name: Create GitHub Release
+        run: gh release create ${{ steps.crate.outputs.tag }} --title "${{ steps.crate.outputs.name }} v${{ steps.crate.outputs.version }}" --notes-file RELEASE_NOTES.md
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
