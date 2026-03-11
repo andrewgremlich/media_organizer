@@ -1,6 +1,6 @@
 [package]
 name = "media_organizer"
-version = "0.9.2"
+version = "0.9.3"
 authors = ["Andrew Gremlich <andrew@gremlich.dev>"]
 edition = "2024"
 license = "MIT"
