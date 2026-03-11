@@ -8,9 +8,9 @@ Media Organizer is a Rust workspace that organizes media files (photos, videos, 
 
 Three crates in a Cargo workspace (resolver 2, edition 2024):
 
-- **media_organizer/** - CLI binary (v0.7.0). Entry point: `src/main.rs`. Uses clap for arg parsing.
-- **media_info/** - Library (v0.5.1). Extracts metadata from photos/videos/audio/docs. Feature-gated (`video`, `audio`, `photo`, `doc` — all default).
-- **fs_metadata/** - Library (v0.4.3). Cross-platform file metadata (timestamps, permissions, sizes).
+- **media_organizer/** - CLI binary (v0.9.0). Entry point: `src/main.rs`. Uses clap for arg parsing.
+- **media_info/** - Library (v0.7.0). Extracts metadata from photos/videos/audio/docs. Feature-gated (`video`, `audio`, `photo`, `doc` — all default).
+- **fs_metadata/** - Library (v0.4.5). Cross-platform file metadata (timestamps, permissions, sizes).
 
 ## Build & Run
 
