@@ -97,7 +97,8 @@ fn media_action(original_file: &str, destination_dir: &str, destination_file_nam
                         debug!(target: "saved_file", "Saved {final_dest:?}")
                     }
 
-                    if cfg!(target_os = "windows") {
+                    #[cfg(target_os = "windows")]
+                    {
                         match copy_file_metadata(original_file, final_dest) {
                             Err(err) => error!("Copying of meta data has failed for {final_dest:?}, cause: {err:?}"),
                             Ok(_) => (),
@@ -125,7 +126,8 @@ fn media_action(original_file: &str, destination_dir: &str, destination_file_nam
                         debug!(target: "saved_file", "Saved {final_dest:?}")
                     }
 
-                    if cfg!(target_os = "windows") {
+                    #[cfg(target_os = "windows")]
+                    {
                         match copy_file_metadata(original_file, final_dest) {
                             Ok(_) => (),
                             Err(_) => handle_if_removable(original_file),
