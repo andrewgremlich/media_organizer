@@ -40,48 +40,19 @@ pub struct Args {
     )]
     file_type: String,
 
-    #[clap(
-        short,
-        long,
-        value_name = "COPY",
-        help = "Copy the files instead of moving them.",
-        default_value = "false"
-    )]
+    #[clap(short, long, help = "Copy the files instead of moving them.")]
     copy: bool,
 
-    #[clap(
-        short = 'y',
-        long,
-        value_name = "DRY_RUN",
-        help = "Dry-run with statistics but without actually copying or moving.",
-        default_value = "false"
-    )]
+    #[clap(short = 'y', long, help = "Dry-run with statistics but without actually copying or moving.")]
     dry_run: bool,
 
-    #[clap(
-        short = 'l',
-        long,
-        value_name = "LOG_SAVED",
-        help = "Log each saved file in a log-file.",
-        default_value = "false"
-    )]
+    #[clap(short = 'l', long, help = "Log each saved file in a log-file.")]
     log_saved: bool,
 
-    #[clap(
-        long,
-        value_name = "DIMENSIONS",
-        help = "Append width x height dimensions to image and video filenames.",
-        default_value = "false"
-    )]
+    #[clap(long, help = "Append width x height dimensions to image and video filenames.")]
     dimensions: bool,
 
-    #[clap(
-        short,
-        long,
-        value_name = "VERBOSE",
-        help = "Print log output to the terminal.",
-        default_value = "false"
-    )]
+    #[clap(short, long, help = "Print log output to the terminal.")]
     verbose: bool,
 }
 
