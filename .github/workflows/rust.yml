@@ -20,5 +20,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y libavformat-dev libavcodec-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev libavdevice-dev pkg-config
     - name: Build
       run: cargo build --verbose
+    - name: Clippy
+      run: cargo clippy --workspace -- -D warnings
     - name: Run tests
       run: cargo test --verbose
