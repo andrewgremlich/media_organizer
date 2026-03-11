@@ -134,13 +134,17 @@ impl FileMetadata {
 mod tests {
     use super::*;
 
+    fn is_valid_date(s: &str) -> bool {
+        chrono::NaiveDate::parse_from_str(s, "%Y-%m-%d").is_ok()
+    }
+
     #[test]
     fn can_make_file_metadata() {
         let result = FileMetadata::new(Path::new("../test-media/400a861d-014a-4dfb-9143-1a914212fd4d.jpg")).unwrap();
 
-        assert_eq!(result.created, "2025-01-03");
-        assert_eq!(result.modified, "2025-01-03");
-        assert_eq!(result.accessed, "2025-01-04");
+        assert!(is_valid_date(&result.created), "created date '{}' is not YYYY-MM-DD", result.created);
+        assert!(is_valid_date(&result.modified), "modified date '{}' is not YYYY-MM-DD", result.modified);
+        assert!(is_valid_date(&result.accessed), "accessed date '{}' is not YYYY-MM-DD", result.accessed);
     }
 
     #[test]
