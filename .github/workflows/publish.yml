@@ -1,0 +1,66 @@
+name: Publish to crates.io
+
+on:
+  push:
+    tags:
+      - "fs_metadata-v*"
+      - "media_info-v*"
+      - "media_organizer-v*"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install FFmpeg dev libraries
+        run: sudo apt-get update && sudo apt-get install -y libavformat-dev libavcodec-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev libavdevice-dev pkg-config
+      - name: Run tests
+        run: cargo test --verbose
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install FFmpeg dev libraries
+        run: sudo apt-get update && sudo apt-get install -y libavformat-dev libavcodec-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev libavdevice-dev pkg-config
+
+      - name: Determine which crate to publish
+        id: crate
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if [[ "$TAG" == fs_metadata-v* ]]; then
+            echo "name=fs_metadata" >> "$GITHUB_OUTPUT"
+            echo "version=${TAG#fs_metadata-v}" >> "$GITHUB_OUTPUT"
+          elif [[ "$TAG" == media_info-v* ]]; then
+            echo "name=media_info" >> "$GITHUB_OUTPUT"
+            echo "version=${TAG#media_info-v}" >> "$GITHUB_OUTPUT"
+          elif [[ "$TAG" == media_organizer-v* ]]; then
+            echo "name=media_organizer" >> "$GITHUB_OUTPUT"
+            echo "version=${TAG#media_organizer-v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "Unknown tag format: $TAG"
+            exit 1
+          fi
+
+      - name: Verify crate version matches tag
+        run: |
+          CRATE="${{ steps.crate.outputs.name }}"
+          EXPECTED="${{ steps.crate.outputs.version }}"
+          ACTUAL=$(cargo metadata --no-deps --format-version 1 | \
+            python3 -c "import sys,json; pkgs=json.load(sys.stdin)['packages']; print([p['version'] for p in pkgs if p['name']=='$CRATE'][0])")
+          if [ "$ACTUAL" != "$EXPECTED" ]; then
+            echo "Version mismatch: Cargo.toml has $ACTUAL but tag says $EXPECTED"
+            exit 1
+          fi
+          echo "Version verified: $ACTUAL"
+
+      - name: Publish ${{ steps.crate.outputs.name }}
+        run: cargo publish -p ${{ steps.crate.outputs.name }}
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
