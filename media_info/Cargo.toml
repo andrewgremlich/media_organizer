@@ -24,7 +24,7 @@ ffmpeg-next = "8.0.0"
 kamadak-exif = "0.6.1"
 chrono = "0.4"
 id3 = "1.16"
-fs_metadata = { version = "0.4.5", path = "../fs_metadata" }
+fs_metadata = { version = "0.5.1", path = "../fs_metadata" }
 log = "0.4"
 epub = "2.1"
 mobi = "0.8.0"
