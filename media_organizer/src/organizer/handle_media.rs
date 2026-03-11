@@ -116,29 +116,27 @@ fn media_action(original_file: &str, destination_dir: &str, destination_file_nam
             increment_saved_file_counter();
             increment_successfully_compared_file_counter();
         }
-    } else {
-        if dry_run_env == "false" {
-            match rename(original_file, final_dest) {
-                Ok(_e) => {
-                    increment_saved_file_counter();
-                    // if log_saved option was provided, log saved files
-                    if log_saved_env == "true" {
-                        debug!(target: "saved_file", "Saved {final_dest:?}")
-                    }
+    } else if dry_run_env == "false" {
+        match rename(original_file, final_dest) {
+            Ok(_e) => {
+                increment_saved_file_counter();
+                // if log_saved option was provided, log saved files
+                if log_saved_env == "true" {
+                    debug!(target: "saved_file", "Saved {final_dest:?}")
+                }
 
-                    #[cfg(target_os = "windows")]
-                    {
-                        match copy_file_metadata(original_file, final_dest) {
-                            Ok(_) => (),
-                            Err(_) => handle_if_removable(original_file),
-                        }
+                #[cfg(target_os = "windows")]
+                {
+                    match copy_file_metadata(original_file, final_dest) {
+                        Ok(_) => (),
+                        Err(_) => handle_if_removable(original_file),
                     }
                 }
-                Err(_) => handle_if_removable(original_file),
-            };
-        } else {
-            increment_saved_file_counter()
-        }
+            }
+            Err(_) => handle_if_removable(original_file),
+        };
+    } else {
+        increment_saved_file_counter()
     }
 }
 
