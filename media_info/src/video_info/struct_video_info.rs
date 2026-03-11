@@ -74,35 +74,35 @@ impl VideoInfo {
             };
         }
 
-        let creation_date = if get_video_metadata!("com.apple.quicktime.creationdate").len() > 0
+        let creation_date = if !get_video_metadata!("com.apple.quicktime.creationdate").is_empty()
         {
             get_video_metadata!("com.apple.quicktime.creationdate")
         } else {
             get_video_metadata!("creation_time")
         };
-        let location = if get_video_metadata!("com.apple.quicktime.location").len() > 0 {
+        let location = if !get_video_metadata!("com.apple.quicktime.location").is_empty() {
             get_video_metadata!("com.apple.quicktime.location")
         } else {
             get_video_metadata!("location")
         };
-        let make = if get_video_metadata!("com.apple.quicktime.make").len() > 0 {
+        let make = if !get_video_metadata!("com.apple.quicktime.make").is_empty() {
             get_video_metadata!("com.apple.quicktime.make")
         } else {
             get_video_metadata!("make")
         };
-        let model = if get_video_metadata!("com.apple.quicktime.model").len() > 0 {
+        let model = if !get_video_metadata!("com.apple.quicktime.model").is_empty() {
             get_video_metadata!("com.apple.quicktime.model")
         } else {
             get_video_metadata!("model")
         };
-        let software = if get_video_metadata!("com.apple.quicktime.software").len() > 0 {
+        let software = if !get_video_metadata!("com.apple.quicktime.software").is_empty() {
             get_video_metadata!("com.apple.quicktime.software")
         } else {
             get_video_metadata!("software")
         };
 
         Ok(VideoInfo {
-            creation_date: creation_date,
+            creation_date,
             major_brand: get_video_metadata!("major_brand"),
             minor_version: get_video_metadata!("minor_version"),
             compatible_brands: get_video_metadata!("compatible_brands"),
@@ -110,10 +110,10 @@ impl VideoInfo {
             comment: get_video_metadata!("comment"),
             duration_in_secs: input_context.duration() / 1_000_000,
             bit_rate: input_context.bit_rate(),
-            location: location,
-            make: make,
-            model: model,
-            software: software,
+            location,
+            make,
+            model,
+            software,
         })
     }
 }

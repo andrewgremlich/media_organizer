@@ -1,7 +1,7 @@
 use fs_metadata::file_created;
 use std::path::Path;
 
-mod doc_info;
+mod readers;
 
 pub fn read_doc_creation_date(path: &Path) -> Result<String, String> {
     if !path.exists() {
@@ -14,11 +14,11 @@ pub fn read_doc_creation_date(path: &Path) -> Result<String, String> {
         .ok_or_else(|| format!("File has no extension: {:?}", path))?;
 
     match ext.to_lowercase().as_str() {
-        "epub" => doc_info::read_epub_date(path),
-        "mobi" => doc_info::read_mobi_date(path),
-        "pdf" => doc_info::read_pdf_date(path),
-        "docx" | "doc" => doc_info::read_docx_date(path),
-        "odt" => doc_info::read_odt_date(path),
+        "epub" => readers::read_epub_date(path),
+        "mobi" => readers::read_mobi_date(path),
+        "pdf" => readers::read_pdf_date(path),
+        "docx" | "doc" => readers::read_docx_date(path),
+        "odt" => readers::read_odt_date(path),
         "txt" | "md" | "rtf" => file_created(path),
         _ => Err(format!("Unsupported file type: {:?}", path)),
     }

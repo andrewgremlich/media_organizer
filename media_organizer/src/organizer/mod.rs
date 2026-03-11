@@ -26,7 +26,7 @@ pub fn organize_file(file_str: &str) {
             Ok(destination_dir) => {
                 let dry_run = env::var("DRY_RUN").unwrap_or_default() == "true";
                 if !dry_run {
-                    mkdirp(&destination_dir).expect(&format!(
+                    mkdirp(&destination_dir).unwrap_or_else(|_| panic!(
                         "Could not create destination directory {:?} for the source file {}",
                         destination_dir, file_str
                     ));
@@ -56,11 +56,11 @@ pub fn organize_dir(dir_str: &str) {
     for entry in glob(&glob_path).expect("Failed to read glob pattern") {
         match entry {
             Ok(path) => {
-                if path.is_file() {
-                    path.to_str().map(|file_str| {
-                        organize_file(file_str);
-                        count_filepaths += 1
-                    });
+                if path.is_file()
+                    && let Some(file_str) = path.to_str()
+                {
+                    organize_file(file_str);
+                    count_filepaths += 1;
                 }
             }
             Err(e) => error!("Glob path entry failed: {:?}", e),

@@ -7,13 +7,13 @@ use std::env;
 use std::path::Path;
 
 fn make_dir_string(date: &str) -> String {
-    let replace_date_hyphens = str::replace(date, "-", &std::path::MAIN_SEPARATOR.to_string());
+    let replace_date_hyphens = str::replace(date, "-", std::path::MAIN_SEPARATOR_STR);
     let dest_folder = env::var("DEST_FOLDER").expect("DEST_FOLDER not set");
     // Normalize so output uses platform separator even if DEST_FOLDER was set with / or \.
     let dest_folder = str::replace(
         &dest_folder,
         if std::path::MAIN_SEPARATOR == '\\' { "/" } else { "\\" },
-        &std::path::MAIN_SEPARATOR.to_string(),
+        std::path::MAIN_SEPARATOR_STR,
     );
     let mut regular_date_folder: String = String::new();
 

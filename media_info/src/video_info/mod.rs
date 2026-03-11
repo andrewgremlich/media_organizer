@@ -59,7 +59,7 @@ pub fn read_video_creation_date(path: &Path) -> Result<String, String> {
                 .unwrap_or("")
                 .to_string();
 
-            if creation_date.len() == 0 {
+            if creation_date.is_empty() {
                 return fallback_to_file_modified_date(path);
             }
 

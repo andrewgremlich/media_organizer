@@ -45,7 +45,7 @@ pub(crate) fn add_unsupported_type(unsupported_type: String) {
 
 pub fn get_unsupported_types() -> String {
     let set = UNSUPPORTED_TYPES.lock().unwrap();
-    set.to_owned().into_iter().collect::<Vec<_>>().join(", ")
+    set.iter().cloned().collect::<Vec<_>>().join(", ")
 }
 
 pub(crate) fn increment_identical_file_counter() {

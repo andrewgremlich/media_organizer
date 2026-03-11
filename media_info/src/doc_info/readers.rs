@@ -15,12 +15,11 @@ fn parse_date_to_ymd(date_str: &str) -> Option<String> {
         return Some(date.format("%Y-%m-%d").to_string());
     }
     // Try just a year like "2024"
-    if date_str.len() == 4 {
-        if let Ok(year) = date_str.parse::<i32>() {
-            if let Some(date) = NaiveDate::from_ymd_opt(year, 1, 1) {
-                return Some(date.format("%Y-%m-%d").to_string());
-            }
-        }
+    if date_str.len() == 4
+        && let Ok(year) = date_str.parse::<i32>()
+        && let Some(date) = NaiveDate::from_ymd_opt(year, 1, 1)
+    {
+        return Some(date.format("%Y-%m-%d").to_string());
     }
     None
 }
@@ -45,10 +44,10 @@ pub fn read_epub_date(path: &Path) -> Result<String, String> {
 pub fn read_mobi_date(path: &Path) -> Result<String, String> {
     let mobi = Mobi::from_path(path).map_err(|e| format!("Failed to open MOBI: {}", e))?;
 
-    if let Some(date_str) = mobi.publish_date() {
-        if let Some(date) = parse_date_to_ymd(&date_str) {
-            return Ok(date);
-        }
+    if let Some(date_str) = mobi.publish_date()
+        && let Some(date) = parse_date_to_ymd(&date_str)
+    {
+        return Ok(date);
     }
 
     file_created(path)
@@ -62,13 +61,11 @@ pub fn read_pdf_date(path: &Path) -> Result<String, String> {
     if let Some(ref info) = file.trailer.info_dict {
         // Try CreationDate first, then ModDate
         let dates = [&info.creation_date, &info.mod_date];
-        for date_opt in &dates {
-            if let Some(date) = date_opt {
-                if let Some(naive) =
-                    NaiveDate::from_ymd_opt(date.year as i32, date.month as u32, date.day as u32)
-                {
-                    return Ok(naive.format("%Y-%m-%d").to_string());
-                }
+        for date in dates.iter().copied().flatten() {
+            if let Some(naive) =
+                NaiveDate::from_ymd_opt(date.year as i32, date.month as u32, date.day as u32)
+            {
+                return Ok(naive.format("%Y-%m-%d").to_string());
             }
         }
     }
