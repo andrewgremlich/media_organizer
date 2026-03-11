@@ -8,9 +8,9 @@ Media Organizer is a Rust workspace that organizes media files (photos, videos, 
 
 Three crates in a Cargo workspace (resolver 2, edition 2024):
 
-- **media_organizer/** - CLI binary (v0.9.0). Entry point: `src/main.rs`. Uses clap for arg parsing.
-- **media_info/** - Library (v0.7.0). Extracts metadata from photos/videos/audio/docs. Feature-gated (`video`, `audio`, `photo`, `doc` — all default).
-- **fs_metadata/** - Library (v0.5.0). Cross-platform file metadata (timestamps, permissions, sizes, symlink detection, Unix/Windows platform-specific fields).
+- **media_organizer/** - CLI binary (v0.9.3). Entry point: `src/main.rs`. Uses clap for arg parsing.
+- **media_info/** - Library (v0.7.1). Extracts metadata from photos/videos/audio/docs. Feature-gated (`video`, `audio`, `photo`, `doc` — all default).
+- **fs_metadata/** - Library (v0.5.1). Cross-platform file metadata (timestamps, permissions, sizes, symlink detection, Unix/Windows platform-specific fields).
 
 ## Build & Run
 
@@ -80,8 +80,8 @@ Use [conventional commits](https://www.conventionalcommits.org/) for commit mess
 ## Architecture Notes
 
 - Config is passed via environment variables (`DEST_FOLDER`, `FILE_TYPE`, `COPY`, `DRY_RUN`, `LOG_SAVED`, `DIMENSIONS`) set in `main.rs` using `unsafe env::set_var`. This is intentional — don't refactor to struct-passing without being asked.
-- Structured logging via `log` + `structured-logger`. Log files (`same_file.log`, `saved_file.log`) are only created when needed — `same_file.log` is skipped during dry runs, `saved_file.log` only appears with `--log-saved`. Terminal output is suppressed by default; use `--verbose` to enable it.
-- Dry run (`--dry-run`) skips directory creation and file operations entirely — no folders or log files are created.
+- Structured logging via `log` + `structured-logger`. Log files (`same_file.log`, `saved_file.log`) are only created when needed — `same_file.log` is skipped during dry runs, `saved_file.log` only appears with `--log-saved`. Terminal output is suppressed by default; use `--verbose` to enable it. Dry run implicitly enables verbose output.
+- Dry run (`--dry-run`) skips directory creation and file operations entirely — no folders or log files are created. Terminal output is automatically enabled.
 - Windows-specific file metadata copying is in `set_creation_time_windows.rs`, guarded by `#[cfg(target_os = "windows")]`.
 - Each media type module in `media_info` follows the same pattern: a `read_*_creation_date` function and an info struct with `::new(path)`. Photo and video modules also have `read_*_dimensions` functions returning `(u32, u32)`.
 - The `get_exif_field!` macro in `media_info` handles EXIF field extraction with fallback to empty strings.

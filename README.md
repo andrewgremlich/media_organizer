@@ -54,7 +54,7 @@ Copy (`-c`) from source (`-s D:\iPhone.Photos`) into destination relative to cur
 | `--destination` | `-d` | Destination folder for sorted media (default: `sorted`) |
 | `--file-type` | `-f` | File type glob to filter (default: `*`) |
 | `--copy` | `-c` | Copy files instead of moving them |
-| `--dry-run` | `-y` | Preview sorting without moving files or creating folders |
+| `--dry-run` | `-y` | Preview sorting without moving files or creating folders (enables verbose output) |
 | `--log-saved` | `-l` | Write each saved file to `saved_file.log` |
 | `--dimensions` | | Append width x height to image and video filenames |
 | `--verbose` | `-v` | Print log output to the terminal |

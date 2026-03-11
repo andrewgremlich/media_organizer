@@ -90,7 +90,7 @@ fn main() {
         builder = builder.with_target_writer("saved_file", new_writer(saved_file_log_file));
     }
 
-    if !matches.verbose {
+    if !matches.verbose && !matches.dry_run {
         builder = builder.with_default_writer(new_writer(io::sink()));
     }
 
