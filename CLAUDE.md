@@ -10,7 +10,7 @@ Three crates in a Cargo workspace (resolver 2, edition 2024):
 
 - **media_organizer/** - CLI binary (v0.9.0). Entry point: `src/main.rs`. Uses clap for arg parsing.
 - **media_info/** - Library (v0.7.0). Extracts metadata from photos/videos/audio/docs. Feature-gated (`video`, `audio`, `photo`, `doc` — all default).
-- **fs_metadata/** - Library (v0.4.5). Cross-platform file metadata (timestamps, permissions, sizes).
+- **fs_metadata/** - Library (v0.5.0). Cross-platform file metadata (timestamps, permissions, sizes, symlink detection, Unix/Windows platform-specific fields).
 
 ## Build & Run
 
@@ -32,7 +32,7 @@ Tests use example media files in `test-media/` at the workspace root. Test files
 
 ### Test Coverage Summary
 
-- **fs_metadata** (9 tests) — file metadata functions, struct methods, and permissions
+- **fs_metadata** (12 tests) — file metadata functions, struct methods, permissions, file size, symlink detection, and Unix-specific metadata
 - **media_info** (23 tests) — date extraction and dimension reading for each media type (photo, video, audio, doc), format validation, and error cases
 - **media_organizer** (36 tests) — type detection for all supported formats, dir string construction, date reading for each media type, dimension filename appending, nonexistent file fallbacks, and edge cases
 - **Doc-tests** (4 tests) — AudioInfo, PhotoInfo, and VideoInfo struct examples
