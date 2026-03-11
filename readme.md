@@ -16,6 +16,9 @@ cargo build
 # Run
 cargo run -p media_organizer -- --source ./test-media --destination ./sorted_media
 
+# Dry run (preview without moving files or creating folders)
+cargo run -p media_organizer -- --source ./test-media --destination ./sorted_media --dry-run
+
 # Test
 cargo test
 ```
@@ -38,12 +41,27 @@ Copy (`-c`) from source (`-s D:\iPhone.Photos`) into destination relative to cur
 
 | Category | Extensions |
 |----------|------------|
-| Photos   | JPEG, JPG, PNG, HEIF, HEIC, TIFF, AVIF, WebP |
-| Videos   | MP4, MOV |
+| Photos   | JPEG, JPG, PNG, HEIF, HEIC, TIFF, AVIF, WebP, DNG, GIF, RAW |
+| Videos   | MP4, MOV, AVI |
 | Audio    | MP3, WAV, AIFF, M4A, FLAC |
-| Documents | DOCX, PDF, EPUB, MOBI, TXT, MD, ODT, RTF |
+| Documents | DOC, DOCX, PDF, EPUB, MOBI, TXT, MD, ODT, RTF, PPTX, XLSX |
 
-> Note: Document sorting is supported in the `media_info` library but is not yet wired into the CLI organizer.
+## CLI Options
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--source` | `-s` | Source folder of media to sort (required) |
+| `--destination` | `-d` | Destination folder for sorted media (default: `sorted`) |
+| `--file-type` | `-f` | File type glob to filter (default: `*`) |
+| `--copy` | `-c` | Copy files instead of moving them |
+| `--dry-run` | `-y` | Preview sorting without moving files or creating folders |
+| `--log-saved` | `-l` | Write each saved file to `saved_file.log` |
+| `--dimensions` | | Append width x height to image and video filenames |
+| `--verbose` | `-v` | Print log output to the terminal |
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup and guidelines.
 
 ## License
 

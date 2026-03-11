@@ -18,7 +18,7 @@ Requires FFmpeg installed on the system (libavformat, libavcodec). On Windows, u
 
 ```bash
 cargo build                    # Build all crates
-cargo run -- --source <path> --destination <path> [--file-type <type>] [--copy] [--dry-run] [--log-saved] [--dimensions]
+cargo run -- --source <path> --destination <path> [--file-type <type>] [--copy] [--dry-run] [--log-saved] [--dimensions] [--verbose]
 ```
 
 ## Testing
@@ -33,20 +33,20 @@ Tests use example media files in `test-media/` at the workspace root. Test files
 ### Test Coverage Summary
 
 - **fs_metadata** (9 tests) — file metadata functions, struct methods, and permissions
-- **media_info** (21 tests) — date extraction and dimension reading for each media type (photo, video, audio, doc), format validation, and error cases
-- **media_organizer** (34 tests) — type detection for all supported formats, dir string construction, date reading for each media type, dimension filename appending, nonexistent file fallbacks, and edge cases
+- **media_info** (23 tests) — date extraction and dimension reading for each media type (photo, video, audio, doc), format validation, and error cases
+- **media_organizer** (36 tests) — type detection for all supported formats, dir string construction, date reading for each media type, dimension filename appending, nonexistent file fallbacks, and edge cases
 - **Doc-tests** (4 tests) — AudioInfo, PhotoInfo, and VideoInfo struct examples
 
 ### Test Media Files
 
-Located in `test-media/`: JPEG photos, MP4 video, M4A audio, and documents (DOCX, PDF, EPUB, TXT, MD, ODT, RTF). Also includes PPTX and XLSX (not yet supported).
+Located in `test-media/`: JPEG photos, MP4 video, M4A audio, and documents (DOCX, PDF, EPUB, TXT, MD, ODT, RTF, PPTX, XLSX).
 
 ## Supported File Types
 
 - **Photos:** JPEG, PNG, HEIF, HEIC, TIFF, AVIF, WebP, DNG, GIF, RAW
 - **Videos:** MP4, MOV, AVI
 - **Audio:** MP3, WAV, AIFF, M4A, FLAC
-- **Documents:** DOC, DOCX, PDF, EPUB, MOBI, TXT, MD, ODT, RTF
+- **Documents:** DOC, DOCX, PDF, EPUB, MOBI, TXT, MD, ODT, RTF, PPTX, XLSX
 
 ## Code Conventions
 
@@ -68,7 +68,8 @@ Located in `test-media/`: JPEG photos, MP4 video, M4A audio, and documents (DOCX
 ## Architecture Notes
 
 - Config is passed via environment variables (`DEST_FOLDER`, `FILE_TYPE`, `COPY`, `DRY_RUN`, `LOG_SAVED`, `DIMENSIONS`) set in `main.rs` using `unsafe env::set_var`. This is intentional — don't refactor to struct-passing without being asked.
-- Structured logging via `log` + `structured-logger` writes to `same_file.log` and `saved_file.log`.
+- Structured logging via `log` + `structured-logger`. Log files (`same_file.log`, `saved_file.log`) are only created when needed — `same_file.log` is skipped during dry runs, `saved_file.log` only appears with `--log-saved`. Terminal output is suppressed by default; use `--verbose` to enable it.
+- Dry run (`--dry-run`) skips directory creation and file operations entirely — no folders or log files are created.
 - Windows-specific file metadata copying is in `set_creation_time_windows.rs`, guarded by `#[cfg(target_os = "windows")]`.
 - Each media type module in `media_info` follows the same pattern: a `read_*_creation_date` function and an info struct with `::new(path)`. Photo and video modules also have `read_*_dimensions` functions returning `(u32, u32)`.
 - The `get_exif_field!` macro in `media_info` handles EXIF field extraction with fallback to empty strings.
