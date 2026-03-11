@@ -26,7 +26,14 @@ Thanks for your interest in contributing! Here's how to get started.
    cargo clippy --workspace -- -D warnings
    cargo test --workspace
    ```
-4. Open a pull request against `master`
+4. Commit using [conventional commits](https://www.conventionalcommits.org/) format:
+   - `feat: add HEIF support` — new feature
+   - `fix: handle missing EXIF date` — bug fix
+   - `docs: update supported file types` — documentation
+   - `refactor: extract date parsing` — code restructuring
+   - `test: add PPTX date extraction test` — test changes
+   - `chore: upgrade dependencies` — maintenance
+5. Open a pull request against `master`
 
 ## Adding a New File Type
 

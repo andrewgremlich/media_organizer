@@ -48,6 +48,18 @@ Located in `test-media/`: JPEG photos, MP4 video, M4A audio, and documents (DOCX
 - **Audio:** MP3, WAV, AIFF, M4A, FLAC
 - **Documents:** DOC, DOCX, PDF, EPUB, MOBI, TXT, MD, ODT, RTF, PPTX, XLSX
 
+## Changelog
+
+Generated automatically by [git-cliff](https://git-cliff.org/) from commit history. Configuration is in `cliff.toml`.
+
+```bash
+git-cliff -o CHANGELOG.md       # Regenerate full changelog
+git-cliff --unreleased           # Preview unreleased changes
+git-cliff --tag v0.8.0           # Tag unreleased as a version
+```
+
+Use [conventional commits](https://www.conventionalcommits.org/) for commit messages so they get categorized properly (e.g. `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`).
+
 ## Code Conventions
 
 - Functions return `Result<String, String>` for error handling
