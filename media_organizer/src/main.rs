@@ -1,6 +1,6 @@
 mod organizer;
 
-use clap::Parser;
+use clap::{Args, Parser, Subcommand};
 use organizer::{organize_file, organize_dir};
 use std::env;
 use std::fs::OpenOptions;
@@ -11,16 +11,24 @@ use structured_logger::json::new_writer;
 use std::io;
 
 #[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-pub struct Args {
+#[command(author, version, about, long_about = None, args_conflicts_with_subcommands = true)]
+pub struct Cli {
+    #[command(flatten)]
+    args: OrganizeArgs,
+
+    #[command(subcommand)]
+    command: Option<Commands>,
+}
+
+#[derive(Args, Debug)]
+pub struct OrganizeArgs {
     #[clap(
         short,
         long,
         value_name = "SOURCE_FOLDER",
-        help = "The absolute path to the source folder of the media to be sorted.",
-        required = true
+        help = "The absolute path to the source folder of the media to be sorted."
     )]
-    source: String,
+    source: Option<String>,
 
     #[clap(
         short,
@@ -59,24 +67,62 @@ pub struct Args {
     categorize: bool,
 }
 
-fn set_env(matches: &Args) {
+#[derive(Subcommand, Debug)]
+enum Commands {
+    /// Find media files matching a glob pattern
+    Find {
+        /// Glob pattern to search for (e.g. "*.jpg", "vacation*")
+        pattern: String,
+
+        /// Directory to search in (defaults to current directory)
+        #[clap(short, long, default_value = ".")]
+        path: String,
+    },
+}
+
+fn set_env(args: &OrganizeArgs) {
     unsafe {
-        env::set_var("DEST_FOLDER", &matches.destination);
-        env::set_var("FILE_TYPE", &matches.file_type);
-        env::set_var("COPY", matches.copy.to_string());
-        env::set_var("DRY_RUN", matches.dry_run.to_string());
-        env::set_var("LOG_SAVED", matches.log_saved.to_string());
-        env::set_var("DIMENSIONS", matches.dimensions.to_string());
-        env::set_var("CATEGORIZE", matches.categorize.to_string());
+        env::set_var("DEST_FOLDER", &args.destination);
+        env::set_var("FILE_TYPE", &args.file_type);
+        env::set_var("COPY", args.copy.to_string());
+        env::set_var("DRY_RUN", args.dry_run.to_string());
+        env::set_var("LOG_SAVED", args.log_saved.to_string());
+        env::set_var("DIMENSIONS", args.dimensions.to_string());
+        env::set_var("CATEGORIZE", args.categorize.to_string());
     }
 }
 
-fn main() {
-    let matches: Args = Args::parse();
+fn run_find(pattern: &str, path: &str) {
+    let full_pattern = format!("{}/**/{}", path, pattern);
+    match glob::glob(&full_pattern) {
+        Ok(entries) => {
+            let mut found = false;
+            for entry in entries.flatten() {
+                if entry.is_file() {
+                    println!("{}", entry.display());
+                    found = true;
+                }
+            }
+            if !found {
+                println!("No files found matching '{}'", pattern);
+            }
+        }
+        Err(e) => eprintln!("Invalid pattern: {}", e),
+    }
+}
+
+fn run_organize(args: &OrganizeArgs) {
+    let source = match &args.source {
+        Some(s) => s,
+        None => {
+            eprintln!("error: the following required argument was not provided: --source <SOURCE_FOLDER>");
+            std::process::exit(2);
+        }
+    };
 
     let mut builder = Builder::with_level("debug");
 
-    if !matches.dry_run {
+    if !args.dry_run {
         let same_file_log_file = OpenOptions::new()
             .append(true)
             .create(true)
@@ -85,7 +131,7 @@ fn main() {
         builder = builder.with_target_writer("same_file", new_writer(same_file_log_file));
     }
 
-    if matches.log_saved {
+    if args.log_saved {
         let saved_file_log_file = OpenOptions::new()
             .append(true)
             .create(true)
@@ -94,26 +140,39 @@ fn main() {
         builder = builder.with_target_writer("saved_file", new_writer(saved_file_log_file));
     }
 
-    if !matches.verbose && !matches.dry_run {
+    if !args.verbose && !args.dry_run {
         builder = builder.with_default_writer(new_writer(io::sink()));
     }
 
     builder.init();
 
-    set_env(&matches);
+    set_env(args);
 
-    let path = Path::new(&matches.source);
+    let path = Path::new(source);
 
     if !path.exists() {
-        error!("Path to source folder does not exist: {}", &matches.source);
+        error!("Path to source folder does not exist: {}", source);
         return;
     }
 
     if path.is_dir() {
-        organize_dir(&matches.source);
+        organize_dir(source);
     } else if path.is_file() {
-        organize_file(&matches.source);
+        organize_file(source);
     } else {
-        error!("Path is not a file or directory: {}", &matches.source);
+        error!("Path is not a file or directory: {}", source);
+    }
+}
+
+fn main() {
+    let cli = Cli::parse();
+
+    match &cli.command {
+        Some(Commands::Find { pattern, path }) => {
+            run_find(pattern, path);
+        }
+        None => {
+            run_organize(&cli.args);
+        }
     }
 }
