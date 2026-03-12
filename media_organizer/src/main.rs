@@ -54,6 +54,9 @@ pub struct Args {
 
     #[clap(short, long, help = "Print log output to the terminal.")]
     verbose: bool,
+
+    #[clap(long, help = "Separate media into category subfolders (photos, video, audio, documents).")]
+    categorize: bool,
 }
 
 fn set_env(matches: &Args) {
@@ -64,6 +67,7 @@ fn set_env(matches: &Args) {
         env::set_var("DRY_RUN", matches.dry_run.to_string());
         env::set_var("LOG_SAVED", matches.log_saved.to_string());
         env::set_var("DIMENSIONS", matches.dimensions.to_string());
+        env::set_var("CATEGORIZE", matches.categorize.to_string());
     }
 }
 

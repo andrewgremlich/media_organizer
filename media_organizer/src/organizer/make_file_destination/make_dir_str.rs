@@ -4,9 +4,28 @@ use media_info::{
     read_video_creation_date,
 };
 use std::env;
+use std::fmt;
 use std::path::Path;
 
-fn make_dir_string(date: &str) -> String {
+pub(crate) enum MediaCategory {
+    Photos,
+    Video,
+    Audio,
+    Documents,
+}
+
+impl fmt::Display for MediaCategory {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            MediaCategory::Photos => write!(f, "photos"),
+            MediaCategory::Video => write!(f, "video"),
+            MediaCategory::Audio => write!(f, "audio"),
+            MediaCategory::Documents => write!(f, "documents"),
+        }
+    }
+}
+
+fn make_dir_string(date: &str, category: MediaCategory) -> String {
     let replace_date_hyphens = str::replace(date, "-", std::path::MAIN_SEPARATOR_STR);
     let dest_folder = env::var("DEST_FOLDER").expect("DEST_FOLDER not set");
     // Normalize so output uses platform separator even if DEST_FOLDER was set with / or \.
@@ -15,10 +34,17 @@ fn make_dir_string(date: &str) -> String {
         if std::path::MAIN_SEPARATOR == '\\' { "/" } else { "\\" },
         std::path::MAIN_SEPARATOR_STR,
     );
+    let categorize = env::var("CATEGORIZE").unwrap_or_default() == "true";
     let mut regular_date_folder: String = String::new();
 
     regular_date_folder.push_str(&dest_folder);
     regular_date_folder.push(std::path::MAIN_SEPARATOR);
+
+    if categorize {
+        regular_date_folder.push_str(&category.to_string());
+        regular_date_folder.push(std::path::MAIN_SEPARATOR);
+    }
+
     regular_date_folder.push_str(&replace_date_hyphens);
 
     regular_date_folder
@@ -26,21 +52,21 @@ fn make_dir_string(date: &str) -> String {
 
 pub(crate) fn make_photo_dir_str(date: &str) -> Result<String, MakeFileDestinationError> {
     match read_photo_creation_date(Path::new(date)) {
-        Ok(date) => Ok(make_dir_string(date.as_str())),
+        Ok(date) => Ok(make_dir_string(date.as_str(), MediaCategory::Photos)),
         Err(error) => Err(MakeFileDestinationError::Error(error)),
     }
 }
 
 pub(crate) fn make_video_dir_str(date: &str) -> Result<String, MakeFileDestinationError> {
     match read_video_creation_date(Path::new(date)) {
-        Ok(date) => Ok(make_dir_string(date.as_str())),
+        Ok(date) => Ok(make_dir_string(date.as_str(), MediaCategory::Video)),
         Err(error) => Err(MakeFileDestinationError::Error(error)),
     }
 }
 
 pub(crate) fn make_audio_dir_str(dir_str: &str) -> Result<String, MakeFileDestinationError> {
     match read_audio_creation_date(Path::new(dir_str)) {
-        Ok(date) => Ok(make_dir_string(date.as_str())),
+        Ok(date) => Ok(make_dir_string(date.as_str(), MediaCategory::Audio)),
         Err(error) => Err(MakeFileDestinationError::Error(error)),
     }
 }
@@ -49,7 +75,7 @@ pub(crate) fn make_doc_dir_str(dir_str: &str) -> String {
     let doc_date =
         read_doc_creation_date(Path::new(dir_str)).unwrap_or("no_date_found".to_string());
 
-    make_dir_string(&doc_date)
+    make_dir_string(&doc_date, MediaCategory::Documents)
 }
 
 #[cfg(test)]
@@ -71,7 +97,7 @@ pub mod date_read_tests {
         );
 
         let date_info = match read_photo_creation_date(Path::new(path_str)) {
-            Ok(date_of_photo) => make_dir_string(date_of_photo.as_str()),
+            Ok(date_of_photo) => make_dir_string(date_of_photo.as_str(), MediaCategory::Photos),
             Err(err) => panic!("Test failed because of error: {}", err),
         };
 
@@ -96,7 +122,7 @@ pub mod date_read_tests {
         );
 
         let date_info = match read_video_creation_date(Path::new(path_str)) {
-            Ok(date_of_video) => make_dir_string(date_of_video.as_str()),
+            Ok(date_of_video) => make_dir_string(date_of_video.as_str(), MediaCategory::Video),
             Err(err) => panic!("Test failed because of error: {}", err),
         };
 
@@ -121,7 +147,7 @@ pub mod date_read_tests {
         );
 
         let date_info = match read_audio_creation_date(Path::new(path_str)) {
-            Ok(date_of_audio) => make_dir_string(date_of_audio.as_str()),
+            Ok(date_of_audio) => make_dir_string(date_of_audio.as_str(), MediaCategory::Audio),
             Err(err) => panic!("Test failed because of error: {}", err),
         };
 
@@ -140,7 +166,7 @@ pub mod date_read_tests {
 
         let doc_date = read_doc_creation_date(Path::new("../test-media/TESTDOCUMENT.docx"))
             .unwrap_or("no_date_found".to_string());
-        let date_info = make_dir_string(&doc_date);
+        let date_info = make_dir_string(&doc_date, MediaCategory::Documents);
 
         let expected_prefix = format!("tests{}test_files{}", sep, sep);
         assert!(
@@ -162,7 +188,7 @@ pub mod date_read_tests {
             env::set_var("DEST_FOLDER", &format!("tests{}test_files", sep));
         }
 
-        let date_info = make_dir_string("no_date_found");
+        let date_info = make_dir_string("no_date_found", MediaCategory::Documents);
         assert_eq!(
             format!("tests{}test_files{}no_date_found", sep, sep),
             date_info
