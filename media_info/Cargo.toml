@@ -1,6 +1,6 @@
 [package]
 name = "media_info"
-version = "0.7.1"
+version = "0.7.2"
 authors = ["Andrew Gremlich <andrew@gremlich.dev>"]
 edition = "2024"
 license = "MIT"
