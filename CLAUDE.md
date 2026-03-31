@@ -18,7 +18,7 @@ Requires FFmpeg installed on the system (libavformat, libavcodec). On Windows, u
 
 ```bash
 cargo build                    # Build all crates
-cargo run -- --source <path> --destination <path> [--file-type <type>] [--copy] [--dry-run] [--log-saved] [--dimensions] [--verbose]
+cargo run -- --source <path> --destination <path> [--file-type <type>] [--copy] [--dry-run] [--log-saved] [--dimensions] [--verbose] [--categorize]
 ```
 
 ## Testing
@@ -66,7 +66,7 @@ Use [conventional commits](https://www.conventionalcommits.org/) for commit mess
 - Date strings formatted as `YYYY-MM-DD`, organized into `YYYY/MM/DD` directory paths
 - Fallback to `"no_date_found"` when date extraction fails
 - Feature-gated compilation in media_info via Cargo features
-- Environment variables set in main.rs: `DEST_FOLDER`, `FILE_TYPE`, `COPY`, `DRY_RUN`, `LOG_SAVED`, `DIMENSIONS`
+- Environment variables set in main.rs: `DEST_FOLDER`, `FILE_TYPE`, `COPY`, `DRY_RUN`, `LOG_SAVED`, `DIMENSIONS`, `CATEGORIZE`
 - File type detection uses explicit whitelists (case-sensitive with common variations)
 - `get_exif_field!` macro used for EXIF field extraction in media_info
 
@@ -79,7 +79,7 @@ Use [conventional commits](https://www.conventionalcommits.org/) for commit mess
 
 ## Architecture Notes
 
-- Config is passed via environment variables (`DEST_FOLDER`, `FILE_TYPE`, `COPY`, `DRY_RUN`, `LOG_SAVED`, `DIMENSIONS`) set in `main.rs` using `unsafe env::set_var`. This is intentional — don't refactor to struct-passing without being asked.
+- Config is passed via environment variables (`DEST_FOLDER`, `FILE_TYPE`, `COPY`, `DRY_RUN`, `LOG_SAVED`, `DIMENSIONS`, `CATEGORIZE`) set in `main.rs` using `unsafe env::set_var`. This is intentional — don't refactor to struct-passing without being asked.
 - Structured logging via `log` + `structured-logger`. Log files (`same_file.log`, `saved_file.log`) are only created when needed — `same_file.log` is skipped during dry runs, `saved_file.log` only appears with `--log-saved`. Terminal output is suppressed by default; use `--verbose` to enable it. Dry run implicitly enables verbose output.
 - Dry run (`--dry-run`) skips directory creation and file operations entirely — no folders or log files are created. Terminal output is automatically enabled.
 - Windows-specific file metadata copying is in `set_creation_time_windows.rs`, guarded by `#[cfg(target_os = "windows")]`.
