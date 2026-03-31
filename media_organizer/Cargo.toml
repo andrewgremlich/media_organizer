@@ -1,6 +1,6 @@
 [package]
 name = "media_organizer"
-version = "0.9.4"
+version = "0.9.5"
 authors = ["Andrew Gremlich <andrew@gremlich.dev>"]
 edition = "2024"
 license = "MIT"
@@ -21,7 +21,7 @@ clap = { version = "4.5", features = ["derive"] }
 glob = "0.3"
 mkdirp = "1.0"
 faccess = "0.2"
-media_info = { version = "0.7.1", path = "../media_info", features = ["default"]}
+media_info = { version = "0.7.3", path = "../media_info", features = ["default"]}
 lazy_static = "1.5"
 log = "0.4"
 structured-logger = "1.0"

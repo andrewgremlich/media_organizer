@@ -101,7 +101,24 @@ let path = Path::new(raw_path_str);
 let audio_info = AudioInfo::new(path).unwrap();
 
 assert_eq!(audio_info.creation_date.contains("2024-11-11"), true);
+
+// Document creation date extraction
+let path = Path::new("../test-media/test_document.pdf");
+let date = read_doc_creation_date(path).unwrap();
+// Returns "YYYY-MM-DD" from embedded document metadata
 ```
+
+### Supported Document Formats
+
+`read_doc_creation_date` extracts creation dates from:
+
+- **EPUB** — reads `<dc:date>` from OPF metadata
+- **PDF** — reads `CreationDate` from PDF metadata
+- **DOCX** — reads `dcterms:created` from `docProps/core.xml`
+- **ODT** — reads `meta:creation-date` from `meta.xml`
+- **PPTX** — reads `dcterms:created` from `docProps/core.xml`
+- **XLSX** — reads `dcterms:created` from `docProps/core.xml`
+- **TXT, MD, RTF, MOBI** — falls back to filesystem creation date
 
 ## Dependencies
 

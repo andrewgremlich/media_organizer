@@ -33,9 +33,9 @@ Copy (`-c`) from source (`-s D:\iPhone.Photos`) into destination relative to cur
 
 ## Workspace Crates
 
-- [media_organizer](./media_organizer/readme.md) - CLI binary for organizing media files
+- [media_organizer](./media_organizer/README.md) - CLI binary for organizing media files
 - [media_info](./media_info/README.md) - Library for extracting metadata from photos, videos, audio, and documents
-- [fs_metadata](./fs_metadata/readme.md) - Library for cross-platform file metadata (timestamps, permissions, sizes)
+- [fs_metadata](./fs_metadata/README.md) - Library for cross-platform file metadata (timestamps, permissions, sizes)
 
 ## Supported File Types
 
@@ -58,6 +58,7 @@ Copy (`-c`) from source (`-s D:\iPhone.Photos`) into destination relative to cur
 | `--log-saved` | `-l` | Write each saved file to `saved_file.log` |
 | `--dimensions` | | Append width x height to image and video filenames |
 | `--verbose` | `-v` | Print log output to the terminal |
+| `--categorize` | | Separate media into category subfolders (photos, video, audio, documents) |
 
 ## Contributing
 
